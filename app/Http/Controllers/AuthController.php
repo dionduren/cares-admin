@@ -77,12 +77,12 @@ class AuthController extends Controller
         $credentials = $request->only(['nik', 'password']);
 
         if (Auth::attempt($credentials)) {
-            // $id = User::where('nik', $request->input('nik'))->first()->id;
-            // Auth::loginUsingId($id);
-            // return response()->json([
-            //     'path' => '/',
-            //     'status' => 200,
-            // ]);
+            $id = User::where('nik', $request->input('nik'))->first()->id;
+            Auth::loginUsingId($id);
+            return response()->json([
+                'path' => '/',
+                'status' => 200,
+            ]);
             return redirect('/');
         } else {
             //todo: Failed Login Log
