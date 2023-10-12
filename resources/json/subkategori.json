@@ -1,0 +1,366 @@
+[
+  {
+    "kategori": "Internet/Wifi",
+    "subkategori": "Permintaan akses internet/ wifi",
+    "level_dampak": 1,
+    "level_urgensi": 3,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "Internet/Wifi",
+    "subkategori": "Internet/ wifi tidak tersambung",
+    "level_dampak": 1,
+    "level_urgensi": 3,
+    "tipe_tiket": "INCIDENT"
+  },
+  {
+    "kategori": "Internet/Wifi",
+    "subkategori": "Internet/ wifi sambung putus",
+    "level_dampak": 1,
+    "level_urgensi": 3,
+    "tipe_tiket": "INCIDENT"
+  },
+  {
+    "kategori": "Internet/Wifi",
+    "subkategori": "Lainnya",
+    "level_dampak": 1,
+    "level_urgensi": 3,
+    "tipe_tiket": "INCIDENT"
+  },
+  {
+    "kategori": "VPN",
+    "subkategori": "Permintaan akses VPN",
+    "level_dampak": 1,
+    "level_urgensi": 3,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "VPN",
+    "subkategori": "VPN tidak tersambung",
+    "level_dampak": 1,
+    "level_urgensi": 3,
+    "tipe_tiket": "INCIDENT"
+  },
+  {
+    "kategori": "VPN",
+    "subkategori": "Lainnya",
+    "level_dampak": 1,
+    "level_urgensi": 3,
+    "tipe_tiket": "INCIDENT"
+  },
+  {
+    "kategori": "File Sharing",
+    "subkategori": "Permintaan akses file sharing",
+    "level_dampak": 1,
+    "level_urgensi": 3,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "File Sharing",
+    "subkategori": "Login gagal",
+    "level_dampak": 1,
+    "level_urgensi": 3,
+    "tipe_tiket": "INCIDENT"
+  },
+  {
+    "kategori": "File Sharing",
+    "subkategori": "Lainnya",
+    "level_dampak": 1,
+    "level_urgensi": 3,
+    "tipe_tiket": "INCIDENT"
+  },
+  {
+    "kategori": "Komputer/ Laptop",
+    "subkategori": "Instalasi aplikasi di komputer/ laptop",
+    "level_dampak": 1,
+    "level_urgensi": 3,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "Komputer/ Laptop",
+    "subkategori": "Komputer/ laptop rusak atau tidak berfungsi",
+    "level_dampak": 1,
+    "level_urgensi": 3,
+    "tipe_tiket": "INCIDENT"
+  },
+  {
+    "kategori": "Komputer/ Laptop",
+    "subkategori": "Lainnya",
+    "level_dampak": 1,
+    "level_urgensi": 3,
+    "tipe_tiket": "INCIDENT"
+  },
+  {
+    "kategori": "Printer",
+    "subkategori": "Instalasi driver printer ",
+    "level_dampak": 1,
+    "level_urgensi": 3,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "Printer",
+    "subkategori": "Driver printer tidak tersambung",
+    "level_dampak": 1,
+    "level_urgensi": 3,
+    "tipe_tiket": "INCIDENT"
+  },
+  {
+    "kategori": "Printer",
+    "subkategori": "Lainnya",
+    "level_dampak": 1,
+    "level_urgensi": 3,
+    "tipe_tiket": "INCIDENT"
+  },
+  {
+    "kategori": "Zoom",
+    "subkategori": "Permintaan layanan zoom temporary",
+    "level_dampak": 1,
+    "level_urgensi": 3,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "Zoom",
+    "subkategori": "Aplikasi zoom mengalami kendala",
+    "level_dampak": 1,
+    "level_urgensi": 3,
+    "tipe_tiket": "INCIDENT"
+  },
+  {
+    "kategori": "Zoom",
+    "subkategori": "Lainnya",
+    "level_dampak": 1,
+    "level_urgensi": 3,
+    "tipe_tiket": "INCIDENT"
+  },
+  {
+    "kategori": "Email",
+    "subkategori": "Permintaan user email ",
+    "level_dampak": 1,
+    "level_urgensi": 3,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "Email",
+    "subkategori": "Login gagal",
+    "level_dampak": 1,
+    "level_urgensi": 3,
+    "tipe_tiket": "INCIDENT"
+  },
+  {
+    "kategori": "Email",
+    "subkategori": "Lainnya",
+    "level_dampak": 1,
+    "level_urgensi": 3,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul BPC",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "INDUK ITEM"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul CS",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "INDUK ITEM"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul FICO",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "INDUK ITEM"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul FM",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "INDUK ITEM"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul HCM",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "INDUK ITEM"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul MM",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "INDUK ITEM"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul PM & PS",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "INDUK ITEM"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul PP & QM",
+    "level_dampak": 3,
+    "level_urgensi": 3,
+    "tipe_tiket": "INDUK ITEM"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul SD",
+    "level_dampak": 3,
+    "level_urgensi": 3,
+    "tipe_tiket": "INDUK ITEM"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul WM",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "INDUK ITEM"
+  },
+  {
+    "kategori": "Aplikasi Non ERP",
+    "subkategori": "HC Services (ESS)",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "INDUK ITEM"
+  },
+  {
+    "kategori": "Aplikasi Non ERP",
+    "subkategori": "Aplikasi Gudang (APG)",
+    "level_dampak": 2,
+    "level_urgensi": 2,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "Aplikasi Non ERP",
+    "subkategori": "Eprocurement",
+    "level_dampak": 2,
+    "level_urgensi": 1,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "Aplikasi Non ERP",
+    "subkategori": "Web Commerce (WCM)",
+    "level_dampak": 2,
+    "level_urgensi": 2,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "Aplikasi Non ERP",
+    "subkategori": "Web Uang Muka (WUM)",
+    "level_dampak": 2,
+    "level_urgensi": 2,
+    "tipe_tiket": "INDUK ITEM"
+  },
+  {
+    "kategori": "Aplikasi Non ERP",
+    "subkategori": "Cares",
+    "level_dampak": 1,
+    "level_urgensi": 1,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "Aplikasi Non ERP",
+    "subkategori": "Digital Office (DOF)",
+    "level_dampak": 2,
+    "level_urgensi": 2,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "Aplikasi Non ERP",
+    "subkategori": "DPCS",
+    "level_dampak": 2,
+    "level_urgensi": 2,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "Aplikasi Non ERP",
+    "subkategori": "Iproms",
+    "level_dampak": 2,
+    "level_urgensi": 2,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "Aplikasi Non ERP",
+    "subkategori": "Master Material & Cataloguing",
+    "level_dampak": 2,
+    "level_urgensi": 2,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "Aplikasi Non ERP",
+    "subkategori": "Pakta Integritas Online (PIONIR)",
+    "level_dampak": 2,
+    "level_urgensi": 2,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "Aplikasi Non ERP",
+    "subkategori": "PI Smart",
+    "level_dampak": 2,
+    "level_urgensi": 2,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "Aplikasi Non ERP",
+    "subkategori": "PI Sign",
+    "level_dampak": 2,
+    "level_urgensi": 2,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "Aplikasi Non ERP",
+    "subkategori": "Prisma",
+    "level_dampak": 2,
+    "level_urgensi": 2,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "Aplikasi Non ERP",
+    "subkategori": "REKAN",
+    "level_dampak": 2,
+    "level_urgensi": 2,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "Aplikasi Non ERP",
+    "subkategori": "SIAP GGC",
+    "level_dampak": 2,
+    "level_urgensi": 2,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "Aplikasi Non ERP",
+    "subkategori": "WBS",
+    "level_dampak": 2,
+    "level_urgensi": 2,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "Aplikasi Non ERP",
+    "subkategori": "Viral",
+    "level_dampak": 2,
+    "level_urgensi": 2,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "Aplikasi Non ERP",
+    "subkategori": "Lainnya",
+    "level_dampak": 1,
+    "level_urgensi": 1,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "Lainnya",
+    "subkategori": "Lainnya",
+    "level_dampak": 1,
+    "level_urgensi": 1,
+    "tipe_tiket": "REQUEST"
+  }
+]

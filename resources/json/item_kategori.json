@@ -1,0 +1,578 @@
+[
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul BPC",
+    "item_kategori": "Master data customer",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul BPC",
+    "item_kategori": "Master data vendor",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul BPC",
+    "item_kategori": "Master data gl account/ COA",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul BPC",
+    "item_kategori": "Master data profit center",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul BPC",
+    "item_kategori": "Master data material",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul BPC",
+    "item_kategori": "Permintaan hak akses tcode tertentu",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul BPC",
+    "item_kategori": "Tidak dapat mengakses tcode tertentu",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "INCIDENT"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul BPC",
+    "item_kategori": "Permintaan atau permasalahan lainnya",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "INCIDENT"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul CS",
+    "item_kategori": "Permintaan hak akses tcode tertentu",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul CS",
+    "item_kategori": "Tidak dapat mengakses tcode tertentu",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "INCIDENT"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul CS",
+    "item_kategori": "Permintaan atau permasalahan lainnya",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "INCIDENT"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul FICO",
+    "item_kategori": "Master data bank key",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul FICO",
+    "item_kategori": "Master data business area",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul FICO",
+    "item_kategori": "Master data gl account/ COA",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul FICO",
+    "item_kategori": "Master data cost center",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul FICO",
+    "item_kategori": "Master data profit center",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul FICO",
+    "item_kategori": "Permintaan hak akses tcode tertentu",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul FICO",
+    "item_kategori": "Tidak dapat mengakses tcode tertentu",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "INCIDENT"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul FICO",
+    "item_kategori": "Permintaan atau permasalahan lainnya",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "INCIDENT"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul FM",
+    "item_kategori": "Master data approval FM",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul FM",
+    "item_kategori": "Permintaan hak akses tcode tertentu",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul FM",
+    "item_kategori": "Tidak dapat mengakses tcode tertentu",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "INCIDENT"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul FM",
+    "item_kategori": "Permintaan atau permasalahan lainnya",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "INCIDENT"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul HCM",
+    "item_kategori": "Master data expense type",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul HCM",
+    "item_kategori": "Master data grade",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul HCM",
+    "item_kategori": "Master data leave",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul HCM",
+    "item_kategori": "Master data organizational management",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul HCM",
+    "item_kategori": "Master data payroll area",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul HCM",
+    "item_kategori": "Master data wage type",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul HCM",
+    "item_kategori": "Master data vendor karyawan",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul HCM",
+    "item_kategori": "Permintaan hak akses tcode tertentu",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul HCM",
+    "item_kategori": "Tidak dapat mengakses tcode tertentu",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "INCIDENT"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul HCM",
+    "item_kategori": "Permintaan atau permasalahan lainnya",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "INCIDENT"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul MM",
+    "item_kategori": "Master data material",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul MM",
+    "item_kategori": "Master data vendor",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul MM",
+    "item_kategori": "Permintaan hak akses tcode tertentu",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul MM",
+    "item_kategori": "Tidak dapat mengakses tcode tertentu",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "INCIDENT"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul MM",
+    "item_kategori": "Permintaan atau permasalahan lainnya",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "INCIDENT"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul PM & PS",
+    "item_kategori": "Master data BOM equipment",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul PM & PS",
+    "item_kategori": "Master data equipment",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul PM & PS",
+    "item_kategori": "Master data maintenance plan",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul PM & PS",
+    "item_kategori": "Master data task list",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul PM & PS",
+    "item_kategori": "Permintaan hak akses tcode tertentu",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul PM & PS",
+    "item_kategori": "Tidak dapat mengakses tcode tertentu",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "INCIDENT"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul PM & PS",
+    "item_kategori": "Permintaan atau permasalahan lainnya",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "INCIDENT"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul PP & QM",
+    "item_kategori": "Master data BOM produksi",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul PP & QM",
+    "item_kategori": "Master data plant pengantongan",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul PP & QM",
+    "item_kategori": "Master data plant produksi",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul PP & QM",
+    "item_kategori": "Master data recipe",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul PP & QM",
+    "item_kategori": "Master data QM",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul PP & QM",
+    "item_kategori": "Permintaan hak akses tcode tertentu",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul PP & QM",
+    "item_kategori": "Tidak dapat mengakses tcode tertentu",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "INCIDENT"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul PP & QM",
+    "item_kategori": "Permintaan atau permasalahan lainnya",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "INCIDENT"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul SD",
+    "item_kategori": "Master data customer",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul SD",
+    "item_kategori": "Master data pemekaran kecamatan",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul SD",
+    "item_kategori": "Master data plant pemasaran",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul SD",
+    "item_kategori": "Master data route",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul SD",
+    "item_kategori": "Master data rayonisasi",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul SD",
+    "item_kategori": "Master data shipping point",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul SD",
+    "item_kategori": "Permintaan hak akses tcode tertentu",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul SD",
+    "item_kategori": "Tidak dapat mengakses tcode tertentu",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "INCIDENT"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul SD",
+    "item_kategori": "Permintaan atau permasalahan lainnya",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "INCIDENT"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul WM",
+    "item_kategori": "Permintaan hak akses tcode tertentu",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul WM",
+    "item_kategori": "Tidak dapat mengakses tcode tertentu",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "INCIDENT"
+  },
+  {
+    "kategori": "Aplikasi ERP SAP",
+    "subkategori": "Modul WM",
+    "item_kategori": "Permintaan atau permasalahan lainnya",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "INCIDENT"
+  },
+  {
+    "kategori": "Aplikasi Non ERP",
+    "subkategori": "HC Services (ESS)",
+    "item_kategori": "Unlock password",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "INCIDENT"
+  },
+  {
+    "kategori": "Aplikasi Non ERP",
+    "subkategori": "HC Services (ESS)",
+    "item_kategori": "Reset password",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "INCIDENT"
+  },
+  {
+    "kategori": "Aplikasi Non ERP",
+    "subkategori": "HC Services (ESS)",
+    "item_kategori": "Permintaan atau permasalahan lainnya",
+    "level_dampak": 2,
+    "level_urgensi": 3,
+    "tipe_tiket": "INCIDENT"
+  },
+  {
+    "kategori": "Aplikasi Non ERP",
+    "subkategori": "Web Uang Muka (WUM)",
+    "item_kategori": "Permintaan user ID dan hak akses",
+    "level_dampak": 2,
+    "level_urgensi": 2,
+    "tipe_tiket": "REQUEST"
+  },
+  {
+    "kategori": "Aplikasi Non ERP",
+    "subkategori": "Web Uang Muka (WUM)",
+    "item_kategori": "Unlock password",
+    "level_dampak": 2,
+    "level_urgensi": 2,
+    "tipe_tiket": "INCIDENT"
+  },
+  {
+    "kategori": "Aplikasi Non ERP",
+    "subkategori": "Web Uang Muka (WUM)",
+    "item_kategori": "Reset password",
+    "level_dampak": 2,
+    "level_urgensi": 2,
+    "tipe_tiket": "INCIDENT"
+  },
+  {
+    "kategori": "Aplikasi Non ERP",
+    "subkategori": "Web Uang Muka (WUM)",
+    "item_kategori": "Permintaan atau permasalahan lainnya",
+    "level_dampak": 2,
+    "level_urgensi": 2,
+    "tipe_tiket": "INCIDENT"
+  }
+]
