@@ -16,58 +16,55 @@
     @endcomponent
     <div class="row py-5">
         <div class="col-11 mx-auto">
-            <form id="create-tiket-form">
 
-                <div class="row mb-3">
-                    <label for="kategori_tiket">Kategori Tiket</label>
-                    <div class="col">
-                        <select class="form-control" name="kategori_tiket" id="kategori_tiket">
-                        </select>
-                    </div>
+            <div class="card card-h-100">
+                <!-- card body -->
+                <div class="card-body">
+                    <form id="create-tiket-form">
+
+                        <div class="row mb-3">
+                            <label for="kategori_tiket">Kategori Tiket</label>
+                            <div class="col">
+                                <select class="form-control" name="kategori_tiket" id="kategori_tiket">
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="subkategori_tiket">Subkategori Tiket</label>
+                            <div class="col">
+                                <select class="form-control" name="subkategori_tiket" id="subkategori_tiket">
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div id="item-category-container">
+                                <!-- Item category dropdown will be inserted here -->
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="judul">Judul Tiket</label>
+                            <div class="col">
+                                <input type="text" class="form-control" name="judul_tiket" id="judul_tiket">
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="detail_tiket">Detail Tiket</label>
+                            <div class="col">
+                                <textarea type="text" class="form-control" name="detail_tiket" id="detail_tiket" rows="5"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="row pb-3 mx-auto text-center">
+                            <button class="btn btn-lg btn-primary" type="submit" style="width: 100%">Submit
+                                Ticket</button>
+                        </div>
+
+                    </form>
                 </div>
-
-                <div class="row mb-3">
-                    <label for="subkategori_tiket">Subkategori Tiket</label>
-                    <div class="col">
-                        <select class="form-control" name="subkategori_tiket" id="subkategori_tiket">
-                        </select>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div id="item-category-container">
-                        <!-- Item category dropdown will be inserted here -->
-                    </div>
-                </div>
-
-                <div class="row mb-3">
-                    <label for="judul">Judul Tiket</label>
-                    <div class="col">
-                        <input type="text" class="form-control" name="judul_tiket" id="judul_tiket">
-                    </div>
-                </div>
-
-                <div class="row mb-3">
-                    <label for="detail_tiket">Detail Tiket</label>
-                    <div class="col">
-                        <textarea type="text" class="form-control" name="detail_tiket" id="detail_tiket" rows="5"></textarea>
-                    </div>
-                </div>
-
-                <div class="row pb-3 mx-auto text-center">
-                    <button class="btn btn-lg btn-primary" type="submit" style="width: 100%">Submit
-                        Ticket</button>
-                </div>
-
-            </form>
-        </div>
-    </div>
-
-    <div class="row" id="failure-box">
-        <div class="col-11 mx-auto">
-            <div class="form-group mb-3">
-                <label for="reason">Reason for Failure:</label>
-                <textarea id="reason" class="form-control" readonly></textarea>
             </div>
         </div>
     </div>
@@ -142,21 +139,21 @@
                         console.log(data);
                         console.log(data.success);
                         window.location.href = '/'; // Redirect to user home page
-                    },
-                    error: function(xhr, status, error) {
-                        var err = eval("(" + xhr.responseText + ")");
-                        console.log('INI MASUK ERROR')
-                        console.log(err);
-                        console.log(err.success);
-                        console.log(err.errors);
+                        // },
+                        // error: function(xhr, status, error) {
+                        //     var err = eval("(" + xhr.responseText + ")");
+                        //     console.log('INI MASUK ERROR')
+                        //     console.log(err);
+                        //     console.log(err.success);
+                        //     console.log(err.errors);
 
-                        $.each(err.errors, function(index, value) {
+                        //     $.each(err.errors, function(index, value) {
 
-                            $('#' + index).addClass(
-                                'highlight'); // Add a CSS class to highlight the field
-                        })
+                        //         $('#' + index).addClass(
+                        //             'highlight'); // Add a CSS class to highlight the field
+                        //     })
 
-                        $('#reason').val(err.reason); // Show the reason for failure
+                        //     $('#reason').val(err.reason); // Show the reason for failure
 
                     }
                 })

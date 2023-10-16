@@ -100,7 +100,7 @@
         </div><!-- end col -->
     </div><!-- end row-->
 
-    <div class="row">
+    <div class="row mb-3">
         <div class="col-xl-10 col-md-10 mx-auto">
             <a href="/create-ticket" class="btn btn-lg btn-warning fs-4 fw-bold text-dark" style="width: 100%">Buat Tiket
                 Baru</a>
