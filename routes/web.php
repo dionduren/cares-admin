@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MasterDataController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\TicketController;
 /*
@@ -30,6 +31,7 @@ Route::middleware(['auth'])->group(function () {
   Route::get('/create-ticket', [TicketController::class, 'create_ticket'])->name('root');
 
   Route::get('/report-test', [ReportController::class, 'index_test'])->name('report_test');
+  Route::get('/master/kategori', [MasterDataController::class, 'master_kategori']);
 
   Route::get('{any}', [HomeController::class, 'index'])->name('index');
 });

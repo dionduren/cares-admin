@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('ms_kategori', function (Blueprint $table) {
             $table->id();
+            $table->integer('sort_order')->unsigned();
             $table->string('nama_kategori');
             $table->string('updated_by');
             $table->string('created_by');

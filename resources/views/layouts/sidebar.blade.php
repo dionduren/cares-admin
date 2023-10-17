@@ -36,9 +36,9 @@
                         <span data-key="t-tasks">Master Data</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="master-kategori" key="t-task-list">Kategori</a></li>
-                        <li><a href="master-sub-kategori" key="t-kanban-board">Sub Kategori</a></li>
-                        <li><a href="master-item-kategori" key="t-create-task">Item kategori</a></li>
+                        <li><a href="/master/kategori" key="t-task-list">Kategori</a></li>
+                        <li><a href="/master/sub-kategori" key="t-kanban-board">Sub Kategori</a></li>
+                        <li><a href="/master/item-kategori" key="t-create-task">Item kategori</a></li>
                     </ul>
                 </li>
 
@@ -85,22 +85,22 @@
                         <span data-key="t-components">Bootstrap</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="ui-alerts" key="t-alerts">Alerts</a></li>
-                        <li><a href="ui-buttons" key="t-buttons">Buttons</a></li>
-                        <li><a href="ui-cards" key="t-cards">Cards</a></li>
-                        <li><a href="ui-carousel" key="t-carousel">Carousel</a></li>
-                        <li><a href="ui-dropdowns" key="t-dropdowns">Dropdowns</a></li>
-                        <li><a href="ui-grid" key="t-grid">Grid</a></li>
-                        <li><a href="ui-images" key="t-images">Images</a></li>
-                        <li><a href="ui-modals" key="t-modals">Modals</a></li>
-                        <li><a href="ui-offcanvas" key="t-offcanvas">Offcanvas</a></li>
-                        <li><a href="ui-progressbars" key="t-progress-bars">Progress_Bars</a></li>
-                        <li><a href="ui-placeholders" key="t-placeholders">Placeholders</a></li>
-                        <li><a href="ui-tabs-accordions" key="t-tabs-accordions">Tabs_&_Accordions</a></li>
-                        <li><a href="ui-typography" key="t-typography">Typography</a></li>
-                        <li><a href="ui-video" key="t-video">Video</a></li>
-                        <li><a href="ui-general" key="t-general">General</a></li>
-                        <li><a href="ui-colors" key="t-colors">Colors</a></li>
+                        <li><a href="/ui-alerts" key="t-alerts">Alerts</a></li>
+                        <li><a href="/ui-buttons" key="t-buttons">Buttons</a></li>
+                        <li><a href="/ui-cards" key="t-cards">Cards</a></li>
+                        <li><a href="/ui-carousel" key="t-carousel">Carousel</a></li>
+                        <li><a href="/ui-dropdowns" key="t-dropdowns">Dropdowns</a></li>
+                        <li><a href="/ui-grid" key="t-grid">Grid</a></li>
+                        <li><a href="/ui-images" key="t-images">Images</a></li>
+                        <li><a href="/ui-modals" key="t-modals">Modals</a></li>
+                        <li><a href="/ui-offcanvas" key="t-offcanvas">Offcanvas</a></li>
+                        <li><a href="/ui-progressbars" key="t-progress-bars">Progress_Bars</a></li>
+                        <li><a href="/ui-placeholders" key="t-placeholders">Placeholders</a></li>
+                        <li><a href="/ui-tabs-accordions" key="t-tabs-accordions">Tabs_&_Accordions</a></li>
+                        <li><a href="/ui-typography" key="t-typography">Typography</a></li>
+                        <li><a href="/ui-video" key="t-video">Video</a></li>
+                        <li><a href="/ui-general" key="t-general">General</a></li>
+                        <li><a href="/ui-colors" key="t-colors">Colors</a></li>
                     </ul>
                 </li>
 

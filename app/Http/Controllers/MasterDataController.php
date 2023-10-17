@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kategori;
 use Illuminate\Http\Request;
 
 class MasterDataController extends Controller
@@ -26,6 +27,10 @@ class MasterDataController extends Controller
         // $user = Auth::user();
         // $daftar_tiket = Tiket::all();
 
-        return view('admin.master.kategori');
+        $daftar_kategori = Kategori::all();
+
+        return view('admin.master.kategori', [
+            'daftar_kategori' => $daftar_kategori,
+        ]);
     }
 }

@@ -31,14 +31,26 @@ class DatabaseSeeder extends Seeder
 
         $daftar_kategori = ["Internet/Wifi", "VPN", "File Sharing", "Komputer/ Laptop", "Printer", "Zoom", "Email", "Aplikasi ERP SAP", "Aplikasi Non ERP", "Lainnya"];
 
-        foreach ($daftar_kategori as $kategori) {
-            Kategori::create([
-                'nama_kategori' => $kategori,
-                'updated_by' => 'Seeder',
-                'created_by' => 'Seeder',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
+        foreach ($daftar_kategori as $index => $kategori) {
+            if ($kategori == "Lainnya") {
+                Kategori::create([
+                    'sort_order' => 999,
+                    'nama_kategori' => $kategori,
+                    'updated_by' => 'Seeder',
+                    'created_by' => 'Seeder',
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+            } else {
+                Kategori::create([
+                    'sort_order' => $index + 1,
+                    'nama_kategori' => $kategori,
+                    'updated_by' => 'Seeder',
+                    'created_by' => 'Seeder',
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+            }
         }
 
         $json1 = File::get("resources/json/subkategori.json");
@@ -49,7 +61,7 @@ class DatabaseSeeder extends Seeder
         $daftar_item_kategori = json_decode($json2);
         $daftar_user_role = json_decode($json3);
 
-        foreach ($daftar_subkategori as $subkategori) {
+        foreach ($daftar_subkategori as  $index => $subkategori) {
             $id_kategori = Kategori::where("nama_kategori", $subkategori->kategori)->first();
 
             $list_subkategori = [
@@ -68,7 +80,7 @@ class DatabaseSeeder extends Seeder
             Subkategori::create($list_subkategori);
         }
 
-        foreach ($daftar_item_kategori as $item_kategori) {
+        foreach ($daftar_item_kategori as  $index => $item_kategori) {
             $id_kategori = Kategori::where("nama_kategori", $item_kategori->kategori)->first()->id;
             $id_subkategori = Subkategori::where("nama_subkategori", $item_kategori->subkategori)->first()->id;
 
