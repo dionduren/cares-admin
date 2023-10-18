@@ -32,6 +32,9 @@ Route::middleware(['auth'])->group(function () {
 
   Route::get('/report-test', [ReportController::class, 'index_test'])->name('report_test');
   Route::get('/master/kategori', [MasterDataController::class, 'master_kategori']);
+  Route::post('/submit-kategori', [MasterDataController::class, 'submit_kategori']);
+  Route::post('/edit-kategori', [MasterDataController::class, 'edit_kategori']);
+  Route::post('/delete-kategori', [MasterDataController::class, 'delete_kategori']);
 
   Route::get('{any}', [HomeController::class, 'index'])->name('index');
 });

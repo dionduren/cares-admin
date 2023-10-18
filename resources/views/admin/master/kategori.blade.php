@@ -39,46 +39,6 @@
                                     <th width="5%">Action</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                @foreach ($daftar_kategori as $kategori)
-                                    <tr>
-                                        <td class="text-center">
-                                            {{ $loop->index + 1 }}
-                                        </td>
-                                        <td>
-                                            {{ $kategori->nama_kategori }}
-                                        </td>
-                                        <td>
-                                            <div class="dropdown">
-                                                <div class="flex-shrink-0 text-center">
-                                                    <div class="dropdown align-self-start">
-                                                        <a class="dropdown-toggle" href="#" role="button"
-                                                            data-bs-toggle="dropdown" aria-haspopup="true"
-                                                            aria-expanded="false">
-                                                            <i
-                                                                class="bx bx-dots-vertical-rounded font-size-24 text-dark"></i>
-                                                        </a>
-                                                        <div class="dropdown-menu">
-                                                            <button type="button" class="dropdown-item"
-                                                                data-bs-toggle="modal" data-bs-target="#editModal"
-                                                                data-bs-id="{{ $kategori->id }}">
-                                                                Ubah
-                                                            </button>
-                                                            <button type="button" class="dropdown-item"
-                                                                data-bs-toggle="modal" data-bs-target="#deleteModal"
-                                                                data-bs-id="{{ $kategori->id }}">
-                                                                Hapus
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -100,12 +60,12 @@
                     <div class="row mb-3">
                         <label for="judul">Nama Kategori</label>
                         <div class="col">
-                            <input type="text" class="form-control" name="kategori_tiket" id="kategori_tiket">
+                            <input type="text" class="form-control" name="tambah_kategori" id="tambah_kategori">
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">Submit</button>
+                    <button type="button" class="btn btn-primary" id="tambahKategoriBtn">Submit</button>
                 </div>
             </div>
         </div>
@@ -124,12 +84,13 @@
                     <div class="row mb-3">
                         <label for="judul">Nama Kategori</label>
                         <div class="col">
-                            <input type="text" class="form-control" name="kategori_tiket" id="kategori_tiket">
+                            <input type="text" class="form-control" name="id_ubah_kategori" id="id_ubah_kategori" hidden>
+                            <input type="text" class="form-control" name="ubah_kategori" id="ubah_kategori">
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">Submit</button>
+                    <button type="button" class="btn btn-primary" id="ubahKategoriBtn">Submit</button>
                 </div>
             </div>
         </div>
@@ -145,10 +106,11 @@
                 </div>
                 <div class="modal-body">
                     Apakah anda yakin menghapus kategori ini?
+                    <input type="text" class="form-control" name="id_delete_kategori" id="id_delete_kategori" hidden>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
-                    <button type="button" class="btn btn-danger" id="confirmDelete">Yakin</button>
+                    <button type="button" class="btn btn-danger" id="hapusKategoriBtn">Yakin</button>
                 </div>
             </div>
         </div>
@@ -170,12 +132,144 @@
         $(document).ready(function() {
 
             var table1 = $('#listKategori').DataTable({
+                "ajax": {
+                    "url": "/api/kategori-list",
+                    "type": "GET",
+                    "dataSrc": "" // This tells DataTables to use the raw array
+                },
+                columns: [{
+                        data: null,
+                        render: function(data, type, row, meta) {
+                            return meta.row + 1; // Display the row number
+                        }
+                    },
+                    {
+                        data: "nama_kategori"
+                    },
+                    {
+                        data: null,
+                        render: function(data, type, row) {
+                            return `
+                        <div class="dropdown">
+                            <div class="flex-shrink-0 text-center">
+                                <div class="dropdown align-self-start">
+                                    <a class="dropdown-toggle" href="#" role="button"
+                                        data-bs-toggle="dropdown" aria-haspopup="true"
+                                        aria-expanded="false">
+                                        <i class="bx bx-dots-vertical-rounded font-size-24 text-dark"></i>
+                                    </a>
+                                    <div class="dropdown-menu">
+                                        <button type="button" class="dropdown-item"
+                                            data-bs-toggle="modal" data-bs-target="#editModal"
+                                            data-id="${row.id}"
+                                            data-nama="${row.nama_kategori}">
+                                            Ubah
+                                        </button>
+                                        <button type="button" class="dropdown-item"
+                                            data-bs-toggle="modal" data-bs-target="#deleteModal"
+                                            data-id="${row.id}">
+                                            Hapus
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                        }
+                    }
+                ],
                 lengthChange: false,
                 buttons: ['copy', 'excel', 'pdf', 'colvis']
             });
 
-            table1.buttons().container()
-                .appendTo('#listKategori_wrapper .col-md-6:eq(0)');
-        })
+            table1.buttons().container().appendTo('#listKategori_wrapper .col-md-6:eq(0)');
+
+            // MODAL FUNCTIONS
+
+            $('#editModal').on('show.bs.modal', function(event) {
+                var button = $(event.relatedTarget);
+                var id_kategori = button.data('id');
+                var nama_kategori = button.data('nama');
+
+                $('#id_ubah_kategori').attr('value', id_kategori);
+                $('#ubah_kategori').attr('value', nama_kategori);
+
+            });
+
+
+            $('#deleteModal').on('show.bs.modal', function(event) {
+                var button = $(event.relatedTarget);
+                var id_kategori = button.data('id');
+
+                $('#id_delete_kategori').attr('value', id_kategori);
+            });
+
+            // ACTION FUNCTIONS
+
+
+            $('#tambahKategoriBtn').click(function() {
+                $tambahKategori = $('#tambah_kategori').val();
+
+                $.ajax({
+                    url: "/submit-kategori",
+                    method: "POST",
+                    dataType: "json",
+                    data: {
+                        nama_kategori: $tambahKategori,
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(data) {
+                        $('#tambah_kategori').empty();
+                        $('#createModal').modal('toggle');
+                        table1.ajax.reload();
+                    }
+                })
+            });
+
+            $('#ubahKategoriBtn').click(function() {
+                $id_kategori = $('#id_ubah_kategori').val();
+                $nama_kategori = $('#ubah_kategori').val();
+
+                $.ajax({
+                    url: "/edit-kategori",
+                    method: "POST",
+                    dataType: "json",
+                    data: {
+                        id_kategori: $id_kategori,
+                        nama_kategori: $nama_kategori,
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(data) {
+                        $('#editModal').modal('toggle');
+                        table1.ajax.reload();
+                    }
+                })
+            })
+
+            $('#hapusKategoriBtn').click(function() {
+                $id_kategori = $('#id_delete_kategori').val();
+
+                $.ajax({
+                    url: "/delete-kategori",
+                    method: "POST",
+                    dataType: "json",
+                    data: {
+                        id_kategori: $id_kategori,
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(data) {
+                        $('#deleteModal').modal('toggle');
+                        table1.ajax.reload();
+                    }
+                })
+            });
+
+        });
     </script>
 @endsection

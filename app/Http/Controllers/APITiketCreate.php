@@ -279,7 +279,7 @@ class APITiketCreate extends Controller
 
     public function list_kategori()
     {
-        $kategori = Kategori::all();
+        $kategori = Kategori::orderBy('sort_order', 'asc')->get();
         return response()->json($kategori);
     }
 
