@@ -1,0 +1,64 @@
+version: '3.9'
+services:
+  app:
+    container_name: cares_admin
+    image: dionduren/cares_admin
+    build: .
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    depends_on:
+      - db
+
+  db:
+    container_name: db
+    image: postgres:12
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: cares_admin
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: dion
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  pgadmin:
+    container_name: pgadmin4_container
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: root
+    ports: 
+      - "5050:80"
+
+volumes:
+  pgdata: {}
+
+
+
+#   postgres:
+#     image: postgres:latest
+
+#   # PHP Service
+#   app:
+#     build:
+#       context: .
+#       dockerfile: Dockerfile
+#     image: laravel_app
+#     container_name: laravel_app
+#     restart: unless-stopped
+#     tty: true
+#     working_dir: /var/www
+#     volumes:
+#       - ./:/var/www
+#     networks:
+#       - app-network
+
+#   # ... (you can add other services like nginx, redis, etc.)
+
+# networks:
+#   app-network:
+#     driver: bridge
+
