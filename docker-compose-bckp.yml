@@ -1,0 +1,29 @@
+# version: '3.9'
+
+# services:
+#     vim:
+#       container_name: cares_admin
+#       build:
+#           context: .
+#       working_dir: /var/www
+#       volumes:
+#         - ./:/var/www
+#       ports:
+#         - 8010:80
+version: '3'
+
+services:
+  web:
+    container_name: cares_admin
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8000"  # Map host port 8080 to container port 8000
+    volumes:
+      - .:/var/www/html
+    environment:
+      DB_CONNECTION: pgsql
+      DB_HOST: host.docker.internal  # Use this special DNS name to refer to your localhost
+      DB_PORT: 5432
+    network_mode: host
