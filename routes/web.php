@@ -28,7 +28,7 @@ Route::middleware(['auth'])->group(function () {
   Route::get('/', [HomeController::class, 'root'])->name('root');
   Route::redirect('/index', '/');
 
-  Route::get('/create-ticket', [TicketController::class, 'create_ticket'])->name('root');
+  Route::get('/create-ticket', [TicketController::class, 'create_ticket'])->name('root1');
 
   Route::get('/report-test', [ReportController::class, 'index_test'])->name('report_test');
   Route::get('/master/kategori', [MasterDataController::class, 'master_kategori']);
