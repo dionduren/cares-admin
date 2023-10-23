@@ -172,10 +172,10 @@ class APITiket extends Controller
     private function hitungDurasiAction(Carbon $start, Carbon $end)
     {
         // Set Jam kerja Mulai
-        $workStartHour = 7;
+        $workStartHour = 8;
 
         // Set Jam kerja Akhir
-        $workEndHour = 19;
+        $workEndHour = 17;
 
         $totalHours = 0;
 
