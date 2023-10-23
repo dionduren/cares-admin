@@ -1,12 +1,14 @@
 <?php
 
+use App\Models\ActivityLog;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\APIGroup;
-use App\Http\Controllers\APITiketCreate;
 use App\Http\Controllers\APITiket;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\APITiketCreate;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\SuperAdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -55,5 +57,7 @@ Route::get('/technical-tiket-finished-list/{id}', [APITiket::class, 'technical_f
 Route::get('/solution-list/{id}', [APITiket::class, 'solution_list']);
 Route::post('/submit-solution', [APITiket::class, 'submit_solution']);
 Route::post('/submit-new-solution', [APITiket::class, 'submit_new_solution']);
+
+Route::get('/activity-history', [SuperAdminController::class, 'data_activity_history']);
 
 Route::post('/close-tiket', [APITiket::class, 'close_tiket']);

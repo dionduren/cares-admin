@@ -31,7 +31,7 @@
 
 
                     <div class="row">
-                        <table id="listKategori" class="table table-bordered w-100">
+                        <table id="listSubkategori" class="table table-bordered w-100">
                             <thead class="fs-5 fw-bolder text-light" style="background-color: rgb(12, 12, 151)">
                                 <tr align="middle" valign="middle">
                                     <th width="5%">No.</th>
@@ -61,14 +61,16 @@
                     <div class="row mb-3">
                         <label for="judul">Pilihan Kategori</label>
                         <div class="col">
-                            {{-- Masukkan Dropdown kategori --}}
+                            <select class="form-control dropdownKategori" name="kategori_tiket_create"
+                                id="kategori_tiket_create">
+                            </select>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label for="judul">Nama Subkategori</label>
                         <div class="col">
-                            {{-- GANTI NAME & ID --}}
-                            <input type="text" class="form-control" name="tambah_kategori" id="tambah_kategori">
+                            <input type="text" class="form-control" name="nama_subkategori_create"
+                                id="nama_subkategori_create">
                         </div>
                     </div>
                 </div>
@@ -85,27 +87,30 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editModalLabel">Ubah Kategori</h5>
+                    <h5 class="modal-title" id="editModalLabel">Ubah Subkategori</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="row mb-3">
                         <label for="judul">Pilihan Kategori</label>
                         <div class="col">
-                            {{-- Masukkan Dropdown kategori --}}
+                            <select class="form-control dropdownKategori" name="kategori_tiket_edit"
+                                id="kategori_tiket_edit">
+                            </select>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label for="judul">Nama Sub Kategori</label>
                         <div class="col">
-                            {{-- GANTI NAME & ID --}}
-                            <input type="text" class="form-control" name="id_ubah_kategori" id="id_ubah_kategori" hidden>
-                            <input type="text" class="form-control" name="ubah_kategori" id="ubah_kategori">
+                            <input type="text" class="form-control" name="id_ubah_subkategori" id="id_ubah_subkategori"
+                                hidden>
+                            <input type="text" class="form-control" name="nama_subkategori_edit"
+                                id="nama_subkategori_edit">
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" id="ubahKategoriBtn">Submit</button>
+                    <button type="button" class="btn btn-primary" id="ubahSubKategoriBtn">Submit</button>
                 </div>
             </div>
         </div>
@@ -116,17 +121,17 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="deleteModalLabel">Hapus Kategori</h5>
+                    <h5 class="modal-title" id="deleteModalLabel">Hapus Subkategori</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Apakah anda yakin menghapus kategori ini?
+                    Apakah anda yakin menghapus subkategori ini?
                     {{-- GANTI NAME & ID --}}
-                    <input type="text" class="form-control" name="id_delete_kategori" id="id_delete_kategori" hidden>
+                    <input type="text" class="form-control" name="id_delete_subkategori" id="id_delete_subkategori">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
-                    <button type="button" class="btn btn-danger" id="hapusKategoriBtn">Yakin</button>
+                    <button type="button" class="btn btn-danger" id="hapusSubKategoriBtn">Yakin</button>
                 </div>
             </div>
         </div>
@@ -145,9 +150,12 @@
     </script>
     <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
     <script>
-        $(document).ready(function() {
+        let daftarKategori = null;
 
-            var table1 = $('#listKategori').DataTable({
+        $(document).ready(function() {
+            getKategori();
+
+            var table1 = $('#listSubkategori').DataTable({
                 "ajax": {
                     "url": "/api/subkategori-list-all",
                     "type": "GET",
@@ -181,6 +189,7 @@
                                         <button type="button" class="dropdown-item"
                                             data-bs-toggle="modal" data-bs-target="#editModal"
                                             data-id="${row.id}"
+                                            data-kategori="${row.id_kategori}"
                                             data-nama="${row.nama_subkategori}">
                                             Ubah
                                         </button>
@@ -204,52 +213,60 @@
             table1.buttons().container().appendTo('#listKategori_wrapper .col-md-6:eq(0)');
 
             // MODAL FUNCTIONS
-
             $('#editModal').on('show.bs.modal', function(event) {
                 var button = $(event.relatedTarget);
-                var id_kategori = button.data('id');
-                var nama_kategori = button.data('nama');
+                var id_kategori = button.data('kategori');
+                var id_subkategori = button.data('id');
+                var nama_subkategori = button.data('nama');
 
-                $('#id_ubah_kategori').attr('value', id_kategori);
-                $('#ubah_kategori').attr('value', nama_kategori);
+                $('#kategori_tiket_edit').val(id_kategori);
+                $('#id_ubah_subkategori').attr('value', id_subkategori);
+                $('#nama_subkategori_edit').attr('value', nama_subkategori);
 
             });
 
 
             $('#deleteModal').on('show.bs.modal', function(event) {
                 var button = $(event.relatedTarget);
-                var id_kategori = button.data('id');
+                var id_subkategori = button.data('id');
 
-                $('#id_delete_kategori').attr('value', id_kategori);
+                $('#id_delete_subkategori').attr('value', id_subkategori);
             });
 
             // ACTION FUNCTIONS
 
 
             $('#tambahKategoriBtn').click(function() {
-                $tambahKategori = $('#tambah_kategori').val();
+                $id_kategori = $('#kategori_tiket_create').val();
+                $nama_kategori = $('#kategori_tiket_create option:selected').text();
+                $nama_subkategori = $('#nama_subkategori_create').val();
 
                 $.ajax({
                     url: "/submit-sub-kategori",
                     method: "POST",
                     dataType: "json",
                     data: {
-                        nama_kategori: $tambahKategori,
+                        id_kategori: $id_kategori,
+                        nama_kategori: $nama_kategori,
+                        nama_subkategori: $nama_subkategori,
                     },
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     success: function(data) {
-                        $('#tambah_kategori').empty();
+                        $('#kategori_tiket_create').find('option:selected').remove();
+                        $('#nama_subkategori_create').val();
                         $('#createModal').modal('toggle');
                         table1.ajax.reload();
                     }
                 })
             });
 
-            $('#ubahKategoriBtn').click(function() {
-                $id_kategori = $('#id_ubah_kategori').val();
-                $nama_kategori = $('#ubah_kategori').val();
+            $('#ubahSubKategoriBtn').click(function() {
+                $id_kategori = $('#kategori_tiket_edit').val();
+                $nama_kategori = $('#kategori_tiket_edit  option:selected').text();
+                $id_subkategori = $('#id_ubah_subkategori').val();
+                $nama_subkategori = $('#nama_subkategori_edit').val();
 
                 $.ajax({
                     url: "/edit-sub-kategori",
@@ -258,6 +275,8 @@
                     data: {
                         id_kategori: $id_kategori,
                         nama_kategori: $nama_kategori,
+                        id_subkategori: $id_subkategori,
+                        nama_subkategori: $nama_subkategori,
                     },
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -269,15 +288,15 @@
                 })
             })
 
-            $('#hapusKategoriBtn').click(function() {
-                $id_kategori = $('#id_delete_kategori').val();
+            $('#hapusSubKategoriBtn').click(function() {
+                $id_subkategori = $('#id_delete_subkategori').val();
 
                 $.ajax({
                     url: "/delete-sub-kategori",
                     method: "POST",
                     dataType: "json",
                     data: {
-                        id_kategori: $id_kategori,
+                        id_subkategori: $id_subkategori,
                     },
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -290,5 +309,44 @@
             });
 
         });
+
+        // Populate dropdown Kategori
+        function getKategori() {
+            if (daftarKategori === null) {
+                // If the list is not already fetched, make an API call
+                $.ajax({
+                    url: "/api/kategori-list/",
+                    method: "GET",
+                    dataType: "json",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(data) {
+                        daftarKategori = data;
+
+                        populateDropdowns();
+                    }
+                })
+            } else {
+                // If the list is already fetched, populate the dropdowns
+                populateDropdowns();
+            }
+        }
+
+        // Function to populate the dropdowns
+        function populateDropdowns() {
+            // Get all dropdown elements with a specific class
+            const dropdowns = $('.dropdownKategori');
+
+            // Loop through each dropdown and populate it with the helpdesk categories
+            dropdowns.each(function() {
+                const dropdown = $(this);
+                daftarKategori.forEach(kategori => {
+                    const option = $('<option></option>').attr('value', kategori.id).text(kategori
+                        .nama_kategori);
+                    dropdown.append(option);
+                });
+            });
+        }
     </script>
 @endsection

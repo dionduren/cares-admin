@@ -8,7 +8,7 @@ services:
         container_name: cares-web
         restart: always
         environment:
-            - TZ=Asia/Makassar
+            - TZ=Asia/Jakarta
         ports:
             - 44070:80
             - 44071:443

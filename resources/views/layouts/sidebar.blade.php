@@ -10,37 +10,53 @@
                 <li class="menu-title" data-key="t-menu">Menu</li>
 
                 <li>
-                    <a href="index">
+                    <a href="/index">
                         <i data-feather="home"></i>
                         <span class="badge rounded-pill bg-soft-success text-success float-end">9+</span>
                         <span data-key="t-dashboard">Dashboard</span>
                     </a>
-                    <a href="create-ticket">
+                    <a href="/create-ticket">
                         <i class="mdi mdi-ticket-confirmation-outline"></i>
                         <span data-key="t-dashboard">Buat Tiket Baru</span>
                     </a>
                 </li>
 
-                <li class="menu-title" data-key="t-menu">Admin</li>
 
-                <li>
-                    <a href="report-test">
-                        <i class="bx bxs-report"></i>
-                        <span data-key="t-horizontal">Report (Test)</span>
-                    </a>
-                </li>
+                @if (Auth::user()->role_id <= 2)
+                    <li class="menu-title" data-key="t-menu">Admin</li>
 
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow">
-                        <i data-feather="trello"></i>
-                        <span data-key="t-tasks">Master Data</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="/master/kategori" key="t-task-list">Kategori</a></li>
-                        <li><a href="/master/sub-kategori" key="t-kanban-board">Sub Kategori</a></li>
-                        <li><a href="/master/item-kategori" key="t-create-task">Item kategori</a></li>
-                    </ul>
-                </li>
+                    <li>
+                        <a href="report-test">
+                            <i class="bx bxs-report"></i>
+                            <span data-key="t-horizontal">Report (Test)</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="javascript: void(0);" class="has-arrow">
+                            <i data-feather="trello"></i>
+                            <span data-key="t-tasks">Master Data</span>
+                        </a>
+                        <ul class="sub-menu" aria-expanded="false">
+                            <li><a href="/master/kategori" key="t-task-list">Kategori</a></li>
+                            <li><a href="/master/sub-kategori" key="t-kanban-board">Sub Kategori</a></li>
+                            <li><a href="/master/item-kategori" key="t-create-task">Item kategori</a></li>
+                            <li><a href="/master/hari-libur" key="t-create-task">Hari Libur Nasional</a></li>
+                        </ul>
+                    </li>
+                @endif
+
+                @if (Auth::user()->role_id == 1)
+                    <li class="menu-title" data-key="t-menu">Super Admin</li>
+
+                    <li>
+                        <a href="/sadmin/activity-history">
+                            <i class="bx bx-time"></i>
+                            <span data-key="t-horizontal">Activity History</span>
+                        </a>
+                    </li>
+                @endif
+
 
 
                 <li class="menu-title" data-key="t-apps">Apps Example</li>

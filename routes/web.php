@@ -2,11 +2,14 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MasterDataController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\SuperAdminController;
 use App\Http\Controllers\TicketController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -38,9 +41,14 @@ Route::middleware(['auth'])->group(function () {
   Route::post('/delete-kategori', [MasterDataController::class, 'delete_kategori']);
 
   Route::get('/master/sub-kategori', [MasterDataController::class, 'master_sub_kategori']);
-  Route::post('/submit-sub-kategori', [MasterDataController::class, 'submit_sub_kategori']);
-  Route::post('/edit-sub-kategori', [MasterDataController::class, 'edit_sub_kategori']);
-  Route::post('/delete-sub-kategori', [MasterDataController::class, 'delete_sub_kategori']);
+  Route::post('/submit-sub-kategori', [MasterDataController::class, 'submit_subkategori']);
+  Route::post('/edit-sub-kategori', [MasterDataController::class, 'edit_subkategori']);
+  Route::post('/delete-sub-kategori', [MasterDataController::class, 'delete_subkategori']);
+
+
+  Route::get('/master/hari-libur', [MasterDataController::class, 'master_sub_kategori']);
+
+  Route::get('/sadmin/activity-history', [SuperAdminController::class, 'activity_history']);
 
   Route::get('{any}', [HomeController::class, 'index'])->name('index');
 });

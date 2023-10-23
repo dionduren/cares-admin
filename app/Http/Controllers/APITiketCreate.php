@@ -107,7 +107,7 @@ class APITiketCreate extends Controller
             $db_raw_data = [
                 'user_id_creator' => $user_id_creator,
                 'tipe_tiket' => $tipe_tiket,
-                'nomor_tiket' => $this->GetNomorTiket($tipe_tiket),
+                'nomor_tiket' => HelperController::GetNomorTiket($tipe_tiket),
                 'id_kategori' => $id_kategori,
                 'kategori_tiket' => $nama_kategori,
                 'id_subkategori' => $id_subkategori,
@@ -190,11 +190,14 @@ class APITiketCreate extends Controller
                 $tipe_matriks = 'HIGH';
             }
 
+            // GET NOMOR TICKET
+            $nomor_tiket = HelperController::GetNomorTiket($tipe_tiket);
+
             if ($id_kategori == null) {
                 $db_raw_data = [
                     'user_id_creator' => $user_id_creator,
                     'tipe_tiket' => $tipe_tiket,
-                    'nomor_tiket' => $this->GetNomorTiket($tipe_tiket),
+                    'nomor_tiket' => $nomor_tiket,
                     'id_kategori' => $id_kategori,
                     'kategori_tiket' => $nama_kategori,
                     'id_subkategori' => $id_subkategori,
@@ -214,7 +217,7 @@ class APITiketCreate extends Controller
                 $db_raw_data = [
                     'user_id_creator' => $user_id_creator,
                     'tipe_tiket' => $tipe_tiket,
-                    'nomor_tiket' => $this->GetNomorTiket($tipe_tiket),
+                    'nomor_tiket' => $nomor_tiket,
                     'id_kategori' => $id_kategori,
                     'kategori_tiket' => $nama_kategori,
                     'id_subkategori' => $id_subkategori,
@@ -233,9 +236,6 @@ class APITiketCreate extends Controller
                     'created_by' => $nama_user,
                 ];
             }
-
-
-
 
             Tiket::create($db_raw_data);
 
@@ -299,48 +299,5 @@ class APITiketCreate extends Controller
     {
         $item_kategori = ItemCategory::where('id_subkategori', $id)->get();
         return response()->json($item_kategori);
-    }
-
-    private function GetNomorTiket($tipe_tiket)
-    {
-        $kode_perusahaan = 'PIH';
-        $pemilik_layanan = 'TI';
-        $jenis_tiket = $tipe_tiket == 'INCIDENT' ? 'INC' : 'REQ';
-
-        $get_nomor = Penomoran::where('tipe_nomor', $tipe_tiket)->first();
-
-        // Get nomor tiket and update
-        if ($get_nomor == null) {
-            $last_number = 0;
-            $current_number = 1;
-            Penomoran::create([
-                'tipe_nomor' => $tipe_tiket,
-                'angka_terakhir' => $current_number,
-            ]);
-        } else {
-            $last_number = $get_nomor->angka_terakhir;
-            $current_number = $last_number + 1;
-
-            Penomoran::where('tipe_nomor', $tipe_tiket)->first()->update([
-                'angka_terakhir' => $current_number
-            ]);
-        }
-
-
-        if ($current_number < 10) {
-            $nomor_tiket = '0000' . $current_number;
-        } elseif ($current_number < 100) {
-            $nomor_tiket = '000' . $current_number;
-        } elseif ($current_number < 1000) {
-            $nomor_tiket = '00' . $current_number;
-        } elseif ($current_number < 10000) {
-            $nomor_tiket = '0' . $current_number;
-        } else {
-            $nomor_tiket = $current_number;
-        }
-
-        $format_nomor_tiket = $jenis_tiket . '-' . $kode_perusahaan . '-' . $pemilik_layanan . '-' . $nomor_tiket;
-
-        return $format_nomor_tiket;
     }
 }
