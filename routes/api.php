@@ -26,6 +26,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/kategori-list', [APITiketCreate::class, 'list_kategori']);
+Route::get('/subkategori-list-all', [APITiketCreate::class, 'list_subkategori_all']);
 Route::get('/subkategori-list/{id}', [APITiketCreate::class, 'list_subkategori']);
 Route::get('/item-kategori-list/{id}', [APITiketCreate::class, 'list_item_kategori']);
 

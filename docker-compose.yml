@@ -1,29 +1,17 @@
-# version: '3.9'
-
-# services:
-#     vim:
-#       container_name: cares_admin
-#       build:
-#           context: .
-#       working_dir: /var/www
-#       volumes:
-#         - ./:/var/www
-#       ports:
-#         - 8010:80
-version: '3'
-
+version: "3.8"
 services:
-  web:
-    container_name: cares_admin
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - "8080:8000"  # Map host port 8080 to container port 8000
-    volumes:
-      - .:/var/www/html
-    environment:
-      DB_CONNECTION: pgsql
-      DB_HOST: host.docker.internal  # Use this special DNS name to refer to your localhost
-      DB_PORT: 5432
-    network_mode: host
+    app:
+        build:
+            context: .
+            dockerfile: .docker/Dockerfile
+        image: cares-web
+        container_name: cares-web
+        restart: always
+        environment:
+            - TZ=Asia/Makassar
+        ports:
+            - 44070:80
+            - 44071:443
+        volumes:
+            - .:/var/www/html
+            - ./log/cron:/var/log/cron

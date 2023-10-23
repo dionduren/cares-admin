@@ -283,6 +283,12 @@ class APITiketCreate extends Controller
         return response()->json($kategori);
     }
 
+    public function list_subkategori_all()
+    {
+        $kategori = Subkategori::orderBy('nama_kategori', 'asc')->get();
+        return response()->json($kategori);
+    }
+
     public function list_subkategori($id)
     {
         $subkategori = Subkategori::where('id_kategori', $id)->get();

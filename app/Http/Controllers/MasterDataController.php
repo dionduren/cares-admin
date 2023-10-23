@@ -26,14 +26,8 @@ class MasterDataController extends Controller
      */
     public function master_kategori()
     {
-        // $user = Auth::user();
-        // $daftar_tiket = Tiket::all();
 
-        $daftar_kategori = Kategori::all();
-
-        return view('admin.master.kategori', [
-            'daftar_kategori' => $daftar_kategori,
-        ]);
+        return view('admin.master.kategori');
     }
 
     public function submit_kategori(Request $request)
@@ -65,5 +59,11 @@ class MasterDataController extends Controller
     {
         // TODO: delete history/activity history
         return Kategori::where('id', $request->input('id_kategori'))->delete();
+    }
+
+    public function master_sub_kategori()
+    {
+
+        return view('admin.master.subkategori');
     }
 }
