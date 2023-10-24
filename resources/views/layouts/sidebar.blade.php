@@ -26,7 +26,14 @@
                     <li class="menu-title" data-key="t-menu">Admin</li>
 
                     <li>
-                        <a href="report-test">
+                        <a href="/master/ticket-list">
+                            <i class="mdi mdi-ticket-confirmation"></i>
+                            <span data-key="t-horizontal">Daftar Tiket Helpdesk (Test)</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="/report-test">
                             <i class="bx bxs-report"></i>
                             <span data-key="t-horizontal">Report (Test)</span>
                         </a>

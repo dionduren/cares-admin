@@ -56,10 +56,14 @@ class DatabaseSeeder extends Seeder
         $json1 = File::get("resources/json/subkategori.json");
         $json2 = File::get("resources/json/item_kategori.json");
         $json3 = File::get("resources/json/user_role.json");
+        $json4 = File::get("resources/json/group_list.json");
+        $json5 = File::get("resources/json/group_member.json");
 
         $daftar_subkategori = json_decode($json1);
         $daftar_item_kategori = json_decode($json2);
         $daftar_user_role = json_decode($json3);
+        $daftar_group = json_decode($json4);
+        $daftar_group_member = json_decode($json5);
 
         foreach ($daftar_subkategori as  $index => $subkategori) {
             $id_kategori = Kategori::where("nama_kategori", $subkategori->kategori)->first();
@@ -117,6 +121,24 @@ class DatabaseSeeder extends Seeder
             Role::create($list_user_role);
         }
 
+        foreach ($daftar_group as  $index => $group) {
+
+            $list_group = [
+                'id_kategori' => $id_kategori->id,
+                'nama_kategori' => $subkategori->kategori,
+                'nama_subkategori' => $subkategori->subkategori,
+                'level_dampak' => $subkategori->level_dampak,
+                'level_urgensi' => $subkategori->level_urgensi,
+                'tipe_tiket' => $subkategori->tipe_tiket,
+                'updated_by' => 'Seeder',
+                'created_by' => 'Seeder',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
+
+            Subkategori::create($list_subkategori);
+        }
+
         User::create([
             'nik' => 1180041,
             'nama' => 'Dion Alamsah',
@@ -166,17 +188,17 @@ class DatabaseSeeder extends Seeder
             'created_by' => 'Seeder',
         ]);
 
-        GrupTechnical::create([
-            'nama_group' => 'Infrastruktur & Layanan TI',
-            'nik_team_lead' => 121003,
-            'nama_team_lead' => 'Richard Martinus Halim',
-            'updated_by' => 'Seeder',
-            'created_by' => 'Seeder',
-        ]);
+        // GrupTechnical::create([
+        //     'nama_group' => 'IT Infrastruktur',
+        //     'nik_team_lead' => 121003,
+        //     'nama_team_lead' => 'Richard Martinus Halim',
+        //     'updated_by' => 'Seeder',
+        //     'created_by' => 'Seeder',
+        // ]);
 
         GrupMember::create([
             'id_group' => 1,
-            'nama_group' => 'Infrastruktur & Layanan TI',
+            'nama_group' => 'IT Infrastruktur',
             'nik_member' => 121003,
             'nama_member' => 'Richard Martinus Halim',
             'role_member' => 'Team Leader',
@@ -188,7 +210,7 @@ class DatabaseSeeder extends Seeder
 
         GrupMember::create([
             'id_group' => 1,
-            'nama_group' => 'Infrastruktur & Layanan TI',
+            'nama_group' => 'IT Infrastruktur',
             'nik_member' => 'teknisi.network',
             'nama_member' => 'Teknisi Network',
             'role_member' => 'Member',
@@ -222,13 +244,13 @@ class DatabaseSeeder extends Seeder
         ]);
 
 
-        GrupTechnical::create([
-            'nama_group' => 'Grup Technical Test',
-            'nik_team_lead' => 'leader.test',
-            'nama_team_lead' => 'Leader Test',
-            'updated_by' => 'Seeder',
-            'created_by' => 'Seeder',
-        ]);
+        // GrupTechnical::create([
+        //     'nama_group' => 'Grup Technical Test',
+        //     'nik_team_lead' => 'leader.test',
+        //     'nama_team_lead' => 'Leader Test',
+        //     'updated_by' => 'Seeder',
+        //     'created_by' => 'Seeder',
+        // ]);
 
         GrupMember::create([
             'id_group' => 2,

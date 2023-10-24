@@ -35,6 +35,8 @@ Route::middleware(['auth'])->group(function () {
 
   Route::get('/report-test', [ReportController::class, 'index_test'])->name('report_test');
 
+  Route::get('/master/ticket-list', [MasterDataController::class, 'helpdesk_ticket_list']);
+
   Route::get('/master/kategori', [MasterDataController::class, 'master_kategori']);
   Route::post('/submit-kategori', [MasterDataController::class, 'submit_kategori']);
   Route::post('/edit-kategori', [MasterDataController::class, 'edit_kategori']);

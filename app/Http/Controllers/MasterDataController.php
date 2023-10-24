@@ -26,6 +26,12 @@ class MasterDataController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
+    public function helpdesk_ticket_list()
+    {
+
+        return view('admin.master.ticket-list');
+    }
+
     public function master_kategori()
     {
 

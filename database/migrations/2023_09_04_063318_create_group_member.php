@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('id_group')->unsigned();
             $table->string('nama_group');
-            $table->string('nik_member');
+            $table->string('nik_member')->nullable();
             $table->string('nama_member');
             $table->string('role_member');
             $table->string('updated_by');

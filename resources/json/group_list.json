@@ -1,0 +1,27 @@
+[
+  {
+    "nama_group": "IT Developer"
+  },
+  {
+    "nama_group": "Ops. Sist. TI"
+  },
+  {
+    "nama_group": "Reviewer Hak Akses"
+  },
+  {
+    "nama_group": "IT Infrastruktur",
+    "nik_team_lead": 121003,
+    "nama_team_lead": "Richard Martinus Halim"
+  },
+  {
+    "nama_group": "Basis dan Email"
+  },
+  {
+    "nama_group": "Vendor Management"
+  },
+  {
+    "nama_group": "Grup Technical Test",
+    "nik_team_lead": "leader.test",
+    "nama_team_lead": "Leader Test"
+  }
+]
