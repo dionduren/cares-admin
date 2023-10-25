@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('tr_tiket', function (Blueprint $table) {
             $table->id();
+            $table->string('company_code')->nullable();
+            $table->integer('id_unit_layanan')->unsigned()->nullable();
+            $table->string('unit_layanan')->nullable();
             $table->string('user_id_creator')->nullable();
             $table->integer('id_tiket_prev')->unsigned()->nullable();
             $table->string('nomor_tiket')->nullable();
@@ -30,6 +33,8 @@ return new class extends Migration
             $table->integer('level_dampak')->unsigned()->nullable();
             $table->integer('level_prioritas')->unsigned()->nullable();
             $table->string('tipe_matriks')->nullable();
+            $table->integer('id_SLA')->unsigned()->nullable();
+            $table->string('tipe_SLA')->nullable();
             $table->integer('id_group')->unsigned()->nullable();
             $table->string('assigned_group')->nullable();
             $table->string('id_technical')->nullable();

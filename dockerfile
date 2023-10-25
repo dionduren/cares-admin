@@ -22,6 +22,9 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 # Install Laravel dependencies
 RUN composer install
 
+# Install PostgreSQL client
+RUN apt-get install -y postgresql-client
+
 # Expose port 9000 for PHP-FPM (optional)
 # EXPOSE 9000
 

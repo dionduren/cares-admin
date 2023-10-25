@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('ms_kategori', function (Blueprint $table) {
             $table->id();
             $table->integer('sort_order')->unsigned();
+            $table->integer('id_unit_layanan')->unsigned()->nullable();
+            $table->string('nama_unit_layanan')->nullable();
             $table->integer('id_grup')->unsigned()->nullable();
             $table->string('nama_grup')->nullable();
             $table->string('nama_kategori');
