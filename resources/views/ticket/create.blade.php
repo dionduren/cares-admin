@@ -72,6 +72,8 @@
 @section('script')
     <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
     <script>
+        $user_id = {{ $user->nik }};
+
         $(document).ready(function() {
             $.ajax({
                 url: "/api/kategori-list/",
@@ -115,6 +117,7 @@
                 var selectedCategoryText = $("#kategori_tiket option:selected").text();
                 var selectedSubCategoryText = $("#subkategori_tiket option:selected").text();
 
+                formData += '&user_id=' + encodeURIComponent($user_id);
                 formData += '&nama_kategori=' + encodeURIComponent(selectedCategoryText);
                 formData += '&nama_subkategori=' + encodeURIComponent(selectedSubCategoryText);
 

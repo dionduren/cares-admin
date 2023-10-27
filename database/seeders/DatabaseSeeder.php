@@ -168,6 +168,7 @@ class DatabaseSeeder extends Seeder
 
             $list_sla = [
                 'nama_sla' => $tipe_sla->nama_sla,
+                'tipe_sla' => $tipe_sla->tipe_sla,
                 'tipe_tiket' => $tipe_sla->tipe_tiket,
                 'tipe_waktu' => $tipe_sla->tipe_waktu,
                 'durasi_text' => $tipe_sla->durasi_text,
@@ -389,8 +390,8 @@ class DatabaseSeeder extends Seeder
         ]);
 
         JamKerja::create([
-            'start_hour' => '07:00:00',
-            'end_hour' => '19:00:00',
+            'start_hour' => '08:00:00',
+            'end_hour' => '17:00:00',
             'updated_by' => 'Seeder',
             'created_by' => 'Seeder'
         ]);

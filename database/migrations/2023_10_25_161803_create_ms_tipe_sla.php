@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('ms_tipe_sla', function (Blueprint $table) {
             $table->id();
             $table->string('nama_sla');
+            $table->string('tipe_sla');
             $table->string('tipe_tiket');
             $table->string('tipe_waktu');
             $table->string('durasi_text');

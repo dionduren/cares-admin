@@ -2,176 +2,176 @@
     {
       "flow_number": 1,
       "nama_status": "Pending Approval",
-      "tipe_tiket": "Request"
+      "tipe_tiket": "REQUEST"
     },
     {
       "flow_number": 2,
       "nama_status": "Assigned",
-      "tipe_tiket": "Request"
+      "tipe_tiket": "REQUEST"
     },
     {
       "flow_number": 3,
       "nama_status": "In Progress",
-      "tipe_tiket": "Request"
+      "tipe_tiket": "REQUEST"
     },
     {
       "flow_number": 4,
       "nama_status": "Completed",
-      "tipe_tiket": "Request"
+      "tipe_tiket": "REQUEST"
     },
     {
       "flow_number": 5,
       "nama_status": "Closed",
-      "tipe_tiket": "Request"
+      "tipe_tiket": "REQUEST"
     },
     {
       "flow_number": 6,
       "nama_status": "On-Hold",
-      "tipe_tiket": "Request"
+      "tipe_tiket": "REQUEST"
     },
     {
       "flow_number": 7,
       "nama_status": "Re-open",
-      "tipe_tiket": "Request"
+      "tipe_tiket": "REQUEST"
     },
     {
       "flow_number": 8,
       "nama_status": "Cancel",
-      "tipe_tiket": "Request"
+      "tipe_tiket": "REQUEST"
     },
     {
       "flow_number": 9,
       "nama_status": "Rejected",
-      "tipe_tiket": "Request"
+      "tipe_tiket": "REQUEST"
     },
     {
       "flow_number": 10,
       "nama_status": "Sod Conflict",
-      "tipe_tiket": "Request"
+      "tipe_tiket": "REQUEST"
     },
     {
       "flow_number": 11,
       "nama_status": "Close Incomplete",
-      "tipe_tiket": "Request"
+      "tipe_tiket": "REQUEST"
     },
     {
       "flow_number": 12,
       "nama_status": "Close Cancelled",
-      "tipe_tiket": "Request"
+      "tipe_tiket": "REQUEST"
     },
     {
       "flow_number": 0,
       "nama_status": "Assess",
-      "tipe_tiket": "Change Request"
+      "tipe_tiket": "CHANGE REQUEST"
     },
     {
       "flow_number": 0,
       "nama_status": "Back Off Schedule. There Is an Issue",
-      "tipe_tiket": "Change Request"
+      "tipe_tiket": "CHANGE REQUEST"
     },
     {
       "flow_number": 0,
       "nama_status": "Rollback",
-      "tipe_tiket": "Change Request"
+      "tipe_tiket": "CHANGE REQUEST"
     },
     {
       "flow_number": 0,
       "nama_status": "On Schedule",
-      "tipe_tiket": "Change Request"
+      "tipe_tiket": "CHANGE REQUEST"
     },
     {
       "flow_number": 0,
       "nama_status": "Cancelled",
-      "tipe_tiket": "Change Request"
+      "tipe_tiket": "CHANGE REQUEST"
     },
     {
       "flow_number": 0,
       "nama_status": "Review",
-      "tipe_tiket": "Change Request"
+      "tipe_tiket": "CHANGE REQUEST"
     },
     {
       "flow_number": 0,
       "nama_status": "Implement",
-      "tipe_tiket": "Change Request"
+      "tipe_tiket": "CHANGE REQUEST"
     },
     {
       "flow_number": 0,
       "nama_status": "Draft",
-      "tipe_tiket": "Change Request"
+      "tipe_tiket": "CHANGE REQUEST"
     },
     {
       "flow_number": 0,
       "nama_status": "Planning",
-      "tipe_tiket": "Change Request"
+      "tipe_tiket": "CHANGE REQUEST"
     },
     {
       "flow_number": 0,
       "nama_status": "Rejected",
-      "tipe_tiket": "Change Request"
+      "tipe_tiket": "CHANGE REQUEST"
     },
     {
       "flow_number": 0,
       "nama_status": "Closed",
-      "tipe_tiket": "Change Request"
+      "tipe_tiket": "CHANGE REQUEST"
     },
     {
       "flow_number": 0,
       "nama_status": "Authorize",
-      "tipe_tiket": "Change Request"
+      "tipe_tiket": "CHANGE REQUEST"
     },
     {
       "flow_number": 0,
       "nama_status": "Scheduled",
-      "tipe_tiket": "Change Request"
+      "tipe_tiket": "CHANGE REQUEST"
     },
     {
       "flow_number": 0,
       "nama_status": "New",
-      "tipe_tiket": "Change Request"
+      "tipe_tiket": "CHANGE REQUEST"
     },
     {
       "flow_number": 1,
       "nama_status": "New",
-      "tipe_tiket": "Incident"
+      "tipe_tiket": "INCIDENT"
     },
     {
       "flow_number": 2,
       "nama_status": "Assigned",
-      "tipe_tiket": "Incident"
+      "tipe_tiket": "INCIDENT"
     },
     {
       "flow_number": 3,
       "nama_status": "In Progress",
-      "tipe_tiket": "Incident"
+      "tipe_tiket": "INCIDENT"
     },
     {
       "flow_number": 4,
       "nama_status": "Resolved",
-      "tipe_tiket": "Incident"
+      "tipe_tiket": "INCIDENT"
     },
     {
       "flow_number": 5,
       "nama_status": "Closed",
-      "tipe_tiket": "Incident"
+      "tipe_tiket": "INCIDENT"
     },
     {
       "flow_number": 6,
       "nama_status": "On Hold",
-      "tipe_tiket": "Incident"
+      "tipe_tiket": "INCIDENT"
     },
     {
       "flow_number": 7,
       "nama_status": "Resume",
-      "tipe_tiket": "Incident"
+      "tipe_tiket": "INCIDENT"
     },
     {
       "flow_number": 8,
       "nama_status": "Canceled",
-      "tipe_tiket": "Incident"
+      "tipe_tiket": "INCIDENT"
     },
     {
       "flow_number": 9,
       "nama_status": "Re-open",
-      "tipe_tiket": "Incident"
+      "tipe_tiket": "INCIDENT"
     }
   ]

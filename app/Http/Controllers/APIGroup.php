@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Tiket;
 use App\Models\HariLibur;
-use App\Models\ActionTime;
 use App\Models\GrupMember;
 use Illuminate\Http\Request;
 
@@ -48,6 +47,8 @@ class APIGroup extends Controller
         $nama_group = GrupTechnical::where('id', $id_group)->first()->nama_group;
         $helpdesk_agent = User::where('nik', $nik)->first();
 
+        
+
         Tiket::where('id', $id_tiket)->update([
             'id_group' => $id_group,
             'assigned_group' => $nama_group,
@@ -58,21 +59,22 @@ class APIGroup extends Controller
         $info_tiket = Tiket::where('id', $id_tiket)->first();
         $start_time = $info_tiket->created_at;
         $end_time   = now();
-        // TODO: change actiontime to sla
-        $durasi_float = HelperController::hitungBusinessSLA($start_time, $end_time);
-        $durasi = floor($durasi_float);
 
         // TODO: change actiontime to sla
-        ActionTime::create([
-            'id_tiket' => $id_tiket,
-            'action' => 'ASSIGNED',
-            'start_time' => $start_time,
-            'end_time' => $end_time,
-            // 'durasi_total' => $durasi_float,
-            'durasi_total' => sprintf("%.3f", $durasi_float),
-            'durasi' => $durasi,
-            'created_by' => $helpdesk_agent->nama,
-        ]);
+        // $durasi_float = HelperController::hitungBusinessSLA($start_time, $end_time);
+        // $durasi = floor($durasi_float);
+
+        // TODO: change actiontime to sla
+        // ActionTime::create([
+        //     'id_tiket' => $id_tiket,
+        //     'action' => 'ASSIGNED',
+        //     'start_time' => $start_time,
+        //     'end_time' => $end_time,
+        //     // 'durasi_total' => $durasi_float,
+        //     'durasi_total' => sprintf("%.3f", $durasi_float),
+        //     'durasi' => $durasi,
+        //     'created_by' => $helpdesk_agent->nama,
+        // ]);
 
         return response()->json([
             'success' => true,
@@ -101,15 +103,15 @@ class APIGroup extends Controller
             'updated_by' => $nama_teamlead,
         ]);
 
-        ActionTime::create([
-            'id_tiket' => $id_tiket,
-            'action' => 'TECHNICAL ASSIGNED',
-            'start_time' => $start_time,
-            'end_time' => $end_time,
-            'durasi_total' => sprintf("%.3f", $durasi_float),
-            'durasi' => $durasi,
-            'created_by' => $nama_teamlead,
-        ]);
+        // ActionTime::create([
+        //     'id_tiket' => $id_tiket,
+        //     'action' => 'TECHNICAL ASSIGNED',
+        //     'start_time' => $start_time,
+        //     'end_time' => $end_time,
+        //     'durasi_total' => sprintf("%.3f", $durasi_float),
+        //     'durasi' => $durasi,
+        //     'created_by' => $nama_teamlead,
+        // ]);
 
         return response()->json([
             'success' => true,

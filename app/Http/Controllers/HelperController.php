@@ -57,49 +57,84 @@ class HelperController extends Controller
         return $format_nomor_tiket;
     }
 
-    public function getSLAMatrix($dampak, $urgensi)
-    {
+    // public function getSLAMatrix($dampak, $urgensi)
+    // {
 
-        // Matriks
-        $matriks = [
-            3 => [ // High
-                3 => '1', // High
-                2 => '2', // Medium
-                1 => '3', // Low
-            ],
-            2 => [ // Medium
-                3 => '2', // High
-                2 => '3', // Medium
-                1 => '4', // Low
-            ],
-            1 => [ // Low
-                3 => '3', // High
-                2 => '4', // Medium
-                1 => '4', // Low
-            ],
-        ];
+    //     // Matriks
+    //     $matriks = [
+    //         3 => [ // High
+    //             3 => '1', // High
+    //             2 => '2', // Medium
+    //             1 => '3', // Low
+    //         ],
+    //         2 => [ // Medium
+    //             3 => '2', // High
+    //             2 => '3', // Medium
+    //             1 => '4', // Low
+    //         ],
+    //         1 => [ // Low
+    //             3 => '3', // High
+    //             2 => '4', // Medium
+    //             1 => '4', // Low
+    //         ],
+    //     ];
 
-        // Mengambil score berdasarkan dampak dan urgensi
-        $score = $matriks[$dampak][$urgensi];
+    //     // Mengambil score berdasarkan dampak dan urgensi
+    //     $score = $matriks[$dampak][$urgensi];
 
-        // Tentukan hasil berdasarkan score
-        $hasil = '';
-        switch ($score) {
-            case '1':
-                $hasil = 'Critical';
-                break;
-            case '2':
-                $hasil = 'High';
-                break;
-            case '3':
-                $hasil = 'Medium';
-                break;
-            case '4':
-                $hasil = 'Low';
-                break;
+    //     // Tentukan hasil berdasarkan score
+    //     $hasil = '';
+    //     switch ($score) {
+    //         case '1':
+    //             $hasil = 'Critical';
+    //             break;
+    //         case '2':
+    //             $hasil = 'High';
+    //             break;
+    //         case '3':
+    //             $hasil = 'Medium';
+    //             break;
+    //         case '4':
+    //             $hasil = 'Low';
+    //             break;
+    //     }
+
+    //     return $hasil;
+    // }
+    public static function getStartBusiness() {
+        $now = now();
+    
+        // Ambil data jam kerja
+        $workHours = JamKerja::first();
+    
+        if ($workHours) {
+            // Set jam kerja mulai dan berhenti
+            $workStartHour = Carbon::parse($workHours->start_hour)->hour;
+            $workEndHour = Carbon::parse($workHours->end_hour)->hour;
+        } else {
+            // Set manual jam kerja kalau db kosong
+            $workStartHour = 8;
+            $workEndHour = 17;
         }
-
-        return $hasil;
+    
+        // Set today's business start time
+        $businessStartToday = $now->copy()->hour($workStartHour)->minute(0)->second(0);
+    
+        // Set today's business end time
+        $businessEndToday = $now->copy()->hour($workEndHour)->minute(0)->second(0);
+    
+        // If the current time is before today's business start time, return today's business start time
+        if ($now->lt($businessStartToday)) {
+            return $businessStartToday;
+        }
+        // If the current time is after today's business end time, return the next business day's start time
+        elseif ($now->gt($businessEndToday)) {
+            return $businessStartToday->addDay();
+        }
+        // If the current time is during business hours, return the current time
+        else {
+            return $now;
+        }
     }
 
     public static function hitungBusinessSLA(Carbon $start, Carbon $end)

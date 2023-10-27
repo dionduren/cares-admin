@@ -90,8 +90,8 @@ class APITiket extends Controller
         $start_time = $info_tiket->updated_at;
         $end_time   = now();
         // TODO: change actiontime to sla
-        $durasi_float = HelperController::hitungBusinessSLA($start_time, $end_time);
-        $durasi = floor($durasi_float);
+        // $durasi_float = HelperController::hitungBusinessSLA($start_time, $end_time);
+        // $durasi = floor($durasi_float);
 
         Tiket::where('id', $id_tiket)->update([
             'id_solusi' => $id_solusi,
@@ -99,16 +99,16 @@ class APITiket extends Controller
             'updated_by' => $nama_technical,
         ]);
 
-        // TODO: change actiontime to SLA
-        ActionTime::create([
-            'id_tiket' => $id_tiket,
-            'action' => 'FINISHED',
-            'start_time' => $start_time,
-            'end_time' => $end_time,
-            'durasi_total' => sprintf("%.3f", $durasi_float),
-            'durasi' => $durasi,
-            'created_by' => $nama_technical,
-        ]);
+        // // TODO: change actiontime to SLA
+        // ActionTime::create([
+        //     'id_tiket' => $id_tiket,
+        //     'action' => 'FINISHED',
+        //     'start_time' => $start_time,
+        //     'end_time' => $end_time,
+        //     'durasi_total' => sprintf("%.3f", $durasi_float),
+        //     'durasi' => $durasi,
+        //     'created_by' => $nama_technical,
+        // ]);
 
         return response()->json([
             'success' => true,
@@ -129,8 +129,8 @@ class APITiket extends Controller
         $start_time = $info_tiket->updated_at;
         $end_time   = now();
         // TODO: change actiontime to sla
-        $durasi_float = HelperController::hitungBusinessSLA($start_time, $end_time);
-        $durasi = floor($durasi_float);
+        // $durasi_float = HelperController::hitungBusinessSLA($start_time, $end_time);
+        // $durasi = floor($durasi_float);
 
         $id_solusi = KnowledgeManagement::create([
             'tipe_tiket' => $info_tiket->tipe_tiket,
@@ -149,19 +149,19 @@ class APITiket extends Controller
         Tiket::where('id', $id_tiket)->update([
             'id_solusi' => $id_solusi->id,
             'status_tiket' => 'Finished',
-            'updated_by' => $nama_technical,        //Todo: Ganti jadi user technical
+            'updated_by' => $nama_technical,
         ]);
 
         // TODO: change actiontime to sla
-        ActionTime::create([
-            'id_tiket' => $id_tiket,
-            'action' => 'FINISHED',
-            'start_time' => $start_time,
-            'end_time' => $end_time,
-            'durasi_total' => sprintf("%.3f", $durasi_float),
-            'durasi' => $durasi,
-            'created_by' => $nama_technical,
-        ]);
+        // ActionTime::create([
+        //     'id_tiket' => $id_tiket,
+        //     'action' => 'FINISHED',
+        //     'start_time' => $start_time,
+        //     'end_time' => $end_time,
+        //     'durasi_total' => sprintf("%.3f", $durasi_float),
+        //     'durasi' => $durasi,
+        //     'created_by' => $nama_technical,
+        // ]);
 
         return response()->json([
             'success' => true,
