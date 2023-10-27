@@ -21,6 +21,8 @@ return new class extends Migration
             $table->string('durasi_text');
             $table->integer('durasi_jam')->unsigned();
             $table->text('keterangan');
+            $table->string('updated_by');
+            $table->string('created_by');
             $table->timestamps();
         });
     }

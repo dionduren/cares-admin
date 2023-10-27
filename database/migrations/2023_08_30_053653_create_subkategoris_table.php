@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('tipe_tiket')->nullable();
             $table->integer('level_dampak')->nullable();
             $table->integer('level_urgensi')->nullable();
+            $table->string('level_prioritas')->nullable();
+            // $table->string('tipe_sla')->nullable();
             $table->integer('id_pemilik_layanan')->nullable()->default('1180043');
             $table->string('nama_pemilik_layanan')->nullable()->default('VP TI Pemilik Layanan');
             $table->string('updated_by');

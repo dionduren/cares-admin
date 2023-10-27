@@ -28,6 +28,7 @@ return new class extends Migration
             $table->string('item_kategori_tiket')->nullable();
             $table->string('judul_tiket');
             $table->text('detail_tiket');
+            $table->integer('id_status_tiket')->unsigned();
             $table->string('status_tiket');
             $table->text('attachment')->nullable();
             $table->integer('level_dampak')->unsigned()->nullable();

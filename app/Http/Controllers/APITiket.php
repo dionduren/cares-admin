@@ -89,7 +89,8 @@ class APITiket extends Controller
         $info_tiket = Tiket::where('id', $id_tiket)->first();
         $start_time = $info_tiket->updated_at;
         $end_time   = now();
-        $durasi_float = HelperController::hitungDurasiAction($start_time, $end_time);
+        // TODO: change actiontime to sla
+        $durasi_float = HelperController::hitungBusinessSLA($start_time, $end_time);
         $durasi = floor($durasi_float);
 
         Tiket::where('id', $id_tiket)->update([
@@ -98,6 +99,7 @@ class APITiket extends Controller
             'updated_by' => $nama_technical,
         ]);
 
+        // TODO: change actiontime to SLA
         ActionTime::create([
             'id_tiket' => $id_tiket,
             'action' => 'FINISHED',
@@ -126,7 +128,8 @@ class APITiket extends Controller
         // Perhitungan Action Time = FINISHED
         $start_time = $info_tiket->updated_at;
         $end_time   = now();
-        $durasi_float = HelperController::hitungDurasiAction($start_time, $end_time);
+        // TODO: change actiontime to sla
+        $durasi_float = HelperController::hitungBusinessSLA($start_time, $end_time);
         $durasi = floor($durasi_float);
 
         $id_solusi = KnowledgeManagement::create([
@@ -139,16 +142,17 @@ class APITiket extends Controller
             'item_kategori_tiket' => $info_tiket->item_kategori_tiket,
             'judul_solusi' => $judul_solusi,
             'detail_solusi' => $detail_solusi,
-            'created_by' => 'Technical',
-            'updated_by' => 'Technical',
+            'created_by' => $nama_technical,
+            'updated_by' => $nama_technical,
         ]);
 
         Tiket::where('id', $id_tiket)->update([
             'id_solusi' => $id_solusi->id,
             'status_tiket' => 'Finished',
-            'updated_by' => 'Technical',        //Todo: Ganti jadi user technical
+            'updated_by' => $nama_technical,        //Todo: Ganti jadi user technical
         ]);
 
+        // TODO: change actiontime to sla
         ActionTime::create([
             'id_tiket' => $id_tiket,
             'action' => 'FINISHED',

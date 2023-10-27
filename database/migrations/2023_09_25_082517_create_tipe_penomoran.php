@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('tr_penomoran', function (Blueprint $table) {
             $table->id();
+            $table->string('kode_perusahaan');
+            $table->string('unit_layanan');
             $table->string('tipe_nomor');
             $table->string('angka_terakhir');
             $table->timestamps();

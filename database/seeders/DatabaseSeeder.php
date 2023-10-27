@@ -2,19 +2,21 @@
 
 namespace Database\Seeders;
 
+use File;
+use App\Models\Role;
 use App\Models\User;
 use App\Models\Kategori;
+use App\Models\GrupMember;
 use App\Models\Subkategori;
 use App\Models\ItemCategory;
 use App\Models\GrupTechnical;
-use App\Models\GrupMember;
-use App\Models\KnowledgeManagement;
-use App\Models\Role;
+use App\Models\Master\TipeSLA;
 use App\Models\Master\JamKerja;
 
 use Illuminate\Database\Seeder;
 
-use File;
+use App\Models\Master\StatusTiket;
+use App\Models\KnowledgeManagement;
 
 class DatabaseSeeder extends Seeder
 {
@@ -59,12 +61,16 @@ class DatabaseSeeder extends Seeder
         $json3 = File::get("resources/json/user_role.json");
         $json4 = File::get("resources/json/group_list.json");
         $json5 = File::get("resources/json/group_member.json");
+        $json6 = File::get("resources/json/tipe_sla.json");
+        $json7 = File::get("resources/json/status_tiket.json");
 
         $daftar_subkategori = json_decode($json1);
         $daftar_item_kategori = json_decode($json2);
         $daftar_user_role = json_decode($json3);
         $daftar_group = json_decode($json4);
         $daftar_group_member = json_decode($json5);
+        $daftar_tipe_sla = json_decode($json6);
+        $daftar_status_tiket = json_decode($json7);
 
         foreach ($daftar_subkategori as  $index => $subkategori) {
             $id_kategori = Kategori::where("nama_kategori", $subkategori->kategori)->first();
@@ -158,6 +164,35 @@ class DatabaseSeeder extends Seeder
             GrupMember::create($list_member);
         }
 
+        foreach ($daftar_tipe_sla as $tipe_sla) {
+
+            $list_sla = [
+                'nama_sla' => $tipe_sla->nama_sla,
+                'tipe_tiket' => $tipe_sla->tipe_tiket,
+                'tipe_waktu' => $tipe_sla->tipe_waktu,
+                'durasi_text' => $tipe_sla->durasi_text,
+                'durasi_jam' => $tipe_sla->durasi_jam,
+                'keterangan' => $tipe_sla->keterangan,
+                'updated_by' => 'Seeder',
+                'created_by' => 'Seeder',
+            ];
+
+            TipeSLA::create($list_sla);
+        }
+
+        foreach ($daftar_status_tiket as $status_tiket) {
+
+            $status_tiket = [
+                'flow_number' => $status_tiket->flow_number,
+                'nama_status' => $status_tiket->nama_status,
+                'tipe_tiket' => $status_tiket->tipe_tiket,
+                'updated_by' => 'Seeder',
+                'created_by' => 'Seeder',
+            ];
+
+            StatusTiket::create($status_tiket);
+        }
+
         User::create([
             'nik' => 1180041,
             'nama' => 'Dion Alamsah',
@@ -209,7 +244,6 @@ class DatabaseSeeder extends Seeder
             'created_by' => 'Seeder',
         ]);
 
-
         User::create([
             'nik' => 121003,
             'nama' => 'Richard Martinus Halim',
@@ -233,14 +267,6 @@ class DatabaseSeeder extends Seeder
             'updated_by' => 'Seeder',
             'created_by' => 'Seeder',
         ]);
-
-        // GrupTechnical::create([
-        //     'nama_group' => 'IT Infrastruktur',
-        //     'nik_team_lead' => 121003,
-        //     'nama_team_lead' => 'Richard Martinus Halim',
-        //     'updated_by' => 'Seeder',
-        //     'created_by' => 'Seeder',
-        // ]);
 
         GrupMember::create([
             'id_group' => 1,
@@ -298,8 +324,10 @@ class DatabaseSeeder extends Seeder
         //     'created_by' => 'Seeder',
         // ]);
 
+        $id_grup = GrupTechnical::where('nama_group','Grup Technical Test')->first()->id;
+
         GrupMember::create([
-            'id_group' => 2,
+            'id_group' => $id_grup,
             'nama_group' => 'Grup Technical Test',
             'nik_member' => 'leader.test',
             'nama_member' => 'Leader Test',
@@ -311,7 +339,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         GrupMember::create([
-            'id_group' => 2,
+            'id_group' => $id_grup,
             'nama_group' => 'Grup Technical Test',
             'nik_member' => 'teknisi.test',
             'nama_member' => 'Teknisi Test',

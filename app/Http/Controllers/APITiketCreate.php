@@ -7,38 +7,36 @@ use App\Models\Tiket;
 use App\Models\Kategori;
 use App\Models\Subkategori;
 use App\Models\ItemCategory;
-use App\Models\Penomoran;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class APITiketCreate extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        //
-    }
+    // public function index()
+    // {
+    //     //
+    // }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        // Random antara Incident dan Request
-        // $randomNumber = rand(1, 2);
-        // $randomValue = $randomNumber === 1 ? "Incident" : "Request";
-        // $tipe_tiket = strtoupper($randomValue);
+        $company_code = 'A000';
+        $kode_perusahaan = 'PIH';
+        $id_unit_layanan = 1;
+        $unit_layanan = 'TI';
 
         // Define the validation rules
         $rules = [
             'kategori_tiket' => 'required',
-            // 'nama_kategori' => 'required',
             'subkategori_tiket' => 'required',
-            // 'nama_subkategori' => 'required',
-            'item_kategori_tiket' => 'sometimes|required', // only validate when present
-            // 'nama_item_kategori' => 'sometimes|required', // only validate when present
+            'item_kategori_tiket' => 'sometimes|required',
             'judul_tiket' => 'required',
             'detail_tiket' => 'required',
             // 'attachment' => 'sometimes|required', // only validate when present
@@ -67,7 +65,7 @@ class APITiketCreate extends Controller
         }
 
         try {
-            $user_id_creator = 1180041;
+            $user_id_creator = Auth::user()->nik;
             $id_kategori = $request->input('kategori_tiket');
             $nama_kategori = $request->input('nama_kategori');
             $id_subkategori = $request->input('subkategori_tiket');
@@ -77,37 +75,28 @@ class APITiketCreate extends Controller
             $judul_tiket = $request->input('judul_tiket');
             $detail_tiket = $request->input('detail_tiket');
 
-            //randomized matriks prioritas insiden
-            // $level_dampak = rand(1, 3);
-            // $level_prioritas = rand(1, 3);
-
-            // Set Level Dampak & Prioritas
+            // Get Value from Subkategori atau Item Kategori
             if ($id_item_kategori != null) {
                 $item_kategori = ItemCategory::where('id', $id_item_kategori)->first();
                 $level_dampak = $item_kategori->level_dampak;
-                $level_prioritas = $item_kategori->level_urgensi;
+                $level_urgensi = $item_kategori->level_urgensi;
+                $level_prioritas = $item_kategori->level_prioritas;
                 $tipe_tiket = $item_kategori->tipe_tiket;
             } else {
                 $subkategori = Subkategori::where('id', $id_subkategori)->first();
                 $level_dampak = $subkategori->level_dampak;
-                $level_prioritas = $subkategori->level_urgensi;
+                $level_urgensi = $subkategori->level_urgensi;
+                $level_prioritas = $subkategori->level_prioritas;
                 $tipe_tiket = $subkategori->tipe_tiket;
             }
 
-            $tingkat_matriks = (int)$level_dampak * (int)$level_prioritas;
-
-            if ($tingkat_matriks < 5) {
-                $tipe_matriks = 'LOW';
-            } else if ($tingkat_matriks < 8) {
-                $tipe_matriks = 'MEDIUM';
-            } else {
-                $tipe_matriks = 'HIGH';
-            }
-
             $db_raw_data = [
+                'company_code' => $company_code,            // Set Model setelah sudah fix akan jadi multi company
+                'id_unit_layanan' => $id_unit_layanan,      // Set Model setelah sudah fix akan multi unit layanan
+                'unit_layanan' => $unit_layanan,            // Set Model setelah sudah fix akan multi unit layanan
                 'user_id_creator' => $user_id_creator,
                 'tipe_tiket' => $tipe_tiket,
-                'nomor_tiket' => HelperController::GetNomorTiket($tipe_tiket),
+                'nomor_tiket' => HelperController::GetNomorTiket($kode_perusahaan,$unit_layanan,$tipe_tiket),
                 'id_kategori' => $id_kategori,
                 'kategori_tiket' => $nama_kategori,
                 'id_subkategori' => $id_subkategori,
@@ -119,11 +108,12 @@ class APITiketCreate extends Controller
                 'status_tiket' => "Submitted",
                 'attachment' => null,
                 'level_dampak' => $level_dampak,
+                'level_urgensi' => $level_urgensi,
                 'level_prioritas' => $level_prioritas,
-                'tingkat_matriks' => $tingkat_matriks,
-                'tipe_matriks' => $tipe_matriks,
-                'updated_by' => 'User Test',
-                'created_by' => 'User Test',
+                // 'id_sla' => $id_sla,
+                // 'tipe_sla' => $tipe_sla,
+                'updated_by' => $user_id_creator,
+                'created_by' => $user_id_creator,
             ];
 
             Tiket::create($db_raw_data);
@@ -148,6 +138,10 @@ class APITiketCreate extends Controller
         // $randomNumber = rand(1, 2);
         // $randomValue = $randomNumber === 1 ? "Incident" : "Request";
         // $tipe_tiket = strtoupper($randomValue);
+        $company_code = 'A000';
+        $kode_perusahaan = 'PIH';
+        $id_unit_layanan = 1;
+        $unit_layanan = 'TI';
         $nama_item_kategori = null;
 
         try {
@@ -191,10 +185,13 @@ class APITiketCreate extends Controller
             }
 
             // GET NOMOR TICKET
-            $nomor_tiket = HelperController::GetNomorTiket($tipe_tiket);
+            $nomor_tiket = HelperController::GetNomorTiket($kode_perusahaan,$unit_layanan,$tipe_tiket);
 
             if ($id_kategori == null) {
                 $db_raw_data = [
+                    'company_code' => $company_code,
+                    'id_unit_layanan' => $id_unit_layanan,
+                    'unit_layanan' => $unit_layanan,
                     'user_id_creator' => $user_id_creator,
                     'tipe_tiket' => $tipe_tiket,
                     'nomor_tiket' => $nomor_tiket,
@@ -215,6 +212,9 @@ class APITiketCreate extends Controller
                 ];
             } else {
                 $db_raw_data = [
+                    'company_code' => $company_code,
+                    'id_unit_layanan' => $id_unit_layanan,
+                    'unit_layanan' => $unit_layanan,
                     'user_id_creator' => $user_id_creator,
                     'tipe_tiket' => $tipe_tiket,
                     'nomor_tiket' => $nomor_tiket,

@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('ms_status_tiket', function (Blueprint $table) {
             $table->id();
+            $table->integer('flow_number')->unsigned();
             $table->string('nama_status');
             $table->string('tipe_tiket');
             $table->string('updated_by');

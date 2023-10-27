@@ -58,9 +58,11 @@ class APIGroup extends Controller
         $info_tiket = Tiket::where('id', $id_tiket)->first();
         $start_time = $info_tiket->created_at;
         $end_time   = now();
-        $durasi_float = HelperController::hitungDurasiAction($start_time, $end_time);
+        // TODO: change actiontime to sla
+        $durasi_float = HelperController::hitungBusinessSLA($start_time, $end_time);
         $durasi = floor($durasi_float);
 
+        // TODO: change actiontime to sla
         ActionTime::create([
             'id_tiket' => $id_tiket,
             'action' => 'ASSIGNED',
@@ -90,7 +92,7 @@ class APIGroup extends Controller
         $info_tiket = Tiket::where('id', $id_tiket)->first();
         $start_time = $info_tiket->updated_at;
         $end_time   = now();
-        $durasi_float = HelperController::hitungDurasiAction($start_time, $end_time);
+        $durasi_float = HelperController::hitungBusinessSLA($start_time, $end_time);
         $durasi = floor($durasi_float);
 
         Tiket::where('id', $id_tiket)->update([

@@ -1,0 +1,92 @@
+[
+    {
+      "nama_sla": "SLA-RESPONSE-REQ-1JAM",
+      "tipe_sla": "Response",
+      "tipe_tiket": "Request",
+      "tipe_waktu": "8 x 5",
+      "durasi_text": "0 Hari 1 Jam 0 Menit 0 Detik",
+      "durasi_jam": 1,
+      "keterangan": "Dihitung setelah approval VP User dan VP TI Pemilik Layanan menyetujui. Menghitung waktu reponse Helpdesk TI"
+    },
+    {
+      "nama_sla": "SLA-RESOLUTION-REQ-8JAM",
+      "tipe_sla": "Critical",
+      "tipe_tiket": "Request",
+      "tipe_waktu": "8 x 5",
+      "durasi_text": "0 Hari 8 Jam 0 Menit 0 Detik",
+      "durasi_jam": 8,
+      "keterangan": "Mengikuti SLA dari layanan terkait"
+    },
+    {
+      "nama_sla": "SLA-RESOLUTION-REQ-16JAM",
+      "tipe_sla": "High",
+      "tipe_tiket": "Request",
+      "tipe_waktu": "8 x 5",
+      "durasi_text": "0 Hari 16 Jam 0 Menit 0 Detik",
+      "durasi_jam": 16,
+      "keterangan": "Mengikuti SLA dari layanan terkait"
+    },
+    {
+      "nama_sla": "SLA-RESOLUTION-REQ-40JAM",
+      "tipe_sla": "Medium",
+      "tipe_tiket": "Request",
+      "tipe_waktu": "8 x 5",
+      "durasi_text": "1 Hari 16 Jam 0 Menit 0 Detik",
+      "durasi_jam": 40,
+      "keterangan": "SLA untuk Request: \r\nInfrasturktur - Backend > Restore Database > Aplikasi SAP"
+    },
+    {
+      "nama_sla": "SLA-RESOLUTION-REQ-3MON",
+      "tipe_sla": "Low",
+      "tipe_tiket": "Request",
+      "tipe_waktu": "8 x 5",
+      "durasi_text": "90 Hari 0 Jam 0 Menit 0 Detik",
+      "durasi_jam": 2160,
+      "keterangan": "SLA untuk REQUEST FOR CHANGE"
+    },
+    {
+      "nama_sla": "SLA-INC-RESPONSE-1JAM",
+      "tipe_sla": "Response",
+      "tipe_tiket": "Incident",
+      "tipe_waktu": "8 x 5",
+      "durasi_text": "0 Hari 1 Jam 0 Menit 0 Detik",
+      "durasi_jam": 1,
+      "keterangan": "Dihitung sejak tiket incident dibuat, helpdesk melakukan assign ke grup teknisi, sampai leader grup melakukan assignment tiket ke teknisi. Menghitung kesigapan waktu response insiden TI"
+    },
+    {
+      "nama_sla": "SLA-INC-RESOLUTION-CRITICAL-8JAM",
+      "tipe_sla": "Critical",
+      "tipe_tiket": "Incident",
+      "tipe_waktu": "8 x 5",
+      "durasi_text": "0 Hari 8 Jam 0 Menit 0 Detik",
+      "durasi_jam": 8,
+      "keterangan": "Perhitungan Matriks Prioritas Insiden skor 1 (Critical)"
+    },
+    {
+      "nama_sla": "SLA-INC-RESOLUTION-HIGH-16JAM",
+      "tipe_sla": "High",
+      "tipe_tiket": "Incident",
+      "tipe_waktu": "8 x 5",
+      "durasi_text": "0 Hari 16 Jam 0 Menit 0 Detik",
+      "durasi_jam": 16,
+      "keterangan": "Perhitungan Matriks Prioritas Insiden skor 2 (High)"
+    },
+    {
+      "nama_sla": "SLA-INC-RESOLUTION-MEDIUM-24JAM",
+      "tipe_sla": "Medium",
+      "tipe_tiket": "Incident",
+      "tipe_waktu": "8 x 5",
+      "durasi_text": "1 Hari 0 Jam 0 Menit 0 Detik",
+      "durasi_jam": 24,
+      "keterangan": "Perhitungan Matriks Prioritas Insiden skor 3 (Medium)"
+    },
+    {
+      "nama_sla": "SLA-INC-RESOLUTION-LOW-32JAM",
+      "tipe_sla": "Low",
+      "tipe_tiket": "Incident",
+      "tipe_waktu": "8 x 5",
+      "durasi_text": "1 Hari 8 Jam 0 Menit 0 Detik",
+      "durasi_jam": 32,
+      "keterangan": "Perhitungan Matriks Prioritas Insiden skor 4 (Low)"
+    }
+  ]

@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('nama_group');
             $table->string('nik_team_lead')->nullable();
             $table->string('nama_team_lead')->nullable();
+            $table->integer('nik_vp_ti')->unsigned()->nullable();
+            $table->string('nama_vp_ti')->nullable();
             $table->string('updated_by');
             $table->string('created_by');
             $table->timestamps();
