@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('tr_tiket', function (Blueprint $table) {
             $table->id();
             $table->string('company_code')->nullable();
+            $table->string('company_name')->nullable();
             $table->integer('id_unit_layanan')->unsigned()->nullable();
             $table->string('unit_layanan')->nullable();
             $table->string('user_id_creator')->nullable();

@@ -23,13 +23,15 @@ class APITiket extends Controller
 
     public function helpdesk_list_submitted()
     {
-        $list_tiket = Tiket::where('status_tiket', 'Submitted')->get();
+        // Cek benerin alur request dulu
+        $list_tiket = Tiket::where('id_status_tiket', '1')->get();
+        // $list_tiket = Tiket::all();
         return response()->json($list_tiket);
     }
 
     public function helpdesk_list_assigned()
     {
-        $list_tiket = Tiket::where('status_tiket', 'Assigned')->get();
+        $list_tiket = Tiket::where('id_status_tiket', '2')->get();
         return response()->json($list_tiket);
     }
 

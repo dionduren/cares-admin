@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Dsahboard\HelpdeskController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MasterDataController;
 use App\Http\Controllers\ReportController;
@@ -32,6 +33,9 @@ Route::middleware(['auth'])->group(function () {
   Route::redirect('/index', '/');
 
   Route::get('/create-ticket', [TicketController::class, 'create_ticket'])->name('root1');
+
+
+  Route::get('/helpdesk/ticket/new', [HelpdeskController::class, 'index_new']);
 
   Route::get('/report-test', [ReportController::class, 'index_test'])->name('report_test');
 

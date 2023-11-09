@@ -22,7 +22,7 @@ class APITiketCreate extends Controller
      */
     // public function index()
     // {
-        
+
     // }
 
     /**
@@ -31,6 +31,7 @@ class APITiketCreate extends Controller
     public function store(Request $request)
     {
         $company_code = 'A000';
+        $company_name = 'PI';
         $kode_perusahaan = 'PIH';
         $id_unit_layanan = 1;
         $unit_layanan = 'TI';
@@ -94,16 +95,17 @@ class APITiketCreate extends Controller
             }
 
             // set status ticket
-            $status_tiket = StatusTiket::where('flow_number',1)->where('tipe_tiket',$tipe_tiket)->first();
+            $status_tiket = StatusTiket::where('flow_number', 1)->where('tipe_tiket', $tipe_tiket)->first();
 
 
             $db_raw_data = [
                 'company_code' => $company_code,            // Set Model setelah sudah fix akan jadi multi company
+                'company_name' => $company_name,            // Set Model setelah sudah fix akan jadi multi company
                 'id_unit_layanan' => $id_unit_layanan,      // Set Model setelah sudah fix akan multi unit layanan
                 'unit_layanan' => $unit_layanan,            // Set Model setelah sudah fix akan multi unit layanan
                 'user_id_creator' => $user_id_creator,
                 'tipe_tiket' => $tipe_tiket,
-                'nomor_tiket' => HelperController::GetNomorTiket($kode_perusahaan,$unit_layanan,$tipe_tiket),
+                'nomor_tiket' => HelperController::GetNomorTiket($kode_perusahaan, $unit_layanan, $tipe_tiket),
                 'id_kategori' => $id_kategori,
                 'kategori_tiket' => $nama_kategori,
                 'id_subkategori' => $id_subkategori,
@@ -125,17 +127,17 @@ class APITiketCreate extends Controller
             $ticket = Tiket::create($db_raw_data);
 
             // Get Tipe SLA and create SLA Response
-            $sla_response = TipeSLA::where('tipe_sla','Response')->where('tipe_tiket',$tipe_tiket)->first();
-            
+            $sla_response = TipeSLA::where('tipe_sla', 'Response')->where('tipe_tiket', $tipe_tiket)->first();
+
             SLA::create([
-                'id_sla' => $sla_response->id, 
+                'id_sla' => $sla_response->id,
                 'tipe_sla' => $sla_response->nama_sla,
-                'id_tiket' => $ticket->id, 
-                'business_start_time' => HelperController::getStartBusiness(), 
-                'status_sla' => "On Progress", 
-                'actual_start_time' => now(), 
-                'updated_by' => $user_creator, 
-                'created_by' => $user_creator, 
+                'id_tiket' => $ticket->id,
+                'business_start_time' => HelperController::getStartBusiness(),
+                'status_sla' => "On Progress",
+                'actual_start_time' => now(),
+                'updated_by' => $user_creator,
+                'created_by' => $user_creator,
             ]);
 
             return response()->json([
@@ -153,6 +155,7 @@ class APITiketCreate extends Controller
     public function store_mobile(Request $request)
     {
         $company_code = 'A000';
+        $company_name = 'PI';
         $kode_perusahaan = 'PIH';
         $id_unit_layanan = 1;
         $unit_layanan = 'TI';
@@ -188,17 +191,18 @@ class APITiketCreate extends Controller
             }
 
             // set status ticket
-            $status_tiket = StatusTiket::where('flow_number',1)->where('tipe_tiket',$tipe_tiket)->first();
+            $status_tiket = StatusTiket::where('flow_number', 1)->where('tipe_tiket', $tipe_tiket)->first();
 
 
             if ($id_kategori == null) {
                 $db_raw_data = [
                     'company_code' => $company_code,            // Set Model setelah sudah fix akan jadi multi company
+                    'company_name' => $company_name,            // Set Model setelah sudah fix akan jadi multi company
                     'id_unit_layanan' => $id_unit_layanan,      // Set Model setelah sudah fix akan multi unit layanan
                     'unit_layanan' => $unit_layanan,            // Set Model setelah sudah fix akan multi unit layanan
                     'user_id_creator' => $user_id_creator,
                     'tipe_tiket' => $tipe_tiket,
-                    'nomor_tiket' => HelperController::GetNomorTiket($kode_perusahaan,$unit_layanan,$tipe_tiket),
+                    'nomor_tiket' => HelperController::GetNomorTiket($kode_perusahaan, $unit_layanan, $tipe_tiket),
                     'id_kategori' => $id_kategori,
                     'kategori_tiket' => $nama_kategori,
                     'id_subkategori' => $id_subkategori,
@@ -217,11 +221,12 @@ class APITiketCreate extends Controller
             } else {
                 $db_raw_data = [
                     'company_code' => $company_code,            // Set Model setelah sudah fix akan jadi multi company
+                    'company_name' => $company_name,            // Set Model setelah sudah fix akan jadi multi company
                     'id_unit_layanan' => $id_unit_layanan,      // Set Model setelah sudah fix akan multi unit layanan
                     'unit_layanan' => $unit_layanan,            // Set Model setelah sudah fix akan multi unit layanan
                     'user_id_creator' => $user_id_creator,
                     'tipe_tiket' => $tipe_tiket,
-                    'nomor_tiket' => HelperController::GetNomorTiket($kode_perusahaan,$unit_layanan,$tipe_tiket),
+                    'nomor_tiket' => HelperController::GetNomorTiket($kode_perusahaan, $unit_layanan, $tipe_tiket),
                     'id_kategori' => $id_kategori,
                     'kategori_tiket' => $nama_kategori,
                     'id_subkategori' => $id_subkategori,
@@ -244,17 +249,17 @@ class APITiketCreate extends Controller
             $ticket = Tiket::create($db_raw_data);
 
             // Get Tipe SLA and create SLA Response
-            $sla_response = TipeSLA::where('tipe_sla','Response')->where('tipe_tiket',$tipe_tiket)->first();
-            
+            $sla_response = TipeSLA::where('tipe_sla', 'Response')->where('tipe_tiket', $tipe_tiket)->first();
+
             SLA::create([
-                'id_sla' => $sla_response->id, 
+                'id_sla' => $sla_response->id,
                 'tipe_sla' => $sla_response->nama_sla,
-                'id_tiket' => $ticket->id, 
-                'business_start_time' => HelperController::getStartBusiness(), 
-                'status_sla' => "On Progress", 
-                'actual_start_time' => now(), 
-                'updated_by' => $user_creator, 
-                'created_by' => $user_creator, 
+                'id_tiket' => $ticket->id,
+                'business_start_time' => HelperController::getStartBusiness(),
+                'status_sla' => "On Progress",
+                'actual_start_time' => now(),
+                'updated_by' => $user_creator,
+                'created_by' => $user_creator,
             ]);
 
             return response()->json([

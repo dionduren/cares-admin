@@ -25,9 +25,9 @@
                         <table id="listTicket" class="table table-bordered nowrap">
                             <thead class="fs-5 fw-bolder text-light" style="background-color: rgb(12, 12, 151)">
                                 <tr align="middle" valign="middle">
-                                    <th width="20%">No.Tiket</th>
+                                    <th width="200px">No.Tiket</th>
                                     <th width="10%">Tipe Tiket</th>
-                                    <th width="10%">User</th>
+                                    <th width="150px">User</th>
                                     <th>Company</th>
                                     <th width="10%">Unit Kerja</th>
                                     <th>Unit Layanan</th>
@@ -42,7 +42,7 @@
                             </thead>
                             <tbody>
                                 <tr align="middle" valign="middle">
-                                    <td>INC-PIH-TI-00001</td>
+                                    <td align="left">INC-PIH-TI-00001</td>
                                     <td>Insiden</td>
                                     <td>Nama User 1</td>
                                     <td>PI</td>
@@ -57,7 +57,7 @@
                                     <td>solusi internet #1</td>
                                 </tr>
                                 <tr align="middle" valign="middle">
-                                    <td>PRB-LIT-24102023-00001</td>
+                                    <td align="left">PRB-LIT-24102023-00001</td>
                                     <td>Problem</td>
                                     <td>Nama User 2</td>
                                     <td>PIM</td>
@@ -72,7 +72,7 @@
                                     <td>-</td>
                                 </tr>
                                 <tr align="middle" valign="middle">
-                                    <td>REQ-PKT-TI-00013</td>
+                                    <td align="left">REQ-PKT-TI-00013</td>
                                     <td>Request</td>
                                     <td>Nama User 3</td>
                                     <td>PKT</td>
@@ -87,7 +87,7 @@
                                     <td>solusi komputer #2</td>
                                 </tr>
                                 <tr align="middle" valign="middle">
-                                    <td>REQ-PIH-TI-00059</td>
+                                    <td align="left">REQ-PIH-TI-00059</td>
                                     <td>Request</td>
                                     <td>Nama User 4</td>
                                     <td>PI</td>
