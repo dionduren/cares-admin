@@ -101,12 +101,14 @@ class HelperController extends Controller
 
     //     return $hasil;
     // }
-    public static function getStartBusiness() {
+
+    public static function getStartBusiness()
+    {
         $now = now();
-    
+
         // Ambil data jam kerja
         $workHours = JamKerja::first();
-    
+
         if ($workHours) {
             // Set jam kerja mulai dan berhenti
             $workStartHour = Carbon::parse($workHours->start_hour)->hour;
@@ -116,13 +118,13 @@ class HelperController extends Controller
             $workStartHour = 8;
             $workEndHour = 17;
         }
-    
+
         // Set today's business start time
         $businessStartToday = $now->copy()->hour($workStartHour)->minute(0)->second(0);
-    
+
         // Set today's business end time
         $businessEndToday = $now->copy()->hour($workEndHour)->minute(0)->second(0);
-    
+
         // If the current time is before today's business start time, return today's business start time
         if ($now->lt($businessStartToday)) {
             return $businessStartToday;
@@ -144,8 +146,8 @@ class HelperController extends Controller
 
         if ($workHours) {
             // Set jam kerja mulai dan berhenti
-            $workStartHour = $workHours->start_hour->hour;
-            $workEndHour = $workHours->end_hour->hour;
+            $workStartHour = Carbon::parse($workHours->start_hour)->hour;
+            $workEndHour = Carbon::parse($workHours->end_hour)->hour;
         } else {
             // Set manual jam kerja kalau db kosong
             $workStartHour = 8;

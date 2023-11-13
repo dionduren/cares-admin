@@ -32,6 +32,7 @@ return new class extends Migration
             $table->integer('id_status_tiket')->unsigned();
             $table->string('status_tiket');
             $table->text('attachment')->nullable();
+            $table->integer('level_urgensi')->unsigned()->nullable();
             $table->integer('level_dampak')->unsigned()->nullable();
             $table->integer('level_prioritas')->unsigned()->nullable();
             $table->string('tipe_matriks')->nullable();

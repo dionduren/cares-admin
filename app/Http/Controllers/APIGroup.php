@@ -47,18 +47,26 @@ class APIGroup extends Controller
         $nama_group = GrupTechnical::where('id', $id_group)->first()->nama_group;
         $helpdesk_agent = User::where('nik', $nik)->first();
 
-        
-
-        Tiket::where('id', $id_tiket)->update([
-            'id_group' => $id_group,
-            'assigned_group' => $nama_group,
-            'status_tiket' => 'Assigned',
-            'updated_by' => $helpdesk_agent->nama,
-        ]);
+        // Tiket::where('id', $id_tiket)->update([
+        //     'id_group' => $id_group,
+        //     'assigned_group' => $nama_group,
+        //     'status_tiket' => 'Assigned',
+        //     'updated_by' => $helpdesk_agent->nama,
+        // ]);
 
         $info_tiket = Tiket::where('id', $id_tiket)->first();
         $start_time = $info_tiket->created_at;
         $end_time   = now();
+
+        // Hitung waktu untuk SLA
+        $businessSLA = HelperController::hitungBusinessSLA($start_time, $end_time);
+        $businessSLA_string = $businessSLA['days'] . ' Hari ' . $businessSLA['hours'] . ' Jam '  . $businessSLA['minutes'] . ' Menit ' . $businessSLA['seconds'] . ' Detik';
+        $actualSLA = HelperController::hitungActualSLA($start_time, $end_time);
+        $actualSLA_string = $actualSLA['days'] . ' Hari ' . $actualSLA['hours'] . ' Jam '  . $actualSLA['minutes'] . ' Menit ' . $actualSLA['seconds'] . ' Detik';
+
+        // \dd($businessSLA_string);
+        // \dd($actualSLA_string);
+
 
         // TODO: change actiontime to sla
         // $durasi_float = HelperController::hitungBusinessSLA($start_time, $end_time);
@@ -94,8 +102,31 @@ class APIGroup extends Controller
         $info_tiket = Tiket::where('id', $id_tiket)->first();
         $start_time = $info_tiket->updated_at;
         $end_time   = now();
-        $durasi_float = HelperController::hitungBusinessSLA($start_time, $end_time);
-        $durasi = floor($durasi_float);
+        $businessSLA = HelperController::hitungBusinessSLA($start_time, $end_time);
+        $businessSLA_string = sprintf(
+            "%02d days %02d hours %02d minutes %02d seconds",
+            $businessSLA['days'],
+            $businessSLA['hours'],
+            $businessSLA['minutes'],
+            $businessSLA['seconds']
+        );
+        // $businessSLA_string = $businessSLA['days'] + ' Hari ' + $businessSLA['hours'] + ' Jam '  + $businessSLA['minutes'] + ' Menit' + $businessSLA['minutes'] + ' Detik';
+        $actualSLA = HelperController::hitungActualSLA($start_time, $end_time);
+        // $actualSLA_string = $actualSLA['days'] + ' Hari ' + $actualSLA['hours'] + ' Jam '  + $actualSLA['minutes'] + ' Menit' + $actualSLA['minutes'] + ' Detik';
+        $actualSLA_string = sprintf(
+            "%02d days %02d hours %02d minutes %02d seconds",
+            $actualSLA['days'],
+            $actualSLA['hours'],
+            $actualSLA['minutes'],
+            $actualSLA['seconds']
+        );
+
+        \dd($businessSLA_string);
+        \dd($actualSLA_string);
+
+
+        // $durasi_float = HelperController::hitungBusinessSLA($start_time, $end_time);
+        // $durasi = floor($durasi_float);
 
         Tiket::where('id', $id_tiket)->update([
             'id_technical' => $id_technical,

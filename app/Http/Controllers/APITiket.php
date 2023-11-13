@@ -11,6 +11,7 @@ use App\Models\GrupMember;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use App\Models\KnowledgeManagement;
+use App\Models\Master\TipeSLA;
 
 class APITiket extends Controller
 {
@@ -19,6 +20,14 @@ class APITiket extends Controller
     {
         $list_tiket = Tiket::where('user_id_creator', $id)->get();
         return response()->json($list_tiket);
+    }
+
+    function get_sla_type(Request $request)
+    {
+        $tipe_tiket = $request->input('tipe_tiket');
+        $tipe_sla = $request->input('tipe_sla');
+        $nama_sla = TipeSLA::where('tipe_sla', $tipe_sla)->where('tipe_tiket', $tipe_tiket)->first();
+        return response()->json($nama_sla);
     }
 
     public function helpdesk_list_submitted()
