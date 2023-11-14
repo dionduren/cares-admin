@@ -21,9 +21,9 @@
                     </a>
                 </li>
 
-                
+
                 <li class="menu-title" data-key="t-menu">VP Menu</li>
-                
+
                 <li>
                     <a href="/vp/ticket-list">
                         <i class="mdi mdi-ticket-confirmation"></i>
@@ -37,16 +37,20 @@
                         <span data-key="t-tasks" style="color:red">Daftar Tiket</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="/helpdesk/ticket/new" key="t-task-list" style="color:red">Daftar Tiket Saya</a></li>
-                        <li><a href="/helpdesk/ticket/ongoing" key="t-kanban-board" style="color:red">Daftar Tiket Ongoing</a></li>
-                        <li><a href="/helpdesk/ticket/resolved" key="t-create-task" style="color:red">Daftar Tiket Resolved</a></li>
-                        <li><a href="/helpdesk/ticket/history" key="t-create-task" style="color:red">Histori Tiket</a></li>
+                        <li><a href="/VP User/ticket/new" key="t-task-list" style="color:red">Daftar Tiket Saya</a>
+                        </li>
+                        <li><a href="/VP User/ticket/ongoing" key="t-kanban-board" style="color:red">Daftar Tiket
+                                Ongoing</a></li>
+                        <li><a href="/VP User/ticket/resolved" key="t-create-task" style="color:red">Daftar Tiket
+                                Resolved</a></li>
+                        <li><a href="/VP User/ticket/history" key="t-create-task" style="color:red">Histori Tiket</a>
+                        </li>
                     </ul>
                 </li>
-                
+
                 <li class="menu-title" data-key="t-menu">VP Pemilik Layanan TI</li>
 
-                
+
                 <li>
                     <a href="/vp_layanan/ticket-list">
                         <i class="mdi mdi-ticket-confirmation"></i>
@@ -60,10 +64,16 @@
                         <span data-key="t-tasks" style="color:red">Daftar Tiket</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="/helpdesk/ticket/new" key="t-task-list" style="color:red">Daftar Tiket Baru</a></li>
-                        <li><a href="/helpdesk/ticket/ongoing" key="t-kanban-board" style="color:red">Daftar Tiket Ongoing</a></li>
-                        <li><a href="/helpdesk/ticket/resolved" key="t-create-task" style="color:red">Daftar Tiket Resolved</a></li>
-                        <li><a href="/helpdesk/ticket/history" key="t-create-task" style="color:red">Histori Tiket</a></li>
+                        <li><a href="/layanan_owner/ticket/new" key="t-task-list" style="color:red">Daftar Tiket
+                                Baru</a>
+                        </li>
+                        <li><a href="/layanan_owner/ticket/ongoing" key="t-kanban-board" style="color:red">Daftar Tiket
+                                Ongoing</a></li>
+                        <li><a href="/layanan_owner/ticket/resolved" key="t-create-task" style="color:red">Daftar Tiket
+                                Resolved</a></li>
+                        <li><a href="/layanan_owner/ticket/history" key="t-create-task" style="color:red">Histori
+                                Tiket</a>
+                        </li>
                     </ul>
                 </li>
 
@@ -75,14 +85,17 @@
                         <span data-key="t-tasks" style="color:red">Daftar Tiket</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="/helpdesk/ticket/new" key="t-task-list" style="color:red">Daftar Tiket Baru</a></li>
-                        <li><a href="/helpdesk/ticket/ongoing" key="t-kanban-board" style="color:red">Daftar Tiket Ongoing</a></li>
-                        <li><a href="/helpdesk/ticket/resolved" key="t-create-task" style="color:red">Daftar Tiket Resolved</a></li>
-                        <li><a href="/helpdesk/ticket/history" key="t-create-task" style="color:red">Histori Tiket</a></li>
+                        <li><a href="/leader/ticket/new" key="t-task-list" style="color:red">Daftar Tiket Baru</a></li>
+                        <li><a href="/leader/ticket/ongoing" key="t-kanban-board" style="color:red">Daftar Tiket
+                                Ongoing</a></li>
+                        <li><a href="/leader/ticket/resolved" key="t-create-task" style="color:red">Daftar Tiket
+                                Resolved</a></li>
+                        <li><a href="/leader/ticket/history" key="t-create-task" style="color:red">Histori Tiket</a>
+                        </li>
                     </ul>
                 </li>
 
-                
+
                 <li class="menu-title" data-key="t-menu">Technical Menu</li>
 
                 <li>
@@ -91,27 +104,32 @@
                         <span data-key="t-tasks" style="color:red">Daftar Tiket</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="/helpdesk/ticket/new" key="t-task-list" style="color:red">Daftar Tiket Active</a></li>
-                        <li><a href="/helpdesk/ticket/history" key="t-create-task" style="color:red">Histori Tiket</a></li>
+                        <li><a href="/technical/ticket/new" key="t-task-list" style="color:red">Daftar Tiket Active</a>
+                        </li>
+                        <li><a href="/technical/ticket/history" key="t-create-task" style="color:red">Histori Tiket</a>
+                        </li>
                     </ul>
                 </li>
 
 
                 @if (Auth::user()->role_id <= 2)
-                <li class="menu-title" data-key="t-menu">Helpdesk</li>
+                    <li class="menu-title" data-key="t-menu">Helpdesk</li>
 
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow">
-                        <i data-feather="trello"></i>
-                        <span data-key="t-tasks" style="color:red">Daftar Tiket</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="/helpdesk/ticket/new" key="t-task-list" style="color:red">Daftar Tiket Baru</a></li>
-                        <li><a href="/helpdesk/ticket/ongoing" key="t-kanban-board" style="color:red">Daftar Tiket Ongoing</a></li>
-                        <li><a href="/helpdesk/ticket/resolved" key="t-create-task" style="color:red">Daftar Tiket Resolved</a></li>
-                        <li><a href="/helpdesk/ticket/history" key="t-create-task" style="color:red">Histori Tiket</a></li>
-                    </ul>
-                </li>
+                    <li>
+                        <a href="javascript: void(0);" class="has-arrow">
+                            <i data-feather="trello"></i>
+                            <span data-key="t-tasks" style="color:red">Daftar Tiket</span>
+                        </a>
+                        <ul class="sub-menu" aria-expanded="false">
+                            <li><a href="/helpdesk/ticket/new" key="t-task-list">Daftar Tiket Baru</a></li>
+                            <li><a href="/helpdesk/ticket/ongoing" key="t-kanban-board" style="color:red">Daftar
+                                    Tiket Ongoing</a></li>
+                            <li><a href="/helpdesk/ticket/resolved" key="t-create-task" style="color:red">Daftar
+                                    Tiket Resolved</a></li>
+                            <li><a href="/helpdesk/ticket/history" key="t-create-task" style="color:red">Histori
+                                    Tiket</a></li>
+                        </ul>
+                    </li>
 
                     <li class="menu-title" data-key="t-menu">Admin</li>
 

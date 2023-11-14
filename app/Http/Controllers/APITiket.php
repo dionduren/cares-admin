@@ -44,7 +44,7 @@ class APITiket extends Controller
         return response()->json($list_tiket);
     }
 
-    public function helpdesk_detail($id)
+    public function ticket_detail($id)
     {
         $detail_tiket = Tiket::where('id', $id)->first();
         return response()->json($detail_tiket);
@@ -67,7 +67,6 @@ class APITiket extends Controller
         $list_tiket = Tiket::where('id_group', $id)->whereNotNull('id_technical')->where('status_tiket', "Closed")->get();
         return response()->json($list_tiket);
     }
-
 
     public function technical_ongoing_list($id)
     {

@@ -102,41 +102,114 @@ class HelperController extends Controller
     //     return $hasil;
     // }
 
+    // public static function getStartBusiness()
+    // {
+    //     $now = now();
+
+    //     // Ambil data jam kerja
+    //     $workHours = JamKerja::first();
+
+    //     if ($workHours) {
+    //         // Set jam kerja mulai dan berhenti
+    //         $workStartHour = Carbon::parse($workHours->start_hour)->hour;
+    //         $workEndHour = Carbon::parse($workHours->end_hour)->hour;
+    //     } else {
+    //         // Set manual jam kerja kalau db kosong
+    //         $workStartHour = 8;
+    //         $workEndHour = 17;
+    //     }
+
+    //     // Set today's business start time
+    //     $businessStartToday = $now->copy()->hour($workStartHour)->minute(0)->second(0);
+
+    //     // Set today's business end time
+    //     $businessEndToday = $now->copy()->hour($workEndHour)->minute(0)->second(0);
+
+    //     // If the current time is before today's business start time, return today's business start time
+    //     if ($now->lt($businessStartToday)) {
+    //         return $businessStartToday;
+    //     }
+    //     // If the current time is after today's business end time, return the next business day's start time
+    //     elseif ($now->gt($businessEndToday)) {
+    //         return $businessStartToday->addDay();
+    //     }
+    //     // If the current time is during business hours, return the current time
+    //     else {
+    //         return $now;
+    //     }
+    // }
+
     public static function getStartBusiness()
     {
-        $now = now();
+        $now = Carbon::now();
+        $publicHolidays = HariLibur::pluck('date')->all();
 
-        // Ambil data jam kerja
+        // Fetch working hours from the database or set default values
         $workHours = JamKerja::first();
+        $workStartHour = $workHours ? Carbon::parse($workHours->start_hour)->hour : 8;
+        $workEndHour = $workHours ? Carbon::parse($workHours->end_hour)->hour : 17;
 
-        if ($workHours) {
-            // Set jam kerja mulai dan berhenti
-            $workStartHour = Carbon::parse($workHours->start_hour)->hour;
-            $workEndHour = Carbon::parse($workHours->end_hour)->hour;
-        } else {
-            // Set manual jam kerja kalau db kosong
-            $workStartHour = 8;
-            $workEndHour = 17;
-        }
-
-        // Set today's business start time
+        // Create Carbon instances for the start and end of today's business hours
         $businessStartToday = $now->copy()->hour($workStartHour)->minute(0)->second(0);
-
-        // Set today's business end time
         $businessEndToday = $now->copy()->hour($workEndHour)->minute(0)->second(0);
 
-        // If the current time is before today's business start time, return today's business start time
+        // If the current time is after business hours, set start time to the end of today's business hours
+        if ($now->gt($businessEndToday)) {
+            return $businessEndToday;
+        }
+        // If the current time is before business hours, set start time to the start of today's business hours
+        elseif ($now->lt($businessStartToday)) {
+            return $businessStartToday;
+        }
+        // If it's a weekend or a holiday, set the start time to the previous business day's end hour
+        if ($now->isWeekend() || in_array($now->toDateString(), $publicHolidays)) {
+            do {
+                $now->subDay();
+            } while ($now->isWeekend() || in_array($now->toDateString(), $publicHolidays));
+
+            return $now->hour($workEndHour)->minute(0)->second(0);
+        }
+
+        // If none of the above, return the current time
+        return $now;
+    }
+
+
+    public static function getEndBusinessTime()
+    {
+        $now = Carbon::now();
+        $publicHolidays = HariLibur::pluck('date')->all(); // Assuming dates are in 'Y-m-d' format
+
+        // Fetch working hours from the database or set default values
+        $workHours = JamKerja::first();
+        $workStartHour = $workHours ? Carbon::parse($workHours->start_hour)->hour : 8;
+        $workEndHour = $workHours ? Carbon::parse($workHours->end_hour)->hour : 17;
+
+        // Set today's business start and end times
+        $businessStartToday = $now->copy()->hour($workStartHour)->minute(0)->second(0);
+        $businessEndToday = $now->copy()->hour($workEndHour)->minute(0)->second(0);
+
+        // If it's a weekend or a public holiday, set the finish time to the end of the working hour of the previous day
+        if ($now->isWeekend() || in_array($now->toDateString(), $publicHolidays)) {
+            do {
+                $now->subDay();
+            } while ($now->isWeekend() || in_array($now->toDateString(), $publicHolidays));
+
+            return $now->hour($workEndHour)->minute(0)->second(0);
+        }
+
+        // If the current time is after office hours, set the finish time to today's end of working hour
+        if ($now->gt($businessEndToday)) {
+            return $businessEndToday;
+        }
+
+        // If the current time is before office hours, set the finish time to today's start of working hour
         if ($now->lt($businessStartToday)) {
             return $businessStartToday;
         }
-        // If the current time is after today's business end time, return the next business day's start time
-        elseif ($now->gt($businessEndToday)) {
-            return $businessStartToday->addDay();
-        }
-        // If the current time is during business hours, return the current time
-        else {
-            return $now;
-        }
+
+        // If the current time is during office hours, return the current time
+        return $now;
     }
 
     public static function hitungBusinessSLA(Carbon $start, Carbon $end)
@@ -225,20 +298,34 @@ class HelperController extends Controller
         return $duration;
     }
 
-
     public static function hitungActualSLA(Carbon $start, Carbon $end)
     {
+        // Ensure that $end is always greater than $start
+        if ($start->gt($end)) {
+            $duration = [
+                'days' => 0,
+                'hours' => 0,
+                'minutes' => 0,
+                'seconds' => 0,
+            ];
+
+            return $duration;
+        }
+
+        // Calculate the difference in total seconds
         $diffInSeconds = $end->diffInSeconds($start);
-        $diffInDays = floor($diffInSeconds / (60 * 60 * 24));
-        $diffInHours = floor(($diffInSeconds % (60 * 60 * 24)) / (60 * 60));
-        $diffInMinutes = floor(($diffInSeconds % (60 * 60)) / 60);
-        $diffInSeconds = $diffInSeconds % 60;
+
+        // Calculate the days, hours, minutes, and seconds
+        $days = floor($diffInSeconds / (60 * 60 * 24));
+        $hours = floor(($diffInSeconds % (60 * 60 * 24)) / (60 * 60));
+        $minutes = floor(($diffInSeconds % (60 * 60)) / 60);
+        $seconds = $diffInSeconds % 60;
 
         $duration = [
-            'days' => $diffInDays,
-            'hours' => $diffInHours,
-            'minutes' => $diffInMinutes,
-            'seconds' => $diffInSeconds,
+            'days' => $days,
+            'hours' => $hours,
+            'minutes' => $minutes,
+            'seconds' => $seconds,
         ];
 
         return $duration;

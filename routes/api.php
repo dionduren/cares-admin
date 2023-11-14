@@ -36,9 +36,10 @@ Route::post('/submit-tiket', [APITiketCreate::class, 'store']);
 Route::post('/submit-tiket-mobile', [APITiketCreate::class, 'store_mobile']);
 
 Route::get('/created-tiket-list/{id}', [APITiket::class, 'created_ticket_list']);
+Route::get('/tiket-detail/{id}', [APITiket::class, 'ticket_detail']);
+
 Route::get('/helpdesk-tiket-submitted', [APITiket::class, 'helpdesk_list_submitted']);
 Route::get('/helpdesk-tiket-assigned', [APITiket::class, 'helpdesk_list_assigned']);
-Route::get('/helpdesk-tiket-detail/{id}', [APITiket::class, 'helpdesk_detail']);
 Route::get('/helpdesk-get-sla', [APITiket::class, 'get_sla_type']);
 Route::get('/technical-group-list', [APIGroup::class, 'technical_group_list']);
 Route::post('/tiket-assign-group', [APIGroup::class, 'tiket_assign_group']);

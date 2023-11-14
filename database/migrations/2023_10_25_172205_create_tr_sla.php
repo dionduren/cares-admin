@@ -16,7 +16,9 @@ return new class extends Migration
         Schema::create('tr_sla', function (Blueprint $table) {
             $table->id();
             $table->integer('id_sla')->unsigned();
+            $table->string('kategori_sla');
             $table->string('tipe_sla');
+            $table->integer('sla_hours_target')->unsigned()->nullable();
             $table->integer('id_tiket')->unsigned();
             $table->datetime('business_start_time')->nullable();
             $table->datetime('business_stop_time')->nullable();

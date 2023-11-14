@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers\Dsahboard;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class HelpdeskController extends Controller
 {
     function index_new()
     {
-        return view('helpdesk.tiket-baru');
+        $nik_user = Auth::user()->nik;
+        return view('helpdesk.tiket-baru', [
+            'user' => $nik_user,
+        ]);
     }
 }

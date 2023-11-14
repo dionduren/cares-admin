@@ -34,10 +34,8 @@ return new class extends Migration
             $table->text('attachment')->nullable();
             $table->integer('level_urgensi')->unsigned()->nullable();
             $table->integer('level_dampak')->unsigned()->nullable();
-            $table->integer('level_prioritas')->unsigned()->nullable();
+            $table->string('level_prioritas')->nullable();
             $table->string('tipe_matriks')->nullable();
-            // $table->integer('id_SLA')->unsigned()->nullable();
-            // $table->string('tipe_SLA')->nullable();
             $table->integer('id_group')->unsigned()->nullable();
             $table->string('assigned_group')->nullable();
             $table->string('id_technical')->nullable();

@@ -84,13 +84,13 @@ class APITiketCreate extends Controller
                 $item_kategori = ItemCategory::where('id', $id_item_kategori)->first();
                 $level_dampak = $item_kategori->level_dampak;
                 $level_urgensi = $item_kategori->level_urgensi;
-                $level_prioritas = $item_kategori->level_prioritas;
+                // $level_prioritas = $item_kategori->level_prioritas;
                 $tipe_tiket = $item_kategori->tipe_tiket;
             } else {
                 $subkategori = Subkategori::where('id', $id_subkategori)->first();
                 $level_dampak = $subkategori->level_dampak;
                 $level_urgensi = $subkategori->level_urgensi;
-                $level_prioritas = $subkategori->level_prioritas;
+                // $level_prioritas = $subkategori->level_prioritas;
                 $tipe_tiket = $subkategori->tipe_tiket;
             }
 
@@ -114,12 +114,12 @@ class APITiketCreate extends Controller
                 'item_kategori_tiket' => $nama_item_kategori,
                 'judul_tiket' => $judul_tiket,
                 'detail_tiket' => $detail_tiket,
-                'id_status_tiket' => 1,
+                'id_status_tiket' => $status_tiket->flow_number,
                 'status_tiket' => $status_tiket->nama_status,
                 'attachment' => null,
                 'level_dampak' => $level_dampak,
                 'level_urgensi' => $level_urgensi,
-                'level_prioritas' => $level_prioritas,
+                // 'level_prioritas' => $level_prioritas,
                 'updated_by' => $user_creator,
                 'created_by' => $user_creator,
             ];
@@ -131,7 +131,9 @@ class APITiketCreate extends Controller
 
             SLA::create([
                 'id_sla' => $sla_response->id,
+                'kategori_sla' => 'Response',
                 'tipe_sla' => $sla_response->nama_sla,
+                'sla_hours_target' => $sla_response->durasi_jam,
                 'id_tiket' => $ticket->id,
                 'business_start_time' => HelperController::getStartBusiness(),
                 'status_sla' => "On Progress",
