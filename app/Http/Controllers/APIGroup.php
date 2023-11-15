@@ -77,7 +77,7 @@ class APIGroup extends Controller
         $actual_start_time = Carbon::parse($sla_response->actual_start_time);
         $end_time   = now();
 
-        // Hitung waktu untuk SLA
+        // Hitung waktu untuk SLA response
         $businessSLA = HelperController::hitungBusinessSLA($business_start_time, $end_time);
         $businessSLA_string = $businessSLA['days'] . ' Hari ' . $businessSLA['hours'] . ' Jam '  . $businessSLA['minutes'] . ' Menit ' . $businessSLA['seconds'] . ' Detik';
         $actualSLA = HelperController::hitungActualSLA($actual_start_time, $end_time);

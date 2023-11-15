@@ -141,8 +141,8 @@ $(document).ready(function () {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
       },
       success: function (data) {
-        console.log('ajax call success');
-        console.log(data);
+        $('#assignModal').modal('toggle');
+        table1.ajax.reload();
       }
     })
   });

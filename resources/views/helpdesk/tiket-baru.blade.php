@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-    Master Data - Daftar Tiket Helpdesk
+    Helpdesk - Daftar Tiket
 @endsection
 @section('css')
     <link href="{{ URL::asset('/assets/libs/admin-resources/admin-resources.min.css') }}" rel="stylesheet">

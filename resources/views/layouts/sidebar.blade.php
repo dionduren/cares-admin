@@ -118,16 +118,13 @@
                     <li>
                         <a href="javascript: void(0);" class="has-arrow">
                             <i data-feather="trello"></i>
-                            <span data-key="t-tasks" style="color:red">Daftar Tiket</span>
+                            <span data-key="t-tasks">Daftar Tiket</span>
                         </a>
                         <ul class="sub-menu" aria-expanded="false">
                             <li><a href="/helpdesk/ticket/new" key="t-task-list">Daftar Tiket Baru</a></li>
-                            <li><a href="/helpdesk/ticket/ongoing" key="t-kanban-board" style="color:red">Daftar
-                                    Tiket Ongoing</a></li>
-                            <li><a href="/helpdesk/ticket/resolved" key="t-create-task" style="color:red">Daftar
-                                    Tiket Resolved</a></li>
-                            <li><a href="/helpdesk/ticket/history" key="t-create-task" style="color:red">Histori
-                                    Tiket</a></li>
+                            <li><a href="/helpdesk/ticket/ongoing" key="t-kanban-board">Daftar Tiket Ongoing</a></li>
+                            <li><a href="/helpdesk/ticket/resolved" key="t-create-task">Daftar Tiket Resolved</a></li>
+                            <li><a href="/helpdesk/ticket/all" key="t-create-task">All Tiket</a></li>
                         </ul>
                     </li>
 
@@ -241,13 +238,13 @@
                         <span data-key="t-ui-elements">Extended</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="extended-lightbox" data-key="t-lightbox">Lightbox</a></li>
-                        <li><a href="extended-rangeslider" data-key="t-range-slider">Range_Slider</a></li>
-                        <li><a href="extended-sweet-alert" data-key="t-sweet-alert">Sweet_Alert 2</a></li>
-                        <li><a href="extended-session-timeout" data-key="t-session-timeout">Session_Timeout</a>
+                        <li><a href="/extended-lightbox" data-key="t-lightbox">Lightbox</a></li>
+                        <li><a href="/extended-rangeslider" data-key="t-range-slider">Range_Slider</a></li>
+                        <li><a href="/extended-sweet-alert" data-key="t-sweet-alert">Sweet_Alert 2</a></li>
+                        <li><a href="/extended-session-timeout" data-key="t-session-timeout">Session_Timeout</a>
                         </li>
-                        <li><a href="extended-rating" data-key="t-rating">Rating</a></li>
-                        <li><a href="extended-notifications" data-key="t-notifications">Notifications</a></li>
+                        <li><a href="/extended-rating" data-key="t-rating">Rating</a></li>
+                        <li><a href="/extended-notifications" data-key="t-notifications">Notifications</a></li>
                     </ul>
                 </li>
 
@@ -258,13 +255,13 @@
                         <span data-key="t-forms">Forms</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="form-elements" data-key="t-form-elements">Basic_Elements</a></li>
-                        <li><a href="form-validation" data-key="t-form-validation">Validation</a></li>
-                        <li><a href="form-advanced" data-key="t-form-advanced">Advanced_Plugins</a></li>
-                        <li><a href="form-editors" data-key="t-form-editors">Editors</a></li>
-                        <li><a href="form-uploads" data-key="t-form-upload">File_Upload</a></li>
-                        <li><a href="form-wizard" data-key="t-form-wizard">Wizard</a></li>
-                        <li><a href="form-mask" data-key="t-form-mask">Mask</a></li>
+                        <li><a href="/form-elements" data-key="t-form-elements">Basic_Elements</a></li>
+                        <li><a href="/form-validation" data-key="t-form-validation">Validation</a></li>
+                        <li><a href="/form-advanced" data-key="t-form-advanced">Advanced_Plugins</a></li>
+                        <li><a href="/form-editors" data-key="t-form-editors">Editors</a></li>
+                        <li><a href="/form-uploads" data-key="t-form-upload">File_Upload</a></li>
+                        <li><a href="/form-wizard" data-key="t-form-wizard">Wizard</a></li>
+                        <li><a href="/form-mask" data-key="t-form-mask">Mask</a></li>
                     </ul>
                 </li>
 
@@ -274,10 +271,10 @@
                         <span data-key="t-tables">Tables</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="tables-basic" data-key="t-basic-tables">Bootstrap_Basic</a></li>
-                        <li><a href="tables-datatable" data-key="t-data-tables">Data_Tables</a></li>
-                        <li><a href="tables-responsive" data-key="t-responsive-table">Responsive</a></li>
-                        <li><a href="tables-editable" data-key="t-editable-table">Editable_Table</a></li>
+                        <li><a href="/tables-basic" data-key="t-basic-tables">Bootstrap_Basic</a></li>
+                        <li><a href="/tables-datatable" data-key="t-data-tables">Data_Tables</a></li>
+                        <li><a href="/tables-responsive" data-key="t-responsive-table">Responsive</a></li>
+                        <li><a href="/tables-editable" data-key="t-editable-table">Editable_Table</a></li>
                     </ul>
                 </li>
 
@@ -287,11 +284,11 @@
                         <span data-key="t-charts">Charts</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="charts-apex" data-key="t-apex-charts">Apex_Charts</a></li>
-                        <li><a href="charts-echart" data-key="t-e-charts">E_Charts</a></li>
-                        <li><a href="charts-chartjs" data-key="t-chartjs-charts">Chartjs</a></li>
-                        <li><a href="charts-knob" data-key="t-knob-charts">Jquery_Knob</a></li>
-                        <li><a href="charts-sparkline" data-key="t-sparkline-charts">Sparkline</a></li>
+                        <li><a href="/charts-apex" data-key="t-apex-charts">Apex_Charts</a></li>
+                        <li><a href="/charts-echart" data-key="t-e-charts">E_Charts</a></li>
+                        <li><a href="/charts-chartjs" data-key="t-chartjs-charts">Chartjs</a></li>
+                        <li><a href="/charts-knob" data-key="t-knob-charts">Jquery_Knob</a></li>
+                        <li><a href="/charts-sparkline" data-key="t-sparkline-charts">Sparkline</a></li>
                     </ul>
                 </li>
 
@@ -301,11 +298,11 @@
                         <span data-key="t-icons">Icons</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="icons-feather" data-key="t-feather">Feather</a></li>
-                        <li><a href="icons-boxicons" data-key="t-boxicons">Boxicons</a></li>
-                        <li><a href="icons-materialdesign" data-key="t-material-design">Material_Design</a></li>
-                        <li><a href="icons-dripicons" data-key="t-dripicons">Dripicons</a></li>
-                        <li><a href="icons-fontawesome" data-key="t-font-awesome">Font_awesome 5</a></li>
+                        <li><a href="/icons-feather" data-key="t-feather">Feather</a></li>
+                        <li><a href="/icons-boxicons" data-key="t-boxicons">Boxicons</a></li>
+                        <li><a href="/icons-materialdesign" data-key="t-material-design">Material_Design</a></li>
+                        <li><a href="/icons-dripicons" data-key="t-dripicons">Dripicons</a></li>
+                        <li><a href="/icons-fontawesome" data-key="t-font-awesome">Font_awesome 5</a></li>
                     </ul>
                 </li>
 
@@ -315,9 +312,9 @@
                         <span data-key="t-maps">Maps</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="maps-google" data-key="t-g-maps">Google</a></li>
-                        <li><a href="maps-vector" data-key="t-v-maps">Vector</a></li>
-                        <li><a href="maps-leaflet" data-key="t-l-maps">Leaflet</a></li>
+                        <li><a href="/maps-google" data-key="t-g-maps">Google</a></li>
+                        <li><a href="/maps-vector" data-key="t-v-maps">Vector</a></li>
+                        <li><a href="/maps-leaflet" data-key="t-l-maps">Leaflet</a></li>
                     </ul>
                 </li>
 

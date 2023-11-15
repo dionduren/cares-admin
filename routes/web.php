@@ -36,6 +36,9 @@ Route::middleware(['auth'])->group(function () {
 
 
   Route::get('/helpdesk/ticket/new', [HelpdeskController::class, 'index_new']);
+  Route::get('/helpdesk/ticket/ongoing', [HelpdeskController::class, 'index_ongoing']);
+  Route::get('/helpdesk/ticket/resolved', [HelpdeskController::class, 'index_resolved']);
+  Route::get('/helpdesk/ticket/all', [HelpdeskController::class, 'index_all']);
 
   Route::get('/report-test', [ReportController::class, 'index_test'])->name('report_test');
 

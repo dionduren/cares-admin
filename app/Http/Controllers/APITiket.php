@@ -30,6 +30,20 @@ class APITiket extends Controller
         return response()->json($nama_sla);
     }
 
+    public function list_all_ticket()
+    {
+        $list_tiket = Tiket::all();
+        return response()->json($list_tiket);
+    }
+
+    public function ticket_detail($id)
+    {
+        $detail_tiket = Tiket::where('id', $id)->first();
+        return response()->json($detail_tiket);
+    }
+
+    // ==================== HELPDESK ====================
+
     public function helpdesk_list_submitted()
     {
         // Cek benerin alur request dulu
@@ -44,11 +58,13 @@ class APITiket extends Controller
         return response()->json($list_tiket);
     }
 
-    public function ticket_detail($id)
+    public function helpdesk_list_resolved()
     {
-        $detail_tiket = Tiket::where('id', $id)->first();
-        return response()->json($detail_tiket);
+        $list_tiket = Tiket::where('id_status_tiket', '4')->get();
+        return response()->json($list_tiket);
     }
+
+    // ==================== TEAMLEAD ====================
 
     public function teamlead_waiting_list($id)
     {
@@ -67,6 +83,8 @@ class APITiket extends Controller
         $list_tiket = Tiket::where('id_group', $id)->whereNotNull('id_technical')->where('status_tiket', "Closed")->get();
         return response()->json($list_tiket);
     }
+
+    // ==================== TECHNICAL ====================
 
     public function technical_ongoing_list($id)
     {
