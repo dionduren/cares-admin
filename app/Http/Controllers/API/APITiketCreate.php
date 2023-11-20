@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
+
+use App\Http\Controllers\Controller;
 
 use App\Models\User;
 use App\Models\Tiket;
@@ -12,7 +14,6 @@ use App\Models\Master\TipeSLA;
 use App\Models\Transaction\SLA;
 
 use Illuminate\Http\Request;
-// use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class APITiketCreate extends Controller
@@ -84,13 +85,11 @@ class APITiketCreate extends Controller
                 $item_kategori = ItemCategory::where('id', $id_item_kategori)->first();
                 $level_dampak = $item_kategori->level_dampak;
                 $level_urgensi = $item_kategori->level_urgensi;
-                // $level_prioritas = $item_kategori->level_prioritas;
                 $tipe_tiket = $item_kategori->tipe_tiket;
             } else {
                 $subkategori = Subkategori::where('id', $id_subkategori)->first();
                 $level_dampak = $subkategori->level_dampak;
                 $level_urgensi = $subkategori->level_urgensi;
-                // $level_prioritas = $subkategori->level_prioritas;
                 $tipe_tiket = $subkategori->tipe_tiket;
             }
 
@@ -119,7 +118,6 @@ class APITiketCreate extends Controller
                 'attachment' => null,
                 'level_dampak' => $level_dampak,
                 'level_urgensi' => $level_urgensi,
-                // 'level_prioritas' => $level_prioritas,
                 'updated_by' => $user_creator,
                 'created_by' => $user_creator,
             ];
@@ -166,6 +164,7 @@ class APITiketCreate extends Controller
         try {
             $user_id_creator = $request->input('user_id_creator');
             $user_creator = User::where('nik', $user_id_creator)->first()->nama;
+
             $id_kategori = $request->input('id_kategori');
             $nama_kategori = Kategori::where('id', $request->input('id_kategori'))->first()->nama_kategori;
             $id_subkategori = $request->input('id_subkategori');
@@ -177,18 +176,15 @@ class APITiketCreate extends Controller
             $judul_tiket = $request->input('judul_tiket');
             $detail_tiket = $request->input('detail_tiket');
 
-
             if ($id_item_kategori != null) {
                 $item_kategori = ItemCategory::where('id', $id_item_kategori)->first();
                 $level_dampak = $item_kategori->level_dampak;
                 $level_urgensi = $item_kategori->level_urgensi;
-                $level_prioritas = $item_kategori->level_prioritas;
                 $tipe_tiket = $item_kategori->tipe_tiket;
             } else {
                 $subkategori = Subkategori::where('id', $id_subkategori)->first();
                 $level_dampak = $subkategori->level_dampak;
                 $level_urgensi = $subkategori->level_urgensi;
-                $level_prioritas = $subkategori->level_prioritas;
                 $tipe_tiket = $subkategori->tipe_tiket;
             }
 
@@ -216,7 +212,6 @@ class APITiketCreate extends Controller
                     // 'attachment' => null,
                     'level_dampak' => $level_dampak,
                     'level_urgensi' => $level_urgensi,
-                    'level_prioritas' => $level_prioritas,
                     'updated_by' => $user_creator,
                     'created_by' => $user_creator,
                 ];
@@ -242,7 +237,6 @@ class APITiketCreate extends Controller
                     // 'attachment' => null,
                     'level_dampak' => $level_dampak,
                     'level_urgensi' => $level_urgensi,
-                    'level_prioritas' => $level_prioritas,
                     'updated_by' => $user_creator,
                     'created_by' => $user_creator,
                 ];

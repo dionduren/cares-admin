@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
+use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Tiket;
-use App\Models\HariLibur;
 use App\Models\GrupMember;
 use Illuminate\Http\Request;
 
@@ -130,51 +130,17 @@ class APIGroup extends Controller
         $id_teamlead = $request->input('nik');
         $nama_teamlead = User::where('nik', $id_teamlead)->first()->nama;
 
-        // Perhitungan Action Time = TECHNICAL ASSIGNED
-        $info_tiket = Tiket::where('id', $id_tiket)->first();
-        $start_time = $info_tiket->updated_at;
-        $end_time   = now();
-        $businessSLA = HelperController::hitungBusinessSLA($start_time, $end_time);
-        $businessSLA_string = sprintf(
-            "%02d days %02d hours %02d minutes %02d seconds",
-            $businessSLA['days'],
-            $businessSLA['hours'],
-            $businessSLA['minutes'],
-            $businessSLA['seconds']
-        );
-        // $businessSLA_string = $businessSLA['days'] + ' Hari ' + $businessSLA['hours'] + ' Jam '  + $businessSLA['minutes'] + ' Menit' + $businessSLA['minutes'] + ' Detik';
-        $actualSLA = HelperController::hitungActualSLA($start_time, $end_time);
-        // $actualSLA_string = $actualSLA['days'] + ' Hari ' + $actualSLA['hours'] + ' Jam '  + $actualSLA['minutes'] + ' Menit' + $actualSLA['minutes'] + ' Detik';
-        $actualSLA_string = sprintf(
-            "%02d days %02d hours %02d minutes %02d seconds",
-            $actualSLA['days'],
-            $actualSLA['hours'],
-            $actualSLA['minutes'],
-            $actualSLA['seconds']
-        );
-
-        \dd($businessSLA_string);
-        \dd($actualSLA_string);
-
-
-        // $durasi_float = HelperController::hitungBusinessSLA($start_time, $end_time);
-        // $durasi = floor($durasi_float);
+        // set status ticket
+        $tipe_tiket = Tiket::where('id', $id_tiket)->first()->tipe_tiket;
+        $status_tiket = StatusTiket::where('flow_number', 3)->where('tipe_tiket', $tipe_tiket)->first();
 
         Tiket::where('id', $id_tiket)->update([
             'id_technical' => $id_technical,
             'assigned_technical' => $nama_technical,
+            'id_status_tiket' => $status_tiket->flow_number,
+            'status_tiket' => $status_tiket->nama_status,
             'updated_by' => $nama_teamlead,
         ]);
-
-        // ActionTime::create([
-        //     'id_tiket' => $id_tiket,
-        //     'action' => 'TECHNICAL ASSIGNED',
-        //     'start_time' => $start_time,
-        //     'end_time' => $end_time,
-        //     'durasi_total' => sprintf("%.3f", $durasi_float),
-        //     'durasi' => $durasi,
-        //     'created_by' => $nama_teamlead,
-        // ]);
 
         return response()->json([
             'success' => true,

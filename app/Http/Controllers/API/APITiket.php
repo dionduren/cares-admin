@@ -1,15 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
+use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Tiket;
-use App\Models\HariLibur;
-use App\Models\ActionTime;
-use App\Models\GrupMember;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 use App\Models\KnowledgeManagement;
 use App\Models\Master\TipeSLA;
 
@@ -68,19 +65,19 @@ class APITiket extends Controller
 
     public function teamlead_waiting_list($id)
     {
-        $list_tiket = Tiket::where('id_group', $id)->whereNull('id_technical')->get();
+        $list_tiket = Tiket::where('id_status_tiket', '2')->where('id_group', $id)->get();
         return response()->json($list_tiket);
     }
 
     public function teamlead_ongoing_list($id)
     {
-        $list_tiket = Tiket::where('id_group', $id)->whereNotNull('id_technical')->get();
+        $list_tiket = Tiket::where('id_status_tiket', '3')->where('id_group', $id)->get();
         return response()->json($list_tiket);
     }
 
     public function teamlead_finished($id)
     {
-        $list_tiket = Tiket::where('id_group', $id)->whereNotNull('id_technical')->where('status_tiket', "Closed")->get();
+        $list_tiket = Tiket::where('id_status_tiket', '4')->where('id_group', $id)->get();
         return response()->json($list_tiket);
     }
 
@@ -88,16 +85,18 @@ class APITiket extends Controller
 
     public function technical_ongoing_list($id)
     {
-        $list_tiket = Tiket::where('id_technical', $id)->whereNotIn('status_tiket', ['Finished', 'Closed'])->get();
+        $list_tiket = Tiket::where('id_status_tiket', '3')->where('id_technical', $id)->get();
         // $list_tiket = Tiket::where('id_technical', $id)->get();
         return response()->json($list_tiket);
     }
 
     public function technical_finished($id)
     {
-        $list_tiket = Tiket::where('id_technical', $id)->where('status_tiket', "Closed")->get();
+        $list_tiket = Tiket::where('id_status_tiket', '4')->where('id_technical', $id)->get();
         return response()->json($list_tiket);
     }
+
+    // ==================== Knowledge Management ====================
 
     function solution_list($id)
     {

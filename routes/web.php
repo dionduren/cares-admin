@@ -4,7 +4,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\Dsahboard\HelpdeskController;
+use App\Http\Controllers\Dashboard\HelpdeskController;
+use App\Http\Controllers\Dashboard\TeamLeadController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MasterDataController;
 use App\Http\Controllers\ReportController;
@@ -39,6 +40,11 @@ Route::middleware(['auth'])->group(function () {
   Route::get('/helpdesk/ticket/ongoing', [HelpdeskController::class, 'index_ongoing']);
   Route::get('/helpdesk/ticket/resolved', [HelpdeskController::class, 'index_resolved']);
   Route::get('/helpdesk/ticket/all', [HelpdeskController::class, 'index_all']);
+
+  Route::get('/leader/ticket/new', [TeamLeadController::class, 'index_new']);
+  Route::get('/leader/ticket/ongoing', [TeamLeadController::class, 'index_ongoing']);
+  Route::get('/leader/ticket/resolved', [TeamLeadController::class, 'index_resolved']);
+  Route::get('/leader/ticket/all', [TeamLeadController::class, 'index_all']);
 
   Route::get('/report-test', [ReportController::class, 'index_test'])->name('report_test');
 

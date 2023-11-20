@@ -26,6 +26,6 @@ class ReportController extends Controller
         // $user = Auth::user();
         // $daftar_tiket = Tiket::all();
 
-        return view('admin.report-test');
+        return view('dashboard.admin.report-test');
     }
 }

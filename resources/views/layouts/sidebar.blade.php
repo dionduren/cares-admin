@@ -71,7 +71,7 @@
                                 Ongoing</a></li>
                         <li><a href="/layanan_owner/ticket/resolved" key="t-create-task" style="color:red">Daftar Tiket
                                 Resolved</a></li>
-                        <li><a href="/layanan_owner/ticket/history" key="t-create-task" style="color:red">Histori
+                        <li><a href="/layanan_owner/ticket/all" key="t-create-task" style="color:red">Histori
                                 Tiket</a>
                         </li>
                     </ul>
@@ -82,15 +82,15 @@
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i data-feather="trello"></i>
-                        <span data-key="t-tasks" style="color:red">Daftar Tiket</span>
+                        <span data-key="t-tasks">Daftar Tiket</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="/leader/ticket/new" key="t-task-list" style="color:red">Daftar Tiket Baru</a></li>
-                        <li><a href="/leader/ticket/ongoing" key="t-kanban-board" style="color:red">Daftar Tiket
+                        <li><a href="/leader/ticket/new" key="t-task-list">Daftar Tiket Baru</a></li>
+                        <li><a href="/leader/ticket/ongoing" key="t-kanban-board">Daftar Tiket
                                 Ongoing</a></li>
-                        <li><a href="/leader/ticket/resolved" key="t-create-task" style="color:red">Daftar Tiket
+                        <li><a href="/leader/ticket/resolved" key="t-create-task">Daftar Tiket
                                 Resolved</a></li>
-                        <li><a href="/leader/ticket/history" key="t-create-task" style="color:red">Histori Tiket</a>
+                        <li><a href="/leader/ticket/all" key="t-create-task">Histori Tiket</a>
                         </li>
                     </ul>
                 </li>

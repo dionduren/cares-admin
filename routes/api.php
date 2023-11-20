@@ -3,10 +3,10 @@
 use App\Models\ActivityLog;
 use Illuminate\Http\Request;
 
-use App\Http\Controllers\APIGroup;
-use App\Http\Controllers\APITiket;
+use App\Http\Controllers\API\APIGroup;
+use App\Http\Controllers\API\APITiket;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\APITiketCreate;
+use App\Http\Controllers\API\APITiketCreate;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SuperAdminController;
 

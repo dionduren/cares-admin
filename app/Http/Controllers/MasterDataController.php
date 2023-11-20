@@ -29,13 +29,13 @@ class MasterDataController extends Controller
     public function helpdesk_ticket_list()
     {
 
-        return view('admin.master.ticket-list');
+        return view('dashboard.admin.master.ticket-list');
     }
 
     public function master_kategori()
     {
 
-        return view('admin.master.kategori');
+        return view('dashboard.admin.master.kategori');
     }
 
     public function submit_kategori(Request $request)
@@ -88,7 +88,7 @@ class MasterDataController extends Controller
     public function master_sub_kategori()
     {
 
-        return view('admin.master.subkategori');
+        return view('dashboard.admin.master.subkategori');
     }
 
     public function submit_subkategori(Request $request)

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Dsahboard;
+namespace App\Http\Controllers\Dashboard;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -11,7 +11,7 @@ class HelpdeskController extends Controller
     function index_new()
     {
         $nik_user = Auth::user()->nik;
-        return view('helpdesk.tiket-baru', [
+        return view('dashboard.helpdesk.tiket-baru', [
             'user' => $nik_user,
         ]);
     }
@@ -19,7 +19,7 @@ class HelpdeskController extends Controller
     function index_ongoing()
     {
         $nik_user = Auth::user()->nik;
-        return view('helpdesk.tiket-ongoing', [
+        return view('dashboard.helpdesk.tiket-ongoing', [
             'user' => $nik_user,
         ]);
     }
@@ -27,7 +27,7 @@ class HelpdeskController extends Controller
     function index_resolved()
     {
         $nik_user = Auth::user()->nik;
-        return view('helpdesk.tiket-resolved', [
+        return view('dashboard.helpdesk.tiket-resolved', [
             'user' => $nik_user,
         ]);
     }
@@ -35,7 +35,7 @@ class HelpdeskController extends Controller
     function index_all()
     {
         $nik_user = Auth::user()->nik;
-        return view('helpdesk.all-tiket', [
+        return view('dashboard.helpdesk.all-tiket', [
             'user' => $nik_user,
         ]);
     }

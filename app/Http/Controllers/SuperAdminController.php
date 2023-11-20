@@ -24,7 +24,7 @@ class SuperAdminController extends Controller
     //  */
     public function activity_history()
     {
-        return view('sadmin.activity_history');
+        return view('dashboard.sadmin.activity_history');
     }
 
     public function data_activity_history()
