@@ -48,68 +48,79 @@
                     </ul>
                 </li>
 
-                <li class="menu-title" data-key="t-menu">VP Pemilik Layanan TI</li>
 
+                @if (Auth::user()->role_id == 3)
+                    <li class="menu-title" data-key="t-menu">VP Pemilik Layanan TI</li>
 
-                <li>
-                    <a href="/vp_layanan/ticket-list">
-                        <i class="mdi mdi-ticket-confirmation"></i>
-                        <span data-key="t-horizontal" style="color:red">Halaman Approval</span>
-                    </a>
-                </li>
+                    <li>
+                        <a href="/vp_layanan/ticket-list">
+                            <i class="mdi mdi-ticket-confirmation"></i>
+                            <span data-key="t-horizontal" style="color:red">Halaman Approval</span>
+                        </a>
+                    </li>
 
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow">
-                        <i data-feather="trello"></i>
-                        <span data-key="t-tasks" style="color:red">Daftar Tiket</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="/layanan_owner/ticket/new" key="t-task-list" style="color:red">Daftar Tiket
-                                Baru</a>
-                        </li>
-                        <li><a href="/layanan_owner/ticket/ongoing" key="t-kanban-board" style="color:red">Daftar Tiket
-                                Ongoing</a></li>
-                        <li><a href="/layanan_owner/ticket/resolved" key="t-create-task" style="color:red">Daftar Tiket
-                                Resolved</a></li>
-                        <li><a href="/layanan_owner/ticket/all" key="t-create-task" style="color:red">Histori
-                                Tiket</a>
-                        </li>
-                    </ul>
-                </li>
+                    <li>
+                        <a href="javascript: void(0);" class="has-arrow">
+                            <i data-feather="trello"></i>
+                            <span data-key="t-tasks" style="color:red">Daftar Tiket</span>
+                        </a>
+                        <ul class="sub-menu" aria-expanded="false">
+                            <li><a href="/layanan_owner/ticket/new" key="t-task-list" style="color:red">Daftar Tiket
+                                    Baru</a>
+                            </li>
+                            <li><a href="/layanan_owner/ticket/ongoing" key="t-kanban-board" style="color:red">Daftar
+                                    Tiket
+                                    Ongoing</a></li>
+                            <li><a href="/layanan_owner/ticket/resolved" key="t-create-task" style="color:red">Daftar
+                                    Tiket
+                                    Resolved</a></li>
+                            <li><a href="/layanan_owner/ticket/all" key="t-create-task" style="color:red">Histori
+                                    Tiket</a>
+                            </li>
+                        </ul>
+                    </li>
+                @endif
 
-                <li class="menu-title" data-key="t-menu">Technical Group Leader</li>
+                @if (Auth::user()->role_id == 4)
+                    <li class="menu-title" data-key="t-menu">Technical Group Leader</li>
 
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow">
-                        <i data-feather="trello"></i>
-                        <span data-key="t-tasks">Daftar Tiket</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="/leader/ticket/new" key="t-task-list">Daftar Tiket Baru</a></li>
-                        <li><a href="/leader/ticket/ongoing" key="t-kanban-board">Daftar Tiket
-                                Ongoing</a></li>
-                        <li><a href="/leader/ticket/resolved" key="t-create-task">Daftar Tiket
-                                Resolved</a></li>
-                        <li><a href="/leader/ticket/all" key="t-create-task">Histori Tiket</a>
-                        </li>
-                    </ul>
-                </li>
+                    <li>
+                        <a href="javascript: void(0);" class="has-arrow">
+                            <i data-feather="trello"></i>
+                            <span data-key="t-tasks">Daftar Tiket</span>
+                        </a>
+                        <ul class="sub-menu" aria-expanded="false">
+                            <li><a href="/leader/ticket/new" key="t-task-list">Daftar Tiket Baru</a></li>
+                            <li><a href="/leader/ticket/ongoing" key="t-kanban-board">Daftar Tiket
+                                    Ongoing</a></li>
+                            <li><a href="/leader/ticket/resolved" key="t-create-task">Daftar Tiket
+                                    Resolved</a></li>
+                            <li><a href="/leader/ticket/all" key="t-create-task">Histori Tiket</a>
+                            </li>
+                        </ul>
+                    </li>
+                @endif
 
+                @if (Auth::user()->role_id == 5)
+                    <li class="menu-title" data-key="t-menu">Technical Menu</li>
 
-                <li class="menu-title" data-key="t-menu">Technical Menu</li>
-
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow">
-                        <i data-feather="trello"></i>
-                        <span data-key="t-tasks" style="color:red">Daftar Tiket</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="/technical/ticket/new" key="t-task-list" style="color:red">Daftar Tiket Active</a>
-                        </li>
-                        <li><a href="/technical/ticket/history" key="t-create-task" style="color:red">Histori Tiket</a>
-                        </li>
-                    </ul>
-                </li>
+                    <li>
+                        <a href="javascript: void(0);" class="has-arrow">
+                            <i data-feather="trello"></i>
+                            <span data-key="t-tasks" style="color:red">Daftar Tiket</span>
+                        </a>
+                        <ul class="sub-menu" aria-expanded="false">
+                            <li><a href="/technical/ticket/assigned" key="t-task-list">Daftar Tiket
+                                    Assigned</a>
+                            </li>
+                            <li><a href="/technical/ticket/resolved" key="t-task-list" style="color:red">Daftar Tiket
+                                    Resolved</a>
+                            </li>
+                            <li><a href="/technical/ticket/history" key="t-create-task" style="color:red">All Tiket</a>
+                            </li>
+                        </ul>
+                    </li>
+                @endif
 
 
                 @if (Auth::user()->role_id <= 2)

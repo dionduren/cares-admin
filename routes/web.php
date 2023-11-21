@@ -4,13 +4,14 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ReportController;
+use App\Http\Controllers\TicketController;
+use App\Http\Controllers\MasterDataController;
+use App\Http\Controllers\SuperAdminController;
 use App\Http\Controllers\Dashboard\HelpdeskController;
 use App\Http\Controllers\Dashboard\TeamLeadController;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\MasterDataController;
-use App\Http\Controllers\ReportController;
-use App\Http\Controllers\SuperAdminController;
-use App\Http\Controllers\TicketController;
+use App\Http\Controllers\Dashboard\TechnicalController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,6 +46,11 @@ Route::middleware(['auth'])->group(function () {
   Route::get('/leader/ticket/ongoing', [TeamLeadController::class, 'index_ongoing']);
   Route::get('/leader/ticket/resolved', [TeamLeadController::class, 'index_resolved']);
   Route::get('/leader/ticket/all', [TeamLeadController::class, 'index_all']);
+
+  Route::get('/technical/ticket/assigned', [TechnicalController::class, 'index_assigned']);
+  Route::get('/technical/ticket/detail/{id}', [TechnicalController::class, 'ticket_detail']);
+  Route::get('/technical/ticket/resolved', [TechnicalController::class, 'index_resolved']);
+  Route::get('/technical/ticket/all', [TechnicalController::class, 'index_all']);
 
   Route::get('/report-test', [ReportController::class, 'index_test'])->name('report_test');
 
