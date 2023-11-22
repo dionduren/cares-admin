@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Tiket;
-
 use Illuminate\Http\Request;
-use App\Models\KnowledgeManagement;
+
 use App\Models\Master\TipeSLA;
+use Illuminate\Support\Carbon;
+use App\Models\Transaction\SLA;
+use App\Models\Master\StatusTiket;
+use App\Models\KnowledgeManagement;
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\HelperController;
 
 class APITiket extends Controller
 {
@@ -100,42 +104,76 @@ class APITiket extends Controller
 
     function solution_list($id)
     {
-        $id_kategori = Tiket::where('id', $id)->first()->id_kategori;
-        $list_solusi = KnowledgeManagement::where('id_kategori', $id_kategori)->get();
+        $id_item_kategori = Tiket::where('id', $id)->first()->id_item_kategori;
+        if ($id_item_kategori == null) {
+            $id_subkategori = Tiket::where('id', $id)->first()->id_subkategori;
+            $list_solusi = KnowledgeManagement::where('id_subkategori', $id_subkategori)->get();
+        } else {
+            $list_solusi = KnowledgeManagement::where('id_item_kategori', $id_item_kategori)->get();
+        }
+
         return response()->json($list_solusi);
     }
 
     function submit_solution(Request $request)
     {
         $id_tiket = $request->input('id_tiket');
+        $tipe_tiket = Tiket::where('id', $id_tiket)->first()->tipe_tiket;
         $id_solusi = $request->input('id_solusi');
         $id_technical = $request->input('nik');
         $nama_technical = User::where('nik', $id_technical)->first()->nama;
 
-        // Perhitungan Action Time = FINISHED
-        $info_tiket = Tiket::where('id', $id_tiket)->first();
-        $start_time = $info_tiket->updated_at;
-        $end_time   = now();
-        // TODO: change actiontime to sla
-        // $durasi_float = HelperController::hitungBusinessSLA($start_time, $end_time);
-        // $durasi = floor($durasi_float);
+        // set status ticket
+        $status_tiket = StatusTiket::where('flow_number', 4)->where('tipe_tiket', $tipe_tiket)->first();
 
         Tiket::where('id', $id_tiket)->update([
+            'id_status_tiket' => $status_tiket->flow_number,
+            'status_tiket' => $status_tiket->nama_status,
             'id_solusi' => $id_solusi,
-            'status_tiket' => 'Finished',
             'updated_by' => $nama_technical,
         ]);
 
-        // // TODO: change actiontime to SLA
-        // ActionTime::create([
-        //     'id_tiket' => $id_tiket,
-        //     'action' => 'FINISHED',
-        //     'start_time' => $start_time,
-        //     'end_time' => $end_time,
-        //     'durasi_total' => sprintf("%.3f", $durasi_float),
-        //     'durasi' => $durasi,
-        //     'created_by' => $nama_technical,
-        // ]);
+        // Step-1 Update SLA Response
+        $sla_response = SLA::where('id_tiket', $id_tiket)->where('kategori_sla', 'Resolve')->first();
+        $business_start_time = Carbon::parse($sla_response->business_start_time);
+        $actual_start_time = Carbon::parse($sla_response->actual_start_time);
+        $end_time   = now();
+
+        // Hitung waktu untuk SLA response
+        $businessSLA = HelperController::hitungBusinessSLA($business_start_time, $end_time);
+        $businessSLA_string = $businessSLA['days'] . ' Hari ' . $businessSLA['hours'] . ' Jam '  . $businessSLA['minutes'] . ' Menit ' . $businessSLA['seconds'] . ' Detik';
+        $actualSLA = HelperController::hitungActualSLA($actual_start_time, $end_time);
+        $actualSLA_string = $actualSLA['days'] . ' Hari ' . $actualSLA['hours'] . ' Jam '  . $actualSLA['minutes'] . ' Menit ' . $actualSLA['seconds'] . ' Detik';
+
+        // hitung persentase jam SLA business dan actual
+        $durasi_jam = SLA::where('id_tiket', $id_tiket)->where('kategori_sla', 'Resolve')->first()->sla_hours_target;
+
+        $business_total_duration = ($businessSLA['days'] * 86400) + ($businessSLA['hours'] * 3600) + ($businessSLA['minutes'] * 60) + $businessSLA['seconds'];
+        $business_percentage = $business_total_duration / ($durasi_jam * 3600) * 100;
+        $business_percentage_formatted = number_format($business_percentage, 2, '.', '');
+
+        $actual_total_duration = ($actualSLA['days'] * 86400) + ($actualSLA['hours'] * 3600) + ($actualSLA['minutes'] * 60) + $actualSLA['seconds'];
+        $actual_percentage = $actual_total_duration / ($durasi_jam * 3600) * 100;
+        $actual_percentage_formatted = number_format($actual_percentage, 2, '.', '');
+
+
+        SLA::where('id_tiket', $id_tiket)->where('kategori_sla', 'Resolve')->update([
+            'business_stop_time' => HelperController::getEndBusinessTime(),
+            'business_days' => $businessSLA['days'],
+            'business_hours' => $businessSLA['hours'],
+            'business_minutes' => $businessSLA['minutes'],
+            'business_seconds' => $businessSLA['seconds'],
+            'business_elapsed_time' => $businessSLA_string,
+            'business_time_percentage' => $business_percentage_formatted,
+            'actual_stop_time' => now(),
+            'actual_days' => $actualSLA['days'],
+            'actual_hours' => $actualSLA['hours'],
+            'actual_minutes' => $actualSLA['minutes'],
+            'actual_seconds' => $actualSLA['seconds'],
+            'actual_elapsed_time' => $actualSLA_string,
+            'actual_time_percentage' => $actual_percentage_formatted,
+            'updated_by' => $nama_technical,
+        ]);
 
         return response()->json([
             'success' => true,
@@ -145,6 +183,8 @@ class APITiket extends Controller
     function submit_new_solution(Request $request)
     {
         $id_tiket = $request->input('id_tiket');
+        $tipe_tiket = Tiket::where('id', $id_tiket)->first()->tipe_tiket;
+        $id_solusi = $request->input('id_solusi');
         $judul_solusi = $request->input('judul_solusi');
         $detail_solusi = $request->input('detail_solusi');
         $id_technical = $request->input('nik');
@@ -152,14 +192,7 @@ class APITiket extends Controller
 
         $info_tiket = Tiket::where('id', $id_tiket)->first();
 
-        // Perhitungan Action Time = FINISHED
-        $start_time = $info_tiket->updated_at;
-        $end_time   = now();
-        // TODO: change actiontime to sla
-        // $durasi_float = HelperController::hitungBusinessSLA($start_time, $end_time);
-        // $durasi = floor($durasi_float);
-
-        $id_solusi = KnowledgeManagement::create([
+        KnowledgeManagement::create([
             'tipe_tiket' => $info_tiket->tipe_tiket,
             'id_kategori' => $info_tiket->id_kategori,
             'kategori_tiket' => $info_tiket->kategori_tiket,
@@ -173,22 +206,60 @@ class APITiket extends Controller
             'updated_by' => $nama_technical,
         ]);
 
+        // set status ticket
+        $status_tiket = StatusTiket::where('flow_number', 4)->where('tipe_tiket', $tipe_tiket)->first();
+
         Tiket::where('id', $id_tiket)->update([
-            'id_solusi' => $id_solusi->id,
-            'status_tiket' => 'Finished',
+            'id_status_tiket' => $status_tiket->flow_number,
+            'status_tiket' => $status_tiket->nama_status,
+            'id_solusi' => $id_solusi,
+            'judul_solusi' => $judul_solusi,
+            'detail_solusi' => $detail_solusi,
+            // 'penjelasan_solusi' => $judul_solusi,
             'updated_by' => $nama_technical,
         ]);
 
-        // TODO: change actiontime to sla
-        // ActionTime::create([
-        //     'id_tiket' => $id_tiket,
-        //     'action' => 'FINISHED',
-        //     'start_time' => $start_time,
-        //     'end_time' => $end_time,
-        //     'durasi_total' => sprintf("%.3f", $durasi_float),
-        //     'durasi' => $durasi,
-        //     'created_by' => $nama_technical,
-        // ]);
+        // Step-1 Update SLA Response
+        $sla_response = SLA::where('id_tiket', $id_tiket)->where('kategori_sla', 'Resolve')->first();
+        $business_start_time = Carbon::parse($sla_response->business_start_time);
+        $actual_start_time = Carbon::parse($sla_response->actual_start_time);
+        $end_time   = now();
+
+        // Hitung waktu untuk SLA response
+        $businessSLA = HelperController::hitungBusinessSLA($business_start_time, $end_time);
+        $businessSLA_string = $businessSLA['days'] . ' Hari ' . $businessSLA['hours'] . ' Jam '  . $businessSLA['minutes'] . ' Menit ' . $businessSLA['seconds'] . ' Detik';
+        $actualSLA = HelperController::hitungActualSLA($actual_start_time, $end_time);
+        $actualSLA_string = $actualSLA['days'] . ' Hari ' . $actualSLA['hours'] . ' Jam '  . $actualSLA['minutes'] . ' Menit ' . $actualSLA['seconds'] . ' Detik';
+
+        // hitung persentase jam SLA business dan actual
+        $durasi_jam = SLA::where('id_tiket', $id_tiket)->where('kategori_sla', 'Resolve')->first()->sla_hours_target;
+
+        $business_total_duration = ($businessSLA['days'] * 86400) + ($businessSLA['hours'] * 3600) + ($businessSLA['minutes'] * 60) + $businessSLA['seconds'];
+        $business_percentage = $business_total_duration / ($durasi_jam * 3600) * 100;
+        $business_percentage_formatted = number_format($business_percentage, 2, '.', '');
+
+        $actual_total_duration = ($actualSLA['days'] * 86400) + ($actualSLA['hours'] * 3600) + ($actualSLA['minutes'] * 60) + $actualSLA['seconds'];
+        $actual_percentage = $actual_total_duration / ($durasi_jam * 3600) * 100;
+        $actual_percentage_formatted = number_format($actual_percentage, 2, '.', '');
+
+
+        SLA::where('id_tiket', $id_tiket)->where('kategori_sla', 'Resolve')->update([
+            'business_stop_time' => HelperController::getEndBusinessTime(),
+            'business_days' => $businessSLA['days'],
+            'business_hours' => $businessSLA['hours'],
+            'business_minutes' => $businessSLA['minutes'],
+            'business_seconds' => $businessSLA['seconds'],
+            'business_elapsed_time' => $businessSLA_string,
+            'business_time_percentage' => $business_percentage_formatted,
+            'actual_stop_time' => now(),
+            'actual_days' => $actualSLA['days'],
+            'actual_hours' => $actualSLA['hours'],
+            'actual_minutes' => $actualSLA['minutes'],
+            'actual_seconds' => $actualSLA['seconds'],
+            'actual_elapsed_time' => $actualSLA_string,
+            'actual_time_percentage' => $actual_percentage_formatted,
+            'updated_by' => $nama_technical,
+        ]);
 
         return response()->json([
             'success' => true,

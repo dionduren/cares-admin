@@ -38,7 +38,7 @@ class HomeController extends Controller
     public function root()
     {
         $user = Auth::user();
-        $daftar_tiket = Tiket::all();
+        $daftar_tiket = Tiket::where('user_id_creator', $user->nik)->get();
 
         return view('index', [
             'user' => $user,

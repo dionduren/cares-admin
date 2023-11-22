@@ -143,6 +143,8 @@
                     }
                 ],
                 lengthChange: true,
+                scrollCollapse: true,
+                scrollX: true,
                 // ordering: true,
                 buttons: ['copy', 'excel', 'pdf', 'colvis']
             });

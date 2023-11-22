@@ -75,7 +75,7 @@
                     <div class="row pb-3 mx-auto text-center">
                         <button type="button" class="btn btn-lg btn-success" style="width: 100%" data-bs-toggle="modal"
                             data-bs-target="#solveTicketModal">
-                            Solve Tikcet
+                            Solve Tiket
                         </button>
                     </div>
 
@@ -99,7 +99,14 @@
                                         </div>
                                     </div>
 
-                                    <div class="row mb-3" id="solution_div">
+                                    <div class="row mb-3" id="solution_div_judul">
+                                        <label for="detail_tiket">Judul solusi baru yang digunakan</label>
+                                        <div class="col">
+                                            <textarea class="form-control" name="judul_solusi" id="judul_solusi" rows="5"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3" id="solution_div_detail">
                                         <label for="detail_tiket">Jelaskan solusi baru yang digunakan</label>
                                         <div class="col">
                                             <textarea class="form-control" name="detail_solusi" id="detail_solusi" rows="5"></textarea>
@@ -128,7 +135,8 @@
         $(document).ready(function() {
 
             $('#solveTicketModal').on('show.bs.modal', function(event) {
-                $('#solution_div').hide();
+                $('#solution_div_judul').hide();
+                $('#solution_div_detail').hide();
 
                 $('#solusi_tiket').find('option').remove().end().append(
                     '<option value="0">Pilihan Solusi dari Knowledge Management</option>');
@@ -151,14 +159,67 @@
 
             $("#solusi_tiket").change(function() {
                 if ($(this).val() == 9999) {
-                    $('#solution_div').show();
+                    $('#solution_div_judul').show();
+                    $('#solution_div_detail').show();
+                    $('#judul_solusi').attr('required', true); // Make required
+                    $('#detail_solusi').attr('required', true); // Make required
                 } else {
-                    $('#solution_div').hide();
+                    $('#solution_div_judul').hide();
+                    $('#solution_div_detail').hide();
+                    $('#judul_solusi').removeAttr('required'); // Remove required
+                    $('#detail_solusi').removeAttr('required'); // Remove required
                 }
             });
 
             $('#resolveTicketButton').click(function() {
-                console.log('submit');
+                $id_solusi = $('#solusi_tiket').val();
+
+                if ($id_solusi != 9999) {
+                    $.ajax({
+                        url: "/api/submit-solution",
+                        method: "POST",
+                        dataType: "json",
+                        data: {
+                            nik: $user_id,
+                            id_tiket: $id_tiket,
+                            id_solusi: $id_solusi,
+                        },
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function(data) {
+                            console.log(data);
+                            window.location.href = '/';
+                        }
+                    })
+                } else {
+                    $judul_solusi = $('#judul_solusi').val();
+                    $detail_solusi = $('#detail_solusi').val();
+
+                    $.ajax({
+                        url: "/api/submit-new-solution",
+                        method: "POST",
+                        dataType: "json",
+                        data: {
+                            nik: $user_id,
+                            id_tiket: $id_tiket,
+                            id_solusi: $id_solusi,
+                            judul_solusi: $judul_solusi,
+                            detail_solusi: $detail_solusi,
+                        },
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function(data) {
+                            console.log(data);
+                            window.location.href = '/';
+                        }
+                    })
+                }
+
+
+
+
             });
 
             function populateDropdowns() {

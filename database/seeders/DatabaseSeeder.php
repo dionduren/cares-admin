@@ -129,28 +129,28 @@ class DatabaseSeeder extends Seeder
         }
 
         foreach ($daftar_group as $group) {
-                $list_group = [
-                    'nama_group' => $group->nama_group,
-                    'updated_by' => 'Seeder',
-                    'created_by' => 'Seeder',
-                ];
+            $list_group = [
+                'nama_group' => $group->nama_group,
+                'updated_by' => 'Seeder',
+                'created_by' => 'Seeder',
+            ];
 
             GrupTechnical::create($list_group);
         }
 
-        GrupTechnical::where('nama_group','IT Infrastruktur')->update([
+        GrupTechnical::where('nama_group', 'IT Infrastruktur')->update([
             'nik_team_lead' => '121003',
             'nama_team_lead' => 'Richard Martinus Halim',
         ]);
 
-        GrupTechnical::where('nama_group','Grup Technical Test')->update([
+        GrupTechnical::where('nama_group', 'Grup Technical Test')->update([
             'nik_team_lead' => 'leader.test',
             'nama_team_lead' => 'Leader Test',
         ]);
 
         foreach ($daftar_group_member as $member) {
 
-            $id_grup = GrupTechnical::where('nama_group',$member->nama_group)->first()->id;
+            $id_grup = GrupTechnical::where('nama_group', $member->nama_group)->first()->id;
 
             $list_member = [
                 'id_group' => $id_grup,
@@ -220,7 +220,7 @@ class DatabaseSeeder extends Seeder
             'created_by' => 'Seeder',
         ]);
 
-        
+
         // Untuk proses request
         User::create([
             'nik' => 1180043,
@@ -325,7 +325,7 @@ class DatabaseSeeder extends Seeder
         //     'created_by' => 'Seeder',
         // ]);
 
-        $id_grup = GrupTechnical::where('nama_group','Grup Technical Test')->first()->id;
+        $id_grup = GrupTechnical::where('nama_group', 'Grup Technical Test')->first()->id;
 
         GrupMember::create([
             'id_group' => $id_grup,
@@ -355,7 +355,7 @@ class DatabaseSeeder extends Seeder
             'tipe_tiket' => 'REQUEST',
             'id_kategori' => 1,
             'kategori_tiket' => 'Internet/Wifi',
-            'id_subkategori' => 17,
+            'id_subkategori' => 1,
             'subkategori_tiket' => 'Permintaan akses internet/ wifi',
             'judul_solusi' => 'Pendaftaran Wifi Perangkat',
             'detail_solusi' => 'Mendaftarkan daftar user wifi sesuai konfigurasi dari perangkat user',

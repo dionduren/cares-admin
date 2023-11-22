@@ -18,6 +18,8 @@ return new class extends Migration
             $table->integer('id_unit_layanan')->unsigned()->nullable();
             $table->string('unit_layanan')->nullable();
             $table->string('user_id_creator')->nullable();
+            $table->string('jabatan_creator')->nullable(); //untuk informasi history
+            $table->string('unit_kerja_creator')->nullable();  //untuk informasi history
             $table->integer('id_tiket_prev')->unsigned()->nullable();
             $table->string('nomor_tiket')->nullable();
             $table->string('tipe_tiket');
@@ -35,12 +37,14 @@ return new class extends Migration
             $table->integer('level_urgensi')->unsigned()->nullable();
             $table->integer('level_dampak')->unsigned()->nullable();
             $table->string('level_prioritas')->nullable();
-            $table->string('tipe_matriks')->nullable();
             $table->integer('id_group')->unsigned()->nullable();
             $table->string('assigned_group')->nullable();
             $table->string('id_technical')->nullable();
             $table->string('assigned_technical')->nullable();
             $table->integer('id_solusi')->unsigned()->nullable();
+            $table->string('judul_solusi')->nullable();
+            $table->string('detail_solusi')->nullable();
+            // $table->string('penjelasan_solusi')->nullable();
             $table->string('updated_by');
             $table->string('created_by');
             $table->timestamps();

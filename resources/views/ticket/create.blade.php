@@ -72,7 +72,7 @@
 @section('script')
     <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
     <script>
-        $user_id = {{ $user->nik }};
+        $user_id = "{{ $user->nik }}";
 
         $(document).ready(function() {
             $.ajax({

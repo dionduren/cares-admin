@@ -75,6 +75,8 @@ $(document).ready(function () {
     }
     ],
     lengthChange: true,
+    scrollCollapse: true,
+    scrollX: true,
     // ordering: true,
     buttons: ['copy', 'excel', 'pdf', 'colvis']
   });
@@ -87,9 +89,9 @@ $(document).ready(function () {
     var idTiket = button.data('id');
     var nomor_tiket = button.data('ticket-number');
 
-    getTechnical(idTiket);
+    $('#list_teknisi').find('option').remove();
 
-    console.log(nomor_tiket);
+    getTechnical(idTiket);
 
     $('#id_tiket').attr('value', idTiket);
     $('#nomor_tiket').text(nomor_tiket);

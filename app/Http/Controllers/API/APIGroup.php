@@ -84,6 +84,17 @@ class APIGroup extends Controller
         $actualSLA = HelperController::hitungActualSLA($actual_start_time, $end_time);
         $actualSLA_string = $actualSLA['days'] . ' Hari ' . $actualSLA['hours'] . ' Jam '  . $actualSLA['minutes'] . ' Menit ' . $actualSLA['seconds'] . ' Detik';
 
+        // hitung persentase jam SLA business dan actual
+        $durasi_jam = SLA::where('id_tiket', $id_tiket)->where('kategori_sla', 'Response')->first()->sla_hours_target;
+
+        $business_total_duration = ($businessSLA['days'] * 86400) + ($businessSLA['hours'] * 3600) + ($businessSLA['minutes'] * 60) + $businessSLA['seconds'];
+        $business_percentage = $business_total_duration / ($durasi_jam * 3600) * 100;
+        $business_percentage_formatted = number_format($business_percentage, 2, '.', '');
+
+        $actual_total_duration = ($actualSLA['days'] * 86400) + ($actualSLA['hours'] * 3600) + ($actualSLA['minutes'] * 60) + $actualSLA['seconds'];
+        $actual_percentage = $actual_total_duration / ($durasi_jam * 3600) * 100;
+        $actual_percentage_formatted = number_format($actual_percentage, 2, '.', '');
+
         SLA::where('id_tiket', $id_tiket)->where('kategori_sla', 'Response')->update([
             'business_stop_time' => HelperController::getEndBusinessTime(),
             'business_days' => $businessSLA['days'],
@@ -91,12 +102,14 @@ class APIGroup extends Controller
             'business_minutes' => $businessSLA['minutes'],
             'business_seconds' => $businessSLA['seconds'],
             'business_elapsed_time' => $businessSLA_string,
+            'business_time_percentage' => $business_percentage_formatted,
             'actual_stop_time' => now(),
             'actual_days' => $actualSLA['days'],
             'actual_hours' => $actualSLA['hours'],
             'actual_minutes' => $actualSLA['minutes'],
             'actual_seconds' => $actualSLA['seconds'],
             'actual_elapsed_time' => $actualSLA_string,
+            'actual_time_percentage' => $actual_percentage_formatted,
             'updated_by' => $helpdesk_agent->nama,
         ]);
 
