@@ -22,31 +22,34 @@
                 </li>
 
 
-                <li class="menu-title" data-key="t-menu">VP Menu</li>
+                @if (Auth::user()->role_id == 7)
+                    <li class="menu-title" data-key="t-menu">VP Menu</li>
 
-                <li>
-                    <a href="/vp/ticket-list">
-                        <i class="mdi mdi-ticket-confirmation"></i>
-                        <span data-key="t-horizontal" style="color:red">Halaman Approval</span>
-                    </a>
-                </li>
+                    <li>
+                        <a href="/vp/ticket-list">
+                            <i class="mdi mdi-ticket-confirmation"></i>
+                            <span data-key="t-horizontal" style="color:red">Halaman Approval</span>
+                        </a>
+                    </li>
 
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow">
-                        <i data-feather="trello"></i>
-                        <span data-key="t-tasks" style="color:red">Daftar Tiket</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="/VP User/ticket/new" key="t-task-list" style="color:red">Daftar Tiket Saya</a>
-                        </li>
-                        <li><a href="/VP User/ticket/ongoing" key="t-kanban-board" style="color:red">Daftar Tiket
-                                Ongoing</a></li>
-                        <li><a href="/VP User/ticket/resolved" key="t-create-task" style="color:red">Daftar Tiket
-                                Resolved</a></li>
-                        <li><a href="/VP User/ticket/history" key="t-create-task" style="color:red">Histori Tiket</a>
-                        </li>
-                    </ul>
-                </li>
+                    <li>
+                        <a href="javascript: void(0);" class="has-arrow">
+                            <i data-feather="trello"></i>
+                            <span data-key="t-tasks" style="color:red">Daftar Tiket</span>
+                        </a>
+                        <ul class="sub-menu" aria-expanded="false">
+                            <li><a href="/VP User/ticket/new" key="t-task-list" style="color:red">Daftar Tiket Saya</a>
+                            </li>
+                            <li><a href="/VP User/ticket/ongoing" key="t-kanban-board" style="color:red">Daftar Tiket
+                                    Ongoing</a></li>
+                            <li><a href="/VP User/ticket/resolved" key="t-create-task" style="color:red">Daftar Tiket
+                                    Resolved</a></li>
+                            <li><a href="/VP User/ticket/history" key="t-create-task" style="color:red">Histori
+                                    Tiket</a>
+                            </li>
+                        </ul>
+                    </li>
+                @endif
 
 
                 @if (Auth::user()->role_id == 3)

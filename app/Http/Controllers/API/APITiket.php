@@ -55,7 +55,7 @@ class APITiket extends Controller
 
     public function helpdesk_list_assigned()
     {
-        $list_tiket = Tiket::where('id_status_tiket', '2')->get();
+        $list_tiket = Tiket::where('id_status_tiket', '2')->orWhere('id_status_tiket', '3')->get();
         return response()->json($list_tiket);
     }
 
@@ -266,9 +266,42 @@ class APITiket extends Controller
         ], 201);
     }
 
-    function close_tiket()
+    function close_tiket(Request $request)
     {
+        $id_tiket = $request->input('id_tiket');
+        $tipe_tiket = Tiket::where('id', $id_tiket)->first()->tipe_tiket;
+        $id_technical = $request->input('nik');
+        $nama_technical = User::where('nik', $id_technical)->first()->nama;
 
-        // create metode close tiket
+        // set status ticket
+        $status_tiket = StatusTiket::where('flow_number', 5)->where('tipe_tiket', $tipe_tiket)->first();
+
+        Tiket::where('id', $id_tiket)->update([
+            'id_status_tiket' => $status_tiket->flow_number,
+            'status_tiket' => $status_tiket->nama_status,
+            'rating_kepuasan' => 3,
+            'updated_by' => $nama_technical,
+        ]);
+    }
+
+    function close_tiket_comment(Request $request)
+    {
+        $id_tiket = $request->input('id_tiket');
+        $tipe_tiket = Tiket::where('id', $id_tiket)->first()->tipe_tiket;
+        $id_technical = $request->input('nik');
+        $nama_technical = User::where('nik', $id_technical)->first()->nama;
+        $rating_kepuasan = $request->input('rating_kepuasan');
+        $catatan_kepuasan = $request->input('catatan_kepuasan');
+
+        // set status ticket
+        $status_tiket = StatusTiket::where('flow_number', 5)->where('tipe_tiket', $tipe_tiket)->first();
+
+        Tiket::where('id', $id_tiket)->update([
+            'id_status_tiket' => $status_tiket->flow_number,
+            'status_tiket' => $status_tiket->nama_status,
+            'rating_kepuasan' => $rating_kepuasan,
+            'catatan_kepuasan' => $catatan_kepuasan,
+            'updated_by' => $nama_technical,
+        ]);
     }
 }

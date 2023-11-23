@@ -35,6 +35,7 @@
                                     <th class="text-center">Sub Kategori</th>
                                     <th>Item Kategori</th>
                                     <th>Judul</th>
+                                    <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -108,6 +109,9 @@
                     },
                     {
                         data: "judul_tiket"
+                    },
+                    {
+                        data: "status_tiket"
                     }
                 ],
                 lengthChange: true,

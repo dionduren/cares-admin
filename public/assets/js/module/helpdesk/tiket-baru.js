@@ -78,6 +78,8 @@ $(document).ready(function () {
     }
     ],
     lengthChange: true,
+    scrollCollapse: true,
+    scrollX: true,
     // ordering: true,
     buttons: ['copy', 'excel', 'pdf', 'colvis']
   });

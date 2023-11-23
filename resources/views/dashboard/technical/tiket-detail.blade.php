@@ -102,7 +102,8 @@
                                     <div class="row mb-3" id="solution_div_judul">
                                         <label for="detail_tiket">Judul solusi baru yang digunakan</label>
                                         <div class="col">
-                                            <textarea class="form-control" name="judul_solusi" id="judul_solusi" rows="5"></textarea>
+                                            <input type="text" class="form-control" name="judul_solusi"
+                                                id="judul_solusi">
                                         </div>
                                     </div>
 
