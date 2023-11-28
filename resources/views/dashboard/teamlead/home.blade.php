@@ -7,7 +7,7 @@
             <th class="text-center">Subkategori</th>
             <th class="text-center">Item kategori</th>
             <th class="text-center">Judul</th>
-            {{-- <th class="text-center">Status Tiket</th> --}}
+            <th class="text-center">Status Tiket</th>
             <th class="text-center">Action</th>
         </tr>
     </thead>
@@ -22,7 +22,7 @@
         $(document).ready(function() {
             var table1 = $('#ticket-display').DataTable({
                 "ajax": {
-                    "url": "/api/created-tiket-list/" + nik_user,
+                    "url": "/api/helpdesk-tiket-submitted/",
                     "type": "GET",
                     "dataSrc": "" // This tells DataTables to use the raw array
                 },
@@ -46,7 +46,8 @@
                     },
                     {
                         data: "item_kategori_tiket",
-                        className: 'text-center',
+                        // className: 'text-center',
+                        "width": "15%",
                         render: function(data, type, row, meta) {
                             return type === 'display' && data == null ? "-" : data;
                         }
@@ -54,37 +55,39 @@
                     {
                         data: "judul_tiket"
                     },
-                    // {
-                    //     data: "status_tiket"
-                    // },
+                    {
+                        data: "status_tiket",
+                        className: 'text-center'
+                    },
                     {
                         data: null,
                         orderable: false,
                         render: function(data, type, row) {
                             return `
-                                    <div class="dropdown">
-                                        <div class="flex-shrink-0 text-center">
-                                            <div class="dropdown align-self-start">
-                                                <a class="dropdown-toggle" href="#" role="button"
-                                                data-bs-toggle="dropdown" aria-haspopup="true"
-                                                aria-expanded="false">
-                                                    <i class="bx bx-dots-vertical-rounded font-size-24 text-dark"></i>
-                                                </a>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="/tiket/detail/${row.id}">
-                                                        Detail Tiket
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                `;
+                                  <div class="dropdown">
+                                      <div class="flex-shrink-0 text-center">
+                                          <div class="dropdown align-self-start">
+                                              <a class="dropdown-toggle" href="#" role="button"
+                                              data-bs-toggle="dropdown" aria-haspopup="true"
+                                              aria-expanded="false">
+                                                  <i class="bx bx-dots-vertical-rounded font-size-24 text-dark"></i>
+                                              </a>
+                                              <div class="dropdown-menu">
+                                                  <a class="dropdown-item" href="/helpdesk/ticket/detail/${row.id}">
+                                                      Detail Tiket
+                                                  </a>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              `;
                         }
                     }
                 ],
                 lengthChange: true,
-                scrollCollapse: true,
-                scrollX: true,
+                // scrollCollapse: false,
+                // scrollX: false,
+                // scrollY: false,
                 // ordering: true,
                 buttons: ['copy', 'excel', 'pdf', 'colvis']
             });

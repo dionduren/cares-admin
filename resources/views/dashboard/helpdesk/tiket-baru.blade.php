@@ -28,24 +28,26 @@
                 <div class="card-body">
 
                     <div class="row">
-                        <table id="listTicket" class="table table-bordered nowrap">
-                            <thead class="fs-5 fw-bolder text-light" style="background-color: rgb(12, 12, 151)">
-                                <tr align="middle" valign="middle">
-                                    <th width="13%">No.Tiket</th>
-                                    <th width="10%">Tipe Tiket</th>
-                                    <th width="10%">User</th>
-                                    <th width="10%">GOLONGAN / JABATAN</th>
-                                    <th class="text-center" width="13%">Kategori</th>
-                                    <th class="text-center" width="13%">Sub Kategori</th>
-                                    <th width="13%">Item Kategori</th>
-                                    <th>Judul</th>
-                                    <th width="5%">&nbsp;</th>
-                                </tr>
-                            </thead>
-                            <tbody>
+                        <div class="table-responsive mb-0 border-0" data-pattern="priority-columns">
+                            <table id="listTicket" class="table table-bordered" style="width: 100%">
+                                <thead class="fs-5 fw-bolder text-light" style="background-color: rgb(12, 12, 151)">
+                                    <tr align="middle" valign="middle">
+                                        <th width="13%">No.Tiket</th>
+                                        <th width="10%">Tipe Tiket</th>
+                                        <th width="10%">User</th>
+                                        <th width="10%">GOLONGAN / JABATAN</th>
+                                        <th class="text-center" width="13%">Kategori</th>
+                                        <th class="text-center" width="13%">Sub Kategori</th>
+                                        <th width="13%">Item Kategori</th>
+                                        <th>Judul</th>
+                                        <th width="5%">&nbsp;</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
 
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -151,6 +153,7 @@
     <script src="{{ URL::asset('assets/libs/datatables.net-responsive/datatables.net-responsive.min.js') }}"></script>
     <script src="{{ URL::asset('assets/libs/datatables.net-responsive-bs4/datatables.net-responsive-bs4.min.js') }}">
     </script>
+    <script src="{{ URL::asset('assets/libs/admin-resources/admin-resources.min.js') }}"></script>
     <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
     <script>
         var nik_user = {!! json_encode($user) !!};

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Models\Tiket;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -12,6 +13,23 @@ class HelpdeskController extends Controller
     {
         $nik_user = Auth::user()->nik;
         return view('dashboard.helpdesk.tiket-baru', [
+            'user' => $nik_user,
+        ]);
+    }
+
+    function detail_tiket($id)
+    {
+        $nik_user = Auth::user()->nik;
+        $tiket_detail = Tiket::where('id', $id)->first();
+        return view('dashboard.helpdesk.ticket-detail', [
+            'user' => $nik_user,
+            'tiket' => $tiket_detail,
+        ]);
+    }
+    function index_self()
+    {
+        $nik_user = Auth::user()->nik;
+        return view('dashboard.helpdesk.tiket-self', [
             'user' => $nik_user,
         ]);
     }

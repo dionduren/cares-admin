@@ -13,6 +13,7 @@ use App\Models\Master\StatusTiket;
 use App\Models\KnowledgeManagement;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\HelperController;
+use App\Models\Transaction\Attachment;
 
 class APITiket extends Controller
 {
@@ -41,6 +42,12 @@ class APITiket extends Controller
     {
         $detail_tiket = Tiket::where('id', $id)->first();
         return response()->json($detail_tiket);
+    }
+
+    public function ticket_attachments($id)
+    {
+        $tiket_attachments = Attachment::where('id_tiket', $id)->get();
+        return response()->json($tiket_attachments);
     }
 
     // ==================== HELPDESK ====================

@@ -4,6 +4,12 @@
 @endsection
 @section('css')
     <link href="{{ URL::asset('/assets/libs/admin-resources/admin-resources.min.css') }}" rel="stylesheet">
+    <link href="{{ URL::asset('assets/libs/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet">
+    <style>
+        .swal-wide {
+            width: 850px !important;
+        }
+    </style>
 @endsection
 @section('content')
     @component('components.breadcrumb')
@@ -58,6 +64,17 @@
                             </div>
                         </div>
 
+                        <div class="row mb-3">
+                            <label for="file-input">Lampiran</label>
+                            <div class="col">
+                                <input type="file" id="file-input" name="attachments[]" multiple>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div id="preview-container"></div>
+                        </div>
+
                         <div class="row pb-3 mx-auto text-center">
                             <button class="btn btn-lg btn-primary" type="submit" style="width: 100%">Submit
                                 Ticket</button>
@@ -70,6 +87,7 @@
     </div>
 @endsection
 @section('script')
+    <script src="{{ URL::asset('assets/libs/sweetalert2/sweetalert2.min.js') }}"></script>
     <script src="{{ URL::asset('/assets/js/app.min.js') }}"></script>
     <script>
         $user_id = "{{ $user->nik }}";
@@ -109,60 +127,175 @@
                 get_itemcat(id_subkategori);
             })
 
-            $('#create-tiket-form').submit(function(event) {
-                event.preventDefault(); // Prevent default form submit action
+            // Attachment Validation & Preview Function
+            $('#file-input').on('change', function() {
+                var files = $(this)[0].files;
+                var errorMessages = [];
 
-                let formData = $(this).serialize(); // Serialize form data
+                // Clear existing previews
+                $('#preview-container').html('');
+                var row = $('<div>').addClass('row');
+                $('#preview-container').append(row);
 
-                var selectedCategoryText = $("#kategori_tiket option:selected").text();
-                var selectedSubCategoryText = $("#subkategori_tiket option:selected").text();
+                // Check file count
+                if (files.length > 3) {
+                    errorMessages.push('Hanya bisa melampirkan maksimal 3 berkas.');
+                    this.value = ''; // Clear the file input
+                } else {
+                    // Check file types and sizes
+                    var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.zip|\.rar|\.pdf)$/i;
+                    for (var i = 0; i < files.length; i++) {
+                        var file = files[i];
+                        var fileName = file.name;
 
-                formData += '&user_id=' + encodeURIComponent($user_id);
-                formData += '&nama_kategori=' + encodeURIComponent(selectedCategoryText);
-                formData += '&nama_subkategori=' + encodeURIComponent(selectedSubCategoryText);
+                        if (!allowedExtensions.exec(fileName)) {
+                            errorMessages.push('Tipe File (' + file.name + ') tidak sesuai.');
+                        } else if (file.size > 2097152) { // 2MB in bytes
+                            errorMessages.push('Ukuran Berkas (' + file.name +
+                                ') Melebihi jumlah maksimal 2MB.');
+                        } else {
+                            var col = $('<div>').addClass('col-md-4');
+                            var reader = new FileReader();
 
-                if ($("select[name='item_kategori_tiket']").length) {
-                    var selectedItemCategoryText = $("#item_kategori_tiket option:selected").text();
-                    formData += '&nama_item_kategori=' + encodeURIComponent(selectedItemCategoryText);
+                            reader.onload = (function(file, col) {
+                                return function(e) {
+                                    var filePreview = $('<div>').addClass('file-preview');
+                                    var caption = $('<p class="text-center">').text(file.name);
+
+                                    if (file.type.match('image.*')) {
+                                        var img = $('<img>').attr('src', e.target.result).css({
+                                                'max-height': '150px',
+                                                'width': 'auto',
+                                                'display': 'block',
+                                                'margin': '0 auto'
+                                            })
+                                            .addClass('img-fluid');
+                                        filePreview.append(img);
+                                    } else if (file.type === 'application/pdf') {
+                                        var icon = $('<i class="fas fa-file-pdf"></i>').css(
+                                            'font-size', '24px');
+                                        filePreview.append(icon);
+                                    } else if (file.name.endsWith('.zip') || file.name.endsWith(
+                                            '.rar')) {
+                                        var icon = $('<i class="fas fa-file-archive"></i>').css(
+                                            'font-size', '24px');
+                                        filePreview.append(icon);
+                                    }
+                                    filePreview.append(caption);
+                                    col.append(filePreview);
+                                    row.append(col);
+                                };
+                            })(file, col);
+
+                            if (file.type.match('image.*')) {
+                                reader.readAsDataURL(file);
+                            } else {
+                                reader.onload();
+                            }
+                        }
+                    }
                 }
 
-                // console.log(formData);
-                // alert(formData);
+                // Display error messages if any
+                if (errorMessages.length > 0) {
+                    var htmlErrorMessage = '<ul class="text-start">';
+                    for (var i = 0; i < errorMessages.length; i++) {
+                        htmlErrorMessage += '<li>' + errorMessages[i] + '</li>';
+                    }
+                    htmlErrorMessage += '</ul>';
+
+                    Swal.fire({
+                        title: 'Error!',
+                        html: htmlErrorMessage,
+                        icon: 'error',
+                        customClass: 'swal-wide'
+                    });
+                }
+            });
+
+            // $('#create-tiket-form').submit(function(event) {
+            //     event.preventDefault();
+
+            //     // Pengumpulan data di dalam form
+            //     let formData = $(this).serialize();
+
+            //     var selectedCategoryText = $("#kategori_tiket option:selected").text();
+            //     var selectedSubCategoryText = $("#subkategori_tiket option:selected").text();
+
+            //     formData += '&user_id=' + encodeURIComponent($user_id);
+            //     formData += '&nama_kategori=' + encodeURIComponent(selectedCategoryText);
+            //     formData += '&nama_subkategori=' + encodeURIComponent(selectedSubCategoryText);
+
+            //     if ($("select[name='item_kategori_tiket']").length) {
+            //         var selectedItemCategoryText = $("#item_kategori_tiket option:selected").text();
+            //         formData += '&nama_item_kategori=' + encodeURIComponent(selectedItemCategoryText);
+            //     }
+
+            //     // Add files to formData
+            //     var fileInput = $('#file-input')[0]; // Adjust the selector to your file input field
+            //     if (fileInput.files.length > 0) {
+            //         for (var i = 0; i < fileInput.files.length; i++) {
+            //             // formData.append('attachments[]', fileInput.files[i]);
+            //             formData.push({
+            //                 name: 'attachments[]',
+            //                 value: fileInput.files[i]
+            //             });
+            //         }
+            //     }
+
+            //     $.ajax({
+            //         url: "/api/submit-tiket",
+            //         method: "POST",
+            //         dataType: "json",
+            //         data: formData,
+            //         processData: false,
+            //         contentType: false,
+            //         headers: {
+            //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            //         },
+            //         success: function(data) {
+            //             console.log('INI MASUK SUCCESS')
+            //             console.log(data);
+            //             console.log(data.success);
+            //             window.location.href = '/';
+            //         }
+            //     })
+            // })
+
+            $('#create-tiket-form').submit(function(event) {
+                event.preventDefault();
+
+                // Pengumpulan data di dalam form
+                var formData = new FormData($('#create-tiket-form')[0]);
+
+                formData.append('user_id', $user_id);
+                formData.append('nama_kategori', $("#kategori_tiket option:selected").text());
+                formData.append('nama_subkategori', $("#subkategori_tiket option:selected").text());
+
+                if ($("select[name='item_kategori_tiket']").length) {
+                    formData.append('nama_item_kategori', $("#item_kategori_tiket option:selected").text());
+                }
+
+                // Log the FormData contents
+                // for (var entry of formData.entries()) {
+                //     console.log(entry[0], entry[1]);
+                // }
 
                 $.ajax({
                     url: "/api/submit-tiket",
                     method: "POST",
                     dataType: "json",
                     data: formData,
+                    processData: false,
+                    contentType: false,
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     success: function(data) {
-                        console.log('INI MASUK SUCCESS')
-                        console.log(data);
-                        console.log(data.success);
-                        window.location.href = '/'; // Redirect to user home page
-                        // },
-                        // error: function(xhr, status, error) {
-                        //     var err = eval("(" + xhr.responseText + ")");
-                        //     console.log('INI MASUK ERROR')
-                        //     console.log(err);
-                        //     console.log(err.success);
-                        //     console.log(err.errors);
-
-                        //     $.each(err.errors, function(index, value) {
-
-                        //         $('#' + index).addClass(
-                        //             'highlight'); // Add a CSS class to highlight the field
-                        //     })
-
-                        //     $('#reason').val(err.reason); // Show the reason for failure
-
+                        window.location.href = '/';
                     }
                 })
             })
-
-
         });
 
         function get_subcat(id) {

@@ -5,13 +5,14 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\HelperController;
 
-use App\Models\ItemCategory;
+use App\Models\User;
+use App\Models\Tiket;
 use App\Models\Kategori;
 use App\Models\Subkategori;
-use App\Models\Tiket;
-use App\Models\User;
-use App\Models\Master\TipeSLA;
+use App\Models\ItemCategory;
 use App\Models\Master\StatusTiket;
+use App\Models\Master\TipeSLA;
+use App\Models\Transaction\Attachment;
 use App\Models\Transaction\SLA;
 
 use Illuminate\Http\Request;
@@ -45,7 +46,8 @@ class APITiketCreate extends Controller
             'item_kategori_tiket' => 'sometimes|required',
             'judul_tiket' => 'required',
             'detail_tiket' => 'required',
-            // 'attachment' => 'sometimes|required', // only validate when present
+            'attachments' => 'array|sometimes|required', // only validate when present
+            'attachments.*' => 'file|max:2048|mimes:jpg,jpeg,png,zip,pdf,rar', // Validate each file
         ];
 
         // Perform validation
@@ -94,9 +96,17 @@ class APITiketCreate extends Controller
                 $tipe_tiket = $subkategori->tipe_tiket;
             }
 
-            // set status ticket
-            $status_tiket = StatusTiket::where('flow_number', 1)->where('tipe_tiket', $tipe_tiket)->first();
+            // \dd($tipe_tiket);
 
+            // set status ticket
+            // Get Tipe SLA and create SLA Response
+            if ($tipe_tiket == "LAINNYA") {
+                $status_tiket = StatusTiket::where('flow_number', 1)->where('tipe_tiket', "REQUEST")->first();
+                $sla_response = TipeSLA::where('tipe_sla', 'Response')->where('tipe_tiket', "REQUEST")->first();
+            } else {
+                $status_tiket = StatusTiket::where('flow_number', 1)->where('tipe_tiket', $tipe_tiket)->first();
+                $sla_response = TipeSLA::where('tipe_sla', 'Response')->where('tipe_tiket', $tipe_tiket)->first();
+            }
 
             $db_raw_data = [
                 'company_code' => $company_code,            // Set Model setelah sudah fix akan jadi multi company
@@ -116,7 +126,6 @@ class APITiketCreate extends Controller
                 'detail_tiket' => $detail_tiket,
                 'id_status_tiket' => $status_tiket->flow_number,
                 'status_tiket' => $status_tiket->nama_status,
-                'attachment' => null,
                 'level_dampak' => $level_dampak,
                 'level_urgensi' => $level_urgensi,
                 'updated_by' => $user_creator,
@@ -126,8 +135,6 @@ class APITiketCreate extends Controller
             $ticket = Tiket::create($db_raw_data);
 
             // Get Tipe SLA and create SLA Response
-            $sla_response = TipeSLA::where('tipe_sla', 'Response')->where('tipe_tiket', $tipe_tiket)->first();
-
             SLA::create([
                 'id_sla' => $sla_response->id,
                 'kategori_sla' => 'Response',
@@ -141,15 +148,38 @@ class APITiketCreate extends Controller
                 'created_by' => $user_creator,
             ]);
 
+            // Multi-Attachments Upload
+            if ($request->hasFile('attachments')) {
+                foreach ($request->file('attachments') as $file) {
+                    $originalName = $file->getClientOriginalName();
+                    $alteredName = $ticket->nomor_tiket . ' - ' . $originalName;
+                    $type = $file->getClientMimeType();
+                    $format = $file->getClientOriginalExtension();
+                    $location = $file->storeAs('uploads', $alteredName, 'public');
+
+                    Attachment::create([
+                        'id_tiket' => $ticket->id,
+                        'nama_file_original' => $originalName,
+                        'nama_file_altered' => $alteredName,
+                        'tipe_file' => $type,
+                        'format_file' => $format,
+                        'file_location' => $location,
+                        'updated_by' => $user_creator,
+                        'created_by' => $user_creator,
+                    ]);
+                }
+            }
+
             return response()->json([
                 'success' => true,
             ], 201);
         } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'reason' => 'Server error',
-                'message' => $e->getMessage()
-            ], 500);
+            // return response()->json([
+            //     'success' => false,
+            //     'reason' => 'Server error',
+            //     'message' => $e->getMessage()
+            // ], 500);
+            return $e;
         }
     }
 

@@ -34,10 +34,13 @@ Route::middleware(['auth'])->group(function () {
   Route::get('/', [HomeController::class, 'root'])->name('root');
   Route::redirect('/index', '/');
 
-  Route::get('/create-ticket', [TicketController::class, 'create_ticket'])->name('root1');
+  Route::get('/create-ticket', [TicketController::class, 'create_ticket'])->name('create_ticket');
 
+  Route::get('/tiket/detail/{id}', [TicketController::class, 'detail_ticket']);
 
   Route::get('/helpdesk/ticket/new', [HelpdeskController::class, 'index_new']);
+  Route::get('/helpdesk/ticket/detail/{id}', [HelpdeskController::class, 'detail_tiket']);
+  Route::get('/helpdesk/ticket/self', [HelpdeskController::class, 'index_self']);
   Route::get('/helpdesk/ticket/ongoing', [HelpdeskController::class, 'index_ongoing']);
   Route::get('/helpdesk/ticket/resolved', [HelpdeskController::class, 'index_resolved']);
   Route::get('/helpdesk/ticket/all', [HelpdeskController::class, 'index_all']);

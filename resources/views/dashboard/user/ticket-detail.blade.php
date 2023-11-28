@@ -1,14 +1,36 @@
 @extends('layouts.master')
 @section('title')
-    Technical - Detail TIket
+    CARES - Detail TIket
 @endsection
 @section('css')
     <link href="{{ URL::asset('/assets/libs/admin-resources/admin-resources.min.css') }}" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
+    <style>
+        .rating-input {
+            display: none;
+        }
+
+        .rating-star {
+            cursor: pointer;
+            font-size: 25px;
+            color: grey;
+        }
+
+        .rating-input:checked~.rating-star,
+        .rating-input:checked~.rating-star~.rating-option .rating-star {
+            color: orange;
+        }
+
+        .caption {
+            display: block;
+            margin-top: 5px;
+        }
+    </style>
 @endsection
 @section('content')
     @component('components.breadcrumb')
         @slot('li_1')
-            Technical
+            My Ticket
         @endslot
         @slot('title')
             Detail Tiket
@@ -20,12 +42,6 @@
             <div class="card card-h-100">
                 <!-- card body -->
                 <div class="card-body">
-                    <div class="row mb-3">
-                        <label>Nomor Tiket</label>
-                        <div class="col">
-                            <input type="text" class="form-control" value="{{ $tiket->nomor_tiket }}" readonly>
-                        </div>
-                    </div>
 
                     <div class="row mb-3">
                         <label>Kategori Tiket</label>
@@ -47,14 +63,6 @@
                             <input type="text" class="form-control"
                                 value="{{ $tiket->item_kategori_tiket == null ? '-' : $tiket->item_kategori_tiket }}"
                                 readonly>
-                        </div>
-                    </div>
-
-                    <div class="row mb-3">
-                        <label>Tanggal Pembuatan Tiket</label>
-                        <div class="col">
-                            <input type="text" class="form-control"
-                                value="{{ $tiket->created_at->format('d M Y - H:i:s') }} WIB" readonly>
                         </div>
                     </div>
 
@@ -84,55 +92,80 @@
 
                     <hr>
 
+                    <div class="row mb-3">
+                        <label for="detail_tiket">Solusi yang diberikan - {{ $tiket->judul_solusi }}</label>
+                        <div class="col">
+                            <textarea type="text" class="form-control" rows="5" readonly>{{ $tiket->detail_solusi }}</textarea>
+                        </div>
+                    </div>
+
                     <div class="row pb-3 mx-auto text-center">
                         <button type="button" class="btn btn-lg btn-success" style="width: 100%" data-bs-toggle="modal"
-                            data-bs-target="#solveTicketModal">
-                            Solve Tiket
+                            data-bs-target="#closeTicketModal">
+                            Close Tiket
                         </button>
                     </div>
 
                     <!-- Modal -->
-                    <div class="modal fade" id="solveTicketModal" tabindex="-1" aria-labelledby="solveTicketModalLabel"
+                    <div class="modal fade" id="closeTicketModal" tabindex="-1" aria-labelledby="closeTicketModalLabel"
                         aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="solveTicketModalLabel">Solve Tiket</h1>
+                                    <h1 class="modal-title fs-5" id="closeTicketModalLabel">Close Tiket</h1>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
 
-                                    <div class="row mb-3">
-                                        <label for="detail_tiket">Solusi tiket yang digunakan</label>
-                                        <div class="col">
-                                            <select class="form-control dropdownGrup" name="solusi_tiket" id="solusi_tiket">
-                                            </select>
+                                    <div class="row justify-content-center mb-5">
+
+                                        <div class="row mb-3">
+                                            <div class="col text-center rating-option">
+                                                <label for="rating_kepuasan" class="fs-5">
+                                                    Bagaimana kualitas pelayanan kami?
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col text-center rating-option">
+                                            <input type="radio" id="1-star" name="rating_kepuasan" value="1"
+                                                class="rating-input" />
+                                            <label for="1-star" class="rating-star"><i class="far fa-star"></i></label>
+                                            <span class="caption">Tidak Puas</span>
+                                        </div>
+                                        <div class="col text-center rating-option">
+                                            <input type="radio" id="2-stars" name="rating_kepuasan" value="2"
+                                                class="rating-input" />
+                                            <label for="2-stars" class="rating-star"><i
+                                                    class="fas fa-star-half-alt"></i></label>
+                                            <span class="caption">Cukup Puas</span>
+                                        </div>
+                                        <div class="col text-center rating-option">
+                                            <input type="radio" id="3-stars" name="rating_kepuasan" value="3"
+                                                class="rating-input" />
+                                            <label for="3-stars" class="rating-star"><i class="fas fa-star"></i></label>
+                                            <span class="caption">Sangat Puas</span>
                                         </div>
                                     </div>
 
-                                    <div class="row mb-3" id="solution_div_judul">
-                                        <label for="detail_tiket">Judul solusi baru yang digunakan</label>
-                                        <div class="col">
-                                            <input type="text" class="form-control" name="judul_solusi"
-                                                id="judul_solusi">
-                                        </div>
+                                    <div id="alasan_div">
+                                        <label for="catatan_kepuasan" class="fs-5">Apa kendala yang anda hadapi?</label>
+                                        <textarea class="form-control" name="catatan_kepuasan" id="catatan_kepuasan" rows="5"></textarea>
                                     </div>
 
-                                    <div class="row mb-3" id="solution_div_detail">
-                                        <label for="detail_tiket">Jelaskan solusi baru yang digunakan</label>
-                                        <div class="col">
-                                            <textarea class="form-control" name="detail_solusi" id="detail_solusi" rows="5"></textarea>
-                                        </div>
-                                    </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button type="button" id="resolveTicketButton" class="btn btn-primary">Submit</button>
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Close</button>
+                                    <button type="button" id="resolveTicketButton"
+                                        class="btn btn-primary">Submit</button>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <!-- Modal -->
+
                 </div>
             </div>
         </div>
@@ -146,8 +179,22 @@
         let daftarSolusi = null;
 
         $(document).ready(function() {
+            $('#alasan_div').hide();
 
             getAttachments();
+
+            $('input[name="rating_kepuasan"]').change(function() {
+                var selectedRating = $(this).val();
+                console.log('Selected Rating:', selectedRating);
+
+                if (selectedRating < 3) {
+                    $('#alasan_div').show();
+                } else {
+                    $('#alasan_div').hide();
+                }
+
+                // Your existing code for displaying the reason...
+            });
 
             $('#solveTicketModal').on('show.bs.modal', function(event) {
                 $('#solution_div_judul').hide();
@@ -189,7 +236,7 @@
             $('#resolveTicketButton').click(function() {
                 $id_solusi = $('#solusi_tiket').val();
 
-                if ($id_solusi != 9999) {
+                if ($id_solusi != 3) {
                     $.ajax({
                         url: "/api/submit-solution",
                         method: "POST",
@@ -233,23 +280,6 @@
                 }
 
             });
-
-            function populateDropdowns() {
-                const dropdowns = $('.dropdownGrup');
-
-                dropdowns.each(function() {
-                    const dropdown = $(this);
-                    daftarSolusi.forEach(solusiTiket => {
-                        const option = $('<option></option>').attr('value', solusiTiket
-                            .id).text(
-                            solusiTiket.judul_solusi);
-                        dropdown.append(option);
-                    });
-                    const option = $('<option></option>').attr('value', 9999).text(
-                        "Solusi Baru / Tidak ada di Knowledge Management");
-                    dropdown.append(option);
-                });
-            };
 
             function getAttachments() {
                 $.ajax({

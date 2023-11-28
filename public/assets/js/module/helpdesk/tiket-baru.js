@@ -1,7 +1,9 @@
 let daftarGrup = null;
-let detailTiket = null;
+// let detailTiket = null;
 
 $(document).ready(function () {
+
+  $('.table-responsive').responsiveTable({});
 
   getGrup();
 
@@ -78,8 +80,8 @@ $(document).ready(function () {
     }
     ],
     lengthChange: true,
-    scrollCollapse: true,
-    scrollX: true,
+    // scrollCollapse: true,
+    // scrollX: true,
     // ordering: true,
     buttons: ['copy', 'excel', 'pdf', 'colvis']
   });

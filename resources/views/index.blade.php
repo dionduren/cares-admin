@@ -35,11 +35,22 @@
             <div class="col-xl-10 col-md-10 mx-auto">
                 <div class="card card-h-100">
                     <div class="card-body">
-                        <h3 class="text-muted mb-4 lh-1 d-block text-truncate">
-                            Daftar Tiket Aktif Anda
-                        </h3>
 
-                        @include('dashboard.user.home')
+                        @if (Auth::user()->role_id == 2)
+                            <h3 class="text-muted mb-4 lh-1 d-block text-truncate">
+                            Helpdesk - Waiting List Tiket
+                            </h3>
+                        @else
+                            <h3 class="text-muted mb-4 lh-1 d-block text-truncate">
+                                Daftar Tiket Aktif Anda
+                            </h3>
+                        @endif
+
+                        @if (Auth::user()->role_id == 2)
+                            @include('dashboard.helpdesk.home')
+                        @else
+                            @include('dashboard.user.home')
+                        @endif
 
                         {{-- Table end --}}
                     </div>
