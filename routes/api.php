@@ -53,7 +53,7 @@ Route::get('/get-teamlead-status/{id}', [APIGroup::class, 'get_teamlead_status']
 Route::get('/teamlead-tiket-waiting-list/{id}', [APITiket::class, 'teamlead_waiting_list']);
 Route::get('/teamlead-tiket-ongoing-list/{id}', [APITiket::class, 'teamlead_ongoing_list']);
 Route::get('/teamlead-tiket-finished/{id}', [APITiket::class, 'teamlead_finished']);
-Route::get('/teamlead-tiket-detail/{id}', [APITiket::class, 'teamlead_detail']);
+// Route::get('/teamlead-tiket-detail/{id}', [APITiket::class, 'teamlead_detail']);
 Route::get('/technical-list/{id}', [APIGroup::class, 'technical_list']);
 Route::post('/tiket-assign-technical', [APIGroup::class, 'tiket_assign_technical']);
 

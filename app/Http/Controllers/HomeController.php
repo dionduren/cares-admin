@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Tiket;
+use App\Models\GrupMember;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
@@ -38,9 +39,10 @@ class HomeController extends Controller
     public function root()
     {
         $user = Auth::user();
-
+        $group_id = GrupMember::where('nik_member', $user->nik)->first()->id_group;
         return view('index', [
             'user' => $user,
+            'group_id' => $group_id,
         ]);
     }
 

@@ -38,7 +38,11 @@
 
                         @if (Auth::user()->role_id == 2)
                             <h3 class="text-muted mb-4 lh-1 d-block text-truncate">
-                            Helpdesk - Waiting List Tiket
+                                Helpdesk - Waiting List Tiket
+                            </h3>
+                        @elseif (Auth::user()->role_id == 4)
+                            <h3 class="text-muted mb-4 lh-1 d-block text-truncate">
+                                Teamlead - Waiting List Tiket
                             </h3>
                         @else
                             <h3 class="text-muted mb-4 lh-1 d-block text-truncate">
@@ -48,6 +52,10 @@
 
                         @if (Auth::user()->role_id == 2)
                             @include('dashboard.helpdesk.home')
+                        @elseif (Auth::user()->role_id == 4)
+                            @include('dashboard.teamlead.home')
+                        @elseif (Auth::user()->role_id == 5)
+                            @include('dashboard.technical.home')
                         @else
                             @include('dashboard.user.home')
                         @endif

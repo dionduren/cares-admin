@@ -15,9 +15,20 @@
                         <span class="badge rounded-pill bg-soft-success text-success float-end">9+</span>
                         <span data-key="t-dashboard">Dashboard</span>
                     </a>
+                </li>
+
+
+                <li>
                     <a href="/create-ticket">
                         <i class="mdi mdi-ticket-confirmation-outline"></i>
                         <span data-key="t-dashboard">Buat Tiket Baru</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/ticket/self">
+                        <i class="mdi mdi-ticket"></i>
+                        <span data-key="t-dashboard">Daftar Tiket Saya</span>
                     </a>
                 </li>
 
@@ -128,13 +139,6 @@
 
                 @if (Auth::user()->role_id <= 2)
                     <li class="menu-title" data-key="t-menu">Helpdesk</li>
-
-                    <li>
-                        <a href="/helpdesk/ticket/self">
-                            <i class="mdi mdi-ticket-confirmation-outline"></i>
-                            <span data-key="t-dashboard">Daftar Tiket Saya</span>
-                        </a>
-                    </li>
 
                     <li>
                         <a href="javascript: void(0);" class="has-arrow">

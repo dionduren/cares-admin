@@ -26,6 +26,14 @@ class TicketController extends Controller
         ]);
     }
 
+    function index_self()
+    {
+        $nik_user = Auth::user()->nik;
+        return view('dashboard.user.tiket-self', [
+            'user' => $nik_user,
+        ]);
+    }
+
     public function detail_ticket($id)
     {
         $user = Auth::user();

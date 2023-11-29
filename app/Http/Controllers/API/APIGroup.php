@@ -62,6 +62,7 @@ class APIGroup extends Controller
         $status_tiket = StatusTiket::where('flow_number', 2)->where('tipe_tiket', $tipe_tiket)->first();
 
         Tiket::where('id', $id_tiket)->update([
+            'tipe_tiket' => $tipe_tiket,
             'level_dampak' => $level_dampak,
             'level_urgensi' => $level_urgensi,
             'level_prioritas' => $level_prioritas,

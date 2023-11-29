@@ -26,13 +26,6 @@ class HelpdeskController extends Controller
             'tiket' => $tiket_detail,
         ]);
     }
-    function index_self()
-    {
-        $nik_user = Auth::user()->nik;
-        return view('dashboard.helpdesk.tiket-self', [
-            'user' => $nik_user,
-        ]);
-    }
 
     function index_ongoing()
     {

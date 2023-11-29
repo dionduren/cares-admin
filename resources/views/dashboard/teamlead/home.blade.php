@@ -18,11 +18,12 @@
 @section('script-bottom')
     <script>
         var nik_user = {!! json_encode($user->nik) !!};
+        var id_grup = {!! json_encode($group_id) !!};
 
         $(document).ready(function() {
             var table1 = $('#ticket-display').DataTable({
                 "ajax": {
-                    "url": "/api/helpdesk-tiket-submitted/",
+                    "url": "/api/teamlead-tiket-waiting-list/" + id_grup,
                     "type": "GET",
                     "dataSrc": "" // This tells DataTables to use the raw array
                 },
@@ -73,7 +74,7 @@
                                                   <i class="bx bx-dots-vertical-rounded font-size-24 text-dark"></i>
                                               </a>
                                               <div class="dropdown-menu">
-                                                  <a class="dropdown-item" href="/helpdesk/ticket/detail/${row.id}">
+                                                  <a class="dropdown-item" href="/leader/ticket/detail/${row.id}">
                                                       Detail Tiket
                                                   </a>
                                               </div>

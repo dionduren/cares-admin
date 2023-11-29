@@ -143,7 +143,7 @@
                     this.value = ''; // Clear the file input
                 } else {
                     // Check file types and sizes
-                    var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.zip|\.rar|\.pdf)$/i;
+                    var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.rar|\.pdf)$/i;
                     for (var i = 0; i < files.length; i++) {
                         var file = files[i];
                         var fileName = file.name;
@@ -175,12 +175,13 @@
                                         var icon = $('<i class="fas fa-file-pdf"></i>').css(
                                             'font-size', '24px');
                                         filePreview.append(icon);
-                                    } else if (file.name.endsWith('.zip') || file.name.endsWith(
-                                            '.rar')) {
-                                        var icon = $('<i class="fas fa-file-archive"></i>').css(
-                                            'font-size', '24px');
-                                        filePreview.append(icon);
                                     }
+                                    // else if (file.name.endsWith('.zip') || file.name.endsWith(
+                                    //         '.rar')) {
+                                    //     var icon = $('<i class="fas fa-file-archive"></i>').css(
+                                    //         'font-size', '24px');
+                                    //     filePreview.append(icon);
+                                    // }
                                     filePreview.append(caption);
                                     col.append(filePreview);
                                     row.append(col);

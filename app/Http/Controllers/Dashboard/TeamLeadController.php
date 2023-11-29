@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+
+use App\Models\Tiket;
 use App\Models\GrupMember;
-use Illuminate\Support\Facades\Auth;
+
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TeamLeadController extends Controller
 {
@@ -46,6 +49,16 @@ class TeamLeadController extends Controller
         return view('dashboard.teamlead.all-tiket', [
             'user' => $nik_user,
             'group_id' => $group_id,
+        ]);
+    }
+
+    function detail_tiket($id)
+    {
+        $nik_user = Auth::user()->nik;
+        $tiket_detail = Tiket::where('id', $id)->first();
+        return view('dashboard.teamlead.ticket-detail', [
+            'user' => $nik_user,
+            'tiket' => $tiket_detail,
         ]);
     }
 }
