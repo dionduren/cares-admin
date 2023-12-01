@@ -69,6 +69,7 @@
         {{-- End --}}
     @endsection
     @section('script')
+        <script src="{{ URL::asset('assets/libs/admin-resources/admin-resources.min.js') }}"></script>
         <!-- datatables-->
         <script src="{{ URL::asset('assets/libs/datatables.net/datatables.net.min.js') }}"></script>
         <script src="{{ URL::asset('assets/libs/datatables.net-bs4/datatables.net-bs4.min.js') }}"></script>

@@ -36,7 +36,7 @@ class TicketController extends Controller
 
     public function detail_ticket($id)
     {
-        $user = Auth::user();
+        $user = Auth::user()->nik;
         $tiket_detail = Tiket::where('id', $id)->first();
         return view('dashboard.user.ticket-detail', [
             'user' => $user,

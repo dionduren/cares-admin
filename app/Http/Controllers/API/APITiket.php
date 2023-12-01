@@ -289,6 +289,11 @@ class APITiket extends Controller
             'rating_kepuasan' => 3,
             'updated_by' => $nama_technical,
         ]);
+
+
+        return response()->json([
+            'success' => true,
+        ], 201);
     }
 
     function close_tiket_comment(Request $request)
@@ -310,5 +315,10 @@ class APITiket extends Controller
             'catatan_kepuasan' => $catatan_kepuasan,
             'updated_by' => $nama_technical,
         ]);
+
+
+        return response()->json([
+            'success' => true,
+        ], 201);
     }
 }

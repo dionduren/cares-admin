@@ -24,23 +24,25 @@
                 <div class="card-body">
 
                     <div class="row">
-                        <table id="listTicket" class="table table-bordered" style="width: 100%">
-                            <thead class="fs-5 fw-bolder text-light" style="background-color: rgb(12, 12, 151)">
-                                <tr align="middle" valign="middle">
-                                    <th>No.Tiket</th>
-                                    <th>Tipe Tiket</th>
-                                    <th class="text-center">User</th>
-                                    <th>GOLONGAN / JABATAN</th>
-                                    <th class="text-center">Kategori</th>
-                                    <th class="text-center">Sub Kategori</th>
-                                    <th>Item Kategori</th>
-                                    <th>Judul</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
+                        <div class="table-responsive mb-0 border-0" data-pattern="priority-columns">
+                            <table id="listTicket" class="table table-bordered" style="width: 100%">
+                                <thead class="fs-5 fw-bolder text-light" style="background-color: rgb(12, 12, 151)">
+                                    <tr align="middle" valign="middle">
+                                        <th>No.Tiket</th>
+                                        <th>Tipe Tiket</th>
+                                        <th class="text-center">User</th>
+                                        <th>GOLONGAN / JABATAN</th>
+                                        <th class="text-center">Kategori</th>
+                                        <th class="text-center">Sub Kategori</th>
+                                        <th>Item Kategori</th>
+                                        <th>Judul</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -48,6 +50,7 @@
     </div>
 @endsection
 @section('script')
+    <script src="{{ URL::asset('assets/libs/admin-resources/admin-resources.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
     <script
@@ -60,6 +63,8 @@
     </script>
     <script>
         $(document).ready(function() {
+
+            $('.table-responsive').responsiveTable({});
 
             $('#listTicket thead tr').clone(true).addClass('filters').appendTo('#listTicket thead');
 

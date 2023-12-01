@@ -1,32 +1,29 @@
-<div class="table-responsive mb-0 border-0" data-pattern="priority-columns">
-    <table id="ticket-display" class="table table-striped" style="width: 100%">
-        <thead class="fs-5 fw-bolder text-light" style="background-color: rgb(12, 12, 151)">
-            <tr align="middle" valign="middle">
-                <th class="text-center">Nomor</th>
-                <th class="text-center">Tipe Tiket</th>
-                <th class="text-center">Kategori</th>
-                <th class="text-center">Subkategori</th>
-                <th class="text-center">Item kategori</th>
-                <th class="text-center">Judul</th>
-                <th class="text-center">Status Tiket</th>
-                <th class="text-center">Action</th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
-</div>
+<table id="ticket-display" class="table table-striped" style="width: 100%">
+    <thead class="fs-5 fw-bolder text-light" style="background-color: rgb(12, 12, 151)">
+        <tr align="middle" valign="middle">
+            <th class="text-center">Nomor</th>
+            <th class="text-center">Tipe Tiket</th>
+            <th class="text-center">Kategori</th>
+            <th class="text-center">Subkategori</th>
+            <th class="text-center">Item kategori</th>
+            <th class="text-center">Judul</th>
+            <th class="text-center">Status Tiket</th>
+            <th class="text-center">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
 @section('script-bottom')
     <script>
         var nik_user = {!! json_encode($user->nik) !!};
+        var id_grup = {!! json_encode($group_id) !!};
 
         $(document).ready(function() {
-
-            $('.table-responsive').responsiveTable({});
-
             var table1 = $('#ticket-display').DataTable({
                 "ajax": {
-                    "url": "/api/helpdesk-tiket-submitted/",
+                    "url": "/api/technical-tiket-ongoing-list/" + nik_user,
                     "type": "GET",
                     "dataSrc": "" // This tells DataTables to use the raw array
                 },
@@ -77,7 +74,7 @@
                                                   <i class="bx bx-dots-vertical-rounded font-size-24 text-dark"></i>
                                               </a>
                                               <div class="dropdown-menu">
-                                                  <a class="dropdown-item" href="/helpdesk/ticket/detail/${row.id}">
+                                                  <a class="dropdown-item" href="/technical/ticket/detail/${row.id}">
                                                       Detail Tiket
                                                   </a>
                                               </div>
@@ -89,8 +86,8 @@
                     }
                 ],
                 lengthChange: true,
-                scrollCollapse: false,
-                scrollX: false,
+                // scrollCollapse: false,
+                // scrollX: false,
                 // scrollY: false,
                 // ordering: true,
                 buttons: ['copy', 'excel', 'pdf', 'colvis']

@@ -66,3 +66,4 @@ Route::post('/submit-new-solution', [APITiket::class, 'submit_new_solution']);
 Route::get('/activity-history', [SuperAdminController::class, 'data_activity_history']);
 
 Route::post('/close-tiket', [APITiket::class, 'close_tiket']);
+Route::post('/close-tiket-comment', [APITiket::class, 'close_tiket_comment']);

@@ -1,25 +1,30 @@
-<table id="ticket-display" class="table table-striped" style="width: 100%">
-    <thead class="fs-5 fw-bolder text-light" style="background-color: rgb(12, 12, 151)">
-        <tr align="middle" valign="middle">
-            <th class="text-center">Nomor</th>
-            <th class="text-center">Tipe Tiket</th>
-            <th class="text-center">Kategori</th>
-            <th class="text-center">Subkategori</th>
-            <th class="text-center">Item kategori</th>
-            <th class="text-center">Judul</th>
-            {{-- <th class="text-center">Status Tiket</th> --}}
-            <th class="text-center">Action</th>
-        </tr>
-    </thead>
-    <tbody>
-    </tbody>
-</table>
+<div class="table-responsive mb-0 border-0" data-pattern="priority-columns">
+    <table id="ticket-display" class="table table-striped" style="width: 100%">
+        <thead class="fs-5 fw-bolder text-light" style="background-color: rgb(12, 12, 151)">
+            <tr align="middle" valign="middle">
+                <th class="text-center">Nomor</th>
+                <th class="text-center">Tipe Tiket</th>
+                <th class="text-center">Kategori</th>
+                <th class="text-center">Subkategori</th>
+                <th class="text-center">Item kategori</th>
+                <th class="text-center">Judul</th>
+                {{-- <th class="text-center">Status Tiket</th> --}}
+                <th class="text-center">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
 
 @section('script-bottom')
     <script>
         var nik_user = {!! json_encode($user->nik) !!};
 
         $(document).ready(function() {
+
+            $('.table-responsive').responsiveTable({});
+
             var table1 = $('#ticket-display').DataTable({
                 "ajax": {
                     "url": "/api/created-tiket-list/" + nik_user,
@@ -83,8 +88,8 @@
                     }
                 ],
                 lengthChange: true,
-                scrollCollapse: true,
-                scrollX: true,
+                // scrollCollapse: true,
+                // scrollX: true,
                 // ordering: true,
                 buttons: ['copy', 'excel', 'pdf', 'colvis']
             });

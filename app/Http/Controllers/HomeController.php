@@ -39,11 +39,17 @@ class HomeController extends Controller
     public function root()
     {
         $user = Auth::user();
-        $group_id = GrupMember::where('nik_member', $user->nik)->first()->id_group;
-        return view('index', [
-            'user' => $user,
-            'group_id' => $group_id,
-        ]);
+        $group_id = GrupMember::where('nik_member', $user->nik)->first();
+        if ($group_id == null) {
+            return view('index', [
+                'user' => $user,
+            ]);
+        } else {
+            return view('index', [
+                'user' => $user,
+                'group_id' => $group_id->id_group,
+            ]);
+        }
     }
 
     /*Language Translation*/

@@ -28,24 +28,26 @@
                 <div class="card-body">
 
                     <div class="row">
-                        <table id="listTicket" class="table table-bordered nowrap">
-                            <thead class="fs-5 fw-bolder text-light" style="background-color: rgb(12, 12, 151)">
-                                <tr align="middle" valign="middle">
-                                    <th width="13%">No.Tiket</th>
-                                    <th width="10%">Tipe Tiket</th>
-                                    <th width="10%">User</th>
-                                    <th width="10%">GOLONGAN / JABATAN</th>
-                                    <th class="text-center" width="13%">Kategori</th>
-                                    <th class="text-center" width="13%">Sub Kategori</th>
-                                    <th width="13%">Item Kategori</th>
-                                    <th>Judul</th>
-                                    <th width="5%">&nbsp;</th>
-                                </tr>
-                            </thead>
-                            <tbody>
+                        <div class="table-responsive mb-0 border-0" data-pattern="priority-columns">
+                            <table id="listTicket" class="table table-bordered nowrap">
+                                <thead class="fs-5 fw-bolder text-light" style="background-color: rgb(12, 12, 151)">
+                                    <tr align="middle" valign="middle">
+                                        <th width="13%">No.Tiket</th>
+                                        <th width="10%">Tipe Tiket</th>
+                                        <th width="10%">User</th>
+                                        <th width="10%">GOLONGAN / JABATAN</th>
+                                        <th class="text-center" width="13%">Kategori</th>
+                                        <th class="text-center" width="13%">Sub Kategori</th>
+                                        <th width="13%">Item Kategori</th>
+                                        <th>Judul</th>
+                                        <th width="5%">&nbsp;</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
 
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -53,6 +55,7 @@
     </div>
 @endsection
 @section('script')
+    <script src="{{ URL::asset('assets/libs/admin-resources/admin-resources.min.js') }}"></script>
     <!-- datatables-->
     <script src="{{ URL::asset('assets/libs/datatables.net/datatables.net.min.js') }}"></script>
     <script src="{{ URL::asset('assets/libs/datatables.net-bs4/datatables.net-bs4.min.js') }}"></script>
@@ -70,6 +73,9 @@
     {{-- <script src="{{ URL::asset('/assets/js/module/technical/tiket-assigned.js') }}"></script> --}}
     <script>
         $(document).ready(function() {
+
+            $('.table-responsive').responsiveTable({});
+
             var table1 = $('#listTicket').DataTable({
                 "ajax": {
                     "url": "/api/technical-tiket-ongoing-list/" + nik_user,
@@ -143,8 +149,8 @@
                     }
                 ],
                 lengthChange: true,
-                scrollCollapse: true,
-                scrollX: true,
+                // scrollCollapse: true,
+                // scrollX: true,
                 // ordering: true,
                 buttons: ['copy', 'excel', 'pdf', 'colvis']
             });

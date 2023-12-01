@@ -158,8 +158,7 @@
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary"
                                         data-bs-dismiss="modal">Close</button>
-                                    <button type="button" id="resolveTicketButton"
-                                        class="btn btn-primary">Submit</button>
+                                    <button type="button" id="closeTicketButton" class="btn btn-primary">Submit</button>
                                 </div>
                             </div>
                         </div>
@@ -177,6 +176,7 @@
         $user_id = "{{ $user }}";
         $id_tiket = {{ $tiket->id }};
         let daftarSolusi = null;
+        $rating_review = null;
 
         $(document).ready(function() {
             $('#alasan_div').hide();
@@ -185,6 +185,7 @@
 
             $('input[name="rating_kepuasan"]').change(function() {
                 var selectedRating = $(this).val();
+                $rating_review = selectedRating;
                 console.log('Selected Rating:', selectedRating);
 
                 if (selectedRating < 3) {
@@ -193,58 +194,20 @@
                     $('#alasan_div').hide();
                 }
 
-                // Your existing code for displaying the reason...
             });
 
-            $('#solveTicketModal').on('show.bs.modal', function(event) {
-                $('#solution_div_judul').hide();
-                $('#solution_div_detail').hide();
+            $('#closeTicketButton').click(function() {
+                $catatan_kepuasan = $('#catatan_kepuasan').val();
 
-                $('#solusi_tiket').find('option').remove().end().append(
-                    '<option value="0">Pilihan Solusi dari Knowledge Management</option>');
-
-                $.ajax({
-                    url: "/api/solution-list/" + $id_tiket,
-                    method: "GET",
-                    dataType: "json",
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    success: function(data) {
-                        daftarSolusi = data;
-
-                        populateDropdowns();
-                    }
-                })
-
-            });
-
-            $("#solusi_tiket").change(function() {
-                if ($(this).val() == 9999) {
-                    $('#solution_div_judul').show();
-                    $('#solution_div_detail').show();
-                    $('#judul_solusi').attr('required', true); // Make required
-                    $('#detail_solusi').attr('required', true); // Make required
-                } else {
-                    $('#solution_div_judul').hide();
-                    $('#solution_div_detail').hide();
-                    $('#judul_solusi').removeAttr('required'); // Remove required
-                    $('#detail_solusi').removeAttr('required'); // Remove required
-                }
-            });
-
-            $('#resolveTicketButton').click(function() {
-                $id_solusi = $('#solusi_tiket').val();
-
-                if ($id_solusi != 3) {
+                if ($rating_review == 3) {
                     $.ajax({
-                        url: "/api/submit-solution",
+                        url: "/api/close-tiket",
                         method: "POST",
                         dataType: "json",
                         data: {
                             nik: $user_id,
                             id_tiket: $id_tiket,
-                            id_solusi: $id_solusi,
+                            rating_kepuasan: $rating_review,
                         },
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -255,19 +218,15 @@
                         }
                     })
                 } else {
-                    $judul_solusi = $('#judul_solusi').val();
-                    $detail_solusi = $('#detail_solusi').val();
-
                     $.ajax({
-                        url: "/api/submit-new-solution",
+                        url: "/api/close-tiket-comment",
                         method: "POST",
                         dataType: "json",
                         data: {
                             nik: $user_id,
                             id_tiket: $id_tiket,
-                            id_solusi: $id_solusi,
-                            judul_solusi: $judul_solusi,
-                            detail_solusi: $detail_solusi,
+                            rating_kepuasan: $rating_review,
+                            catatan_kepuasan: $catatan_kepuasan,
                         },
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
