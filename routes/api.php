@@ -22,6 +22,7 @@ use App\Http\Controllers\SuperAdminController;
 */
 
 Route::post('/login', [AuthController::class, 'login']);
+Route::post('/main-login', [AuthController::class, 'main_login']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -33,19 +34,31 @@ Route::get('/subkategori-list/{id}', [APITiketCreate::class, 'list_subkategori']
 Route::get('/item-kategori-list/{id}', [APITiketCreate::class, 'list_item_kategori']);
 
 Route::post('/submit-tiket', [APITiketCreate::class, 'store']);
+// need testing - need attachment code on flutter
 Route::post('/submit-tiket-mobile', [APITiketCreate::class, 'store_mobile']);
+// new - need front end
+Route::post('/submit-tiket-revise', [APITiketCreate::class, 'store_revise']);
+// need testing - need frontend - need attachment code on flutter
+Route::post('/submit-tiket-mobile-revise/{id}', [APITiketCreate::class, 'store_mobile_revise']);
 
 Route::get('/created-tiket-list/{id}', [APITiket::class, 'created_ticket_list']);
 Route::get('/list-all-tiket', [APITiket::class, 'list_all_ticket']);
 Route::get('/tiket-detail/{id}', [APITiket::class, 'ticket_detail']);
 Route::get('/tiket-attachments/{id}', [APITiket::class, 'ticket_attachments']);
 
+// mobile need front end
 Route::get('/helpdesk-tiket-submitted', [APITiket::class, 'helpdesk_list_submitted']);
+// mobile need front end
 Route::get('/helpdesk-tiket-assigned', [APITiket::class, 'helpdesk_list_assigned']);
+// mobile need front end
 Route::get('/helpdesk-tiket-resolved', [APITiket::class, 'helpdesk_list_resolved']);
+// mobile need front end
 Route::get('/helpdesk-get-sla', [APITiket::class, 'get_sla_type']);
 Route::get('/technical-group-list', [APIGroup::class, 'technical_group_list']);
+// mobile need front end
 Route::post('/tiket-assign-group', [APIGroup::class, 'tiket_assign_group']);
+// need test | mobile need front end
+Route::post('/helpdesk-reject-tiket', [APIGroup::class, 'helpdesk_reject_ticket']);
 
 Route::get('/get-group-id/{id}', [APIGroup::class, 'get_group_id']);
 Route::get('/get-teamlead-status/{id}', [APIGroup::class, 'get_teamlead_status']);

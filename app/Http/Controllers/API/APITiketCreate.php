@@ -17,6 +17,7 @@ use App\Models\Transaction\SLA;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 
 class APITiketCreate extends Controller
 {
@@ -174,12 +175,12 @@ class APITiketCreate extends Controller
                 'success' => true,
             ], 201);
         } catch (\Exception $e) {
-            // return response()->json([
-            //     'success' => false,
-            //     'reason' => 'Server error',
-            //     'message' => $e->getMessage()
-            // ], 500);
-            return $e;
+            return response()->json([
+                'success' => false,
+                'reason' => 'Server error',
+                'message' => $e->getMessage()
+            ], 500);
+            // return $e;
         }
     }
 
@@ -220,7 +221,14 @@ class APITiketCreate extends Controller
             }
 
             // set status ticket
-            $status_tiket = StatusTiket::where('flow_number', 1)->where('tipe_tiket', $tipe_tiket)->first();
+            // Get Tipe SLA and create SLA Response
+            if ($tipe_tiket == "LAINNYA") {
+                $status_tiket = StatusTiket::where('flow_number', 1)->where('tipe_tiket', "REQUEST")->first();
+                $sla_response = TipeSLA::where('tipe_sla', 'Response')->where('tipe_tiket', "REQUEST")->first();
+            } else {
+                $status_tiket = StatusTiket::where('flow_number', 1)->where('tipe_tiket', $tipe_tiket)->first();
+                $sla_response = TipeSLA::where('tipe_sla', 'Response')->where('tipe_tiket', $tipe_tiket)->first();
+            }
 
 
             if ($id_kategori == null) {
@@ -275,8 +283,262 @@ class APITiketCreate extends Controller
 
             $ticket = Tiket::create($db_raw_data);
 
+            SLA::create([
+                'id_sla' => $sla_response->id,
+                'tipe_sla' => $sla_response->nama_sla,
+                'id_tiket' => $ticket->id,
+                'business_start_time' => HelperController::getStartBusiness(),
+                'status_sla' => "On Progress",
+                'actual_start_time' => now(),
+                'updated_by' => $user_creator,
+                'created_by' => $user_creator,
+            ]);
+
+            return response()->json([
+                'success' => true,
+                // 'data' => $db_raw_data,
+            ], 201);
+        } catch (\Exception $e) {
+            // Catch any error during the storing process
+            return response()->json([
+                'success' => false,
+                'reason' => 'Server error',
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    function store_revise(Request $request, $id)
+    {
+        $company_code = 'A000';
+        $company_name = 'PI';
+        $kode_perusahaan = 'PIH';
+        $id_unit_layanan = 1;
+        $unit_layanan = 'TI';
+
+        try {
+            $id_tiket = $id;
+            $user_id_creator = $request->input('user_id');
+            $user_creator = User::where('nik', $user_id_creator)->first()->nama;
+
+            $id_kategori = $request->input('kategori_tiket');
+            $nama_kategori = $request->input('nama_kategori');
+            $id_subkategori = $request->input('subkategori_tiket');
+            $nama_subkategori = $request->input('nama_subkategori');
+            $id_item_kategori = $request->input('item_kategori_tiket');
+            $nama_item_kategori = $request->input('nama_item_kategori');
+            $judul_tiket = $request->input('judul_tiket');
+            $detail_tiket = $request->input('detail_tiket');
+
+            // Get Value from Subkategori atau Item Kategori
+            if ($id_item_kategori != null) {
+                $item_kategori = ItemCategory::where('id', $id_item_kategori)->first();
+                $level_dampak = $item_kategori->level_dampak;
+                $level_urgensi = $item_kategori->level_urgensi;
+                $tipe_tiket = $item_kategori->tipe_tiket;
+            } else {
+                $subkategori = Subkategori::where('id', $id_subkategori)->first();
+                $level_dampak = $subkategori->level_dampak;
+                $level_urgensi = $subkategori->level_urgensi;
+                $tipe_tiket = $subkategori->tipe_tiket;
+            }
+
+            // \dd($tipe_tiket);
+
+            // set status ticket
             // Get Tipe SLA and create SLA Response
-            $sla_response = TipeSLA::where('tipe_sla', 'Response')->where('tipe_tiket', $tipe_tiket)->first();
+            if ($tipe_tiket == "LAINNYA") {
+                $status_tiket = StatusTiket::where('flow_number', 1)->where('tipe_tiket', "REQUEST")->first();
+                $sla_response = TipeSLA::where('tipe_sla', 'Response')->where('tipe_tiket', "REQUEST")->first();
+            } else {
+                $status_tiket = StatusTiket::where('flow_number', 1)->where('tipe_tiket', $tipe_tiket)->first();
+                $sla_response = TipeSLA::where('tipe_sla', 'Response')->where('tipe_tiket', $tipe_tiket)->first();
+            }
+
+            $db_raw_data = [
+                'company_code' => $company_code,            // Set Model setelah sudah fix akan jadi multi company
+                'company_name' => $company_name,            // Set Model setelah sudah fix akan jadi multi company
+                'id_unit_layanan' => $id_unit_layanan,      // Set Model setelah sudah fix akan multi unit layanan
+                'unit_layanan' => $unit_layanan,            // Set Model setelah sudah fix akan multi unit layanan
+                'user_id_creator' => $user_id_creator,
+                'tipe_tiket' => $tipe_tiket,
+                'nomor_tiket' => HelperController::GetNomorTiket($kode_perusahaan, $unit_layanan, $tipe_tiket),
+                'id_kategori' => $id_kategori,
+                'kategori_tiket' => $nama_kategori,
+                'id_subkategori' => $id_subkategori,
+                'subkategori_tiket' => $nama_subkategori,
+                'id_item_kategori' => $id_item_kategori,
+                'item_kategori_tiket' => $nama_item_kategori,
+                'judul_tiket' => $judul_tiket,
+                'detail_tiket' => $detail_tiket,
+                'id_status_tiket' => $status_tiket->flow_number,
+                'status_tiket' => $status_tiket->nama_status,
+                'level_dampak' => $level_dampak,
+                'level_urgensi' => $level_urgensi,
+                'updated_by' => $user_creator,
+                'created_by' => $user_creator,
+            ];
+
+            $ticket = Tiket::where('id', $id_tiket)->update($db_raw_data);
+
+            // Get Tipe SLA and create SLA Response
+            SLA::create([
+                'id_sla' => $sla_response->id,
+                'kategori_sla' => 'Response',
+                'tipe_sla' => $sla_response->nama_sla,
+                'sla_hours_target' => $sla_response->durasi_jam,
+                'id_tiket' => $ticket->id,
+                'business_start_time' => HelperController::getStartBusiness(),
+                'status_sla' => "On Progress",
+                'actual_start_time' => now(),
+                'updated_by' => $user_creator,
+                'created_by' => $user_creator,
+            ]);
+
+            // Multi-Attachments Upload
+            if ($request->hasFile('attachments')) {
+                // hapus existing file di server & DB
+                $currentAttachments = Attachment::where('id_tiket', $ticket->id)->get();
+                foreach ($currentAttachments as $currentAttachment) {
+                    // Hapus file di server
+                    if (Storage::exists($currentAttachment->file_location)) {
+                        Storage::delete($currentAttachment->file_location);
+                    }
+                    $currentAttachment->delete(); // Hapus record attachment di DB
+                }
+
+                // Upload file dan path baru
+                foreach ($request->file('attachments') as $file) {
+                    $originalName = $file->getClientOriginalName();
+                    $alteredName = $ticket->nomor_tiket . ' - ' . $originalName;
+                    $type = $file->getClientMimeType();
+                    $format = $file->getClientOriginalExtension();
+                    $location = $file->storeAs('uploads', $alteredName, 'public');
+
+                    Attachment::create([
+                        'id_tiket' => $ticket->id,
+                        'nama_file_original' => $originalName,
+                        'nama_file_altered' => $alteredName,
+                        'tipe_file' => $type,
+                        'format_file' => $format,
+                        'file_location' => $location,
+                        'updated_by' => $user_creator,
+                        'created_by' => $user_creator,
+                    ]);
+                }
+            }
+
+            return response()->json([
+                'success' => true,
+            ], 201);
+        } catch (\Exception $e) {
+            // return response()->json([
+            //     'success' => false,
+            //     'reason' => 'Server error',
+            //     'message' => $e->getMessage()
+            // ], 500);
+            return $e;
+        }
+    }
+
+    function store_mobile_revise(Request $request, $id)
+    {
+        $company_code = 'A000';
+        $company_name = 'PI';
+        $kode_perusahaan = 'PIH';
+        $id_unit_layanan = 1;
+        $unit_layanan = 'TI';
+        $nama_item_kategori = null;
+
+        try {
+            $id_tiket = $id;
+            $user_id_creator = $request->input('user_id_creator');
+            $user_creator = User::where('nik', $user_id_creator)->first()->nama;
+
+            $id_kategori = $request->input('id_kategori');
+            $nama_kategori = Kategori::where('id', $request->input('id_kategori'))->first()->nama_kategori;
+            $id_subkategori = $request->input('id_subkategori');
+            $nama_subkategori = Subkategori::where('id', $request->input('id_subkategori'))->first()->nama_subkategori;
+            $id_item_kategori = $request->input('id_item_kategori');
+            if ($id_item_kategori != null) {
+                $nama_item_kategori = ItemCategory::where('id', $request->input('id_item_kategori'))->first()->nama_item_kategori;
+            }
+            $judul_tiket = $request->input('judul_tiket');
+            $detail_tiket = $request->input('detail_tiket');
+
+            if ($id_item_kategori != null) {
+                $item_kategori = ItemCategory::where('id', $id_item_kategori)->first();
+                $level_dampak = $item_kategori->level_dampak;
+                $level_urgensi = $item_kategori->level_urgensi;
+                $tipe_tiket = $item_kategori->tipe_tiket;
+            } else {
+                $subkategori = Subkategori::where('id', $id_subkategori)->first();
+                $level_dampak = $subkategori->level_dampak;
+                $level_urgensi = $subkategori->level_urgensi;
+                $tipe_tiket = $subkategori->tipe_tiket;
+            }
+
+            // Get Tipe SLA and create SLA Response
+            if ($tipe_tiket == "LAINNYA") {
+                $status_tiket = StatusTiket::where('flow_number', 1)->where('tipe_tiket', "REQUEST")->first();
+                $sla_response = TipeSLA::where('tipe_sla', 'Response')->where('tipe_tiket', "REQUEST")->first();
+            } else {
+                $status_tiket = StatusTiket::where('flow_number', 1)->where('tipe_tiket', $tipe_tiket)->first();
+                $sla_response = TipeSLA::where('tipe_sla', 'Response')->where('tipe_tiket', $tipe_tiket)->first();
+            }
+
+
+            if ($id_kategori == null) {
+                $db_raw_data = [
+                    'company_code' => $company_code,            // Set Model setelah sudah fix akan jadi multi company
+                    'company_name' => $company_name,            // Set Model setelah sudah fix akan jadi multi company
+                    'id_unit_layanan' => $id_unit_layanan,      // Set Model setelah sudah fix akan multi unit layanan
+                    'unit_layanan' => $unit_layanan,            // Set Model setelah sudah fix akan multi unit layanan
+                    'user_id_creator' => $user_id_creator,
+                    'tipe_tiket' => $tipe_tiket,
+                    'nomor_tiket' => HelperController::GetNomorTiket($kode_perusahaan, $unit_layanan, $tipe_tiket),
+                    'id_kategori' => $id_kategori,
+                    'kategori_tiket' => $nama_kategori,
+                    'id_subkategori' => $id_subkategori,
+                    'subkategori_tiket' => $nama_subkategori,
+                    'judul_tiket' => $judul_tiket,
+                    'detail_tiket' => $detail_tiket,
+                    'id_status_tiket' => 1,
+                    'status_tiket' => $status_tiket->nama_status,
+                    // 'attachment' => null,
+                    'level_dampak' => $level_dampak,
+                    'level_urgensi' => $level_urgensi,
+                    'updated_by' => $user_creator,
+                    'created_by' => $user_creator,
+                ];
+            } else {
+                $db_raw_data = [
+                    'company_code' => $company_code,            // Set Model setelah sudah fix akan jadi multi company
+                    'company_name' => $company_name,            // Set Model setelah sudah fix akan jadi multi company
+                    'id_unit_layanan' => $id_unit_layanan,      // Set Model setelah sudah fix akan multi unit layanan
+                    'unit_layanan' => $unit_layanan,            // Set Model setelah sudah fix akan multi unit layanan
+                    'user_id_creator' => $user_id_creator,
+                    'tipe_tiket' => $tipe_tiket,
+                    'nomor_tiket' => HelperController::GetNomorTiket($kode_perusahaan, $unit_layanan, $tipe_tiket),
+                    'id_kategori' => $id_kategori,
+                    'kategori_tiket' => $nama_kategori,
+                    'id_subkategori' => $id_subkategori,
+                    'subkategori_tiket' => $nama_subkategori,
+                    'id_item_kategori' => $id_item_kategori,
+                    'item_kategori_tiket' => $nama_item_kategori,
+                    'judul_tiket' => $judul_tiket,
+                    'detail_tiket' => $detail_tiket,
+                    'id_status_tiket' => 1,
+                    'status_tiket' => $status_tiket->nama_status,
+                    // 'attachment' => null,
+                    'level_dampak' => $level_dampak,
+                    'level_urgensi' => $level_urgensi,
+                    'updated_by' => $user_creator,
+                    'created_by' => $user_creator,
+                ];
+            }
+
+            $ticket = Tiket::where('id', $id_tiket)->update($db_raw_data);
 
             SLA::create([
                 'id_sla' => $sla_response->id,

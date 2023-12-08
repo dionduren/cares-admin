@@ -31,6 +31,9 @@ class CreateUsersTable extends Migration
             $table->string('nama_atasan')->nullable();
             $table->text('avatar')->nullable();     //DIFFERENT
             $table->rememberToken();
+            $table->string('token', 250)->nullable(); // Token column
+            $table->bigInteger('token_exp')->nullable(); // Timestamp for token expiration
+            $table->dateTime('token_exp_date')->nullable(); // Human-readable expiration date/time
             $table->string('updated_by');
             $table->string('created_by');
             $table->timestamps();

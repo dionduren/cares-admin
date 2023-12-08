@@ -106,10 +106,21 @@
                     </div>
 
                     <div class="row pb-3 mx-auto text-center">
-                        <button type="button" class="btn btn-lg btn-success" style="width: 100%" data-bs-toggle="modal"
-                            data-bs-target="#assignTicketModal">
-                            Assign Tiket
-                        </button>
+                        <div class="col-5">
+                            <button type="button" class="btn btn-lg btn-danger" style="width: 100%" data-bs-toggle="modal"
+                                data-bs-target="#rejectTicketModal">
+                                Reject Tiket
+                            </button>
+
+                        </div>
+                        <div class="col-2"></div>
+                        <div class="col-5">
+                            <button type="button" class="btn btn-lg btn-success" style="width: 100%" data-bs-toggle="modal"
+                                data-bs-target="#assignTicketModal">
+                                Assign Tiket
+                            </button>
+
+                        </div>
                     </div>
 
                     <!-- Modal -->
@@ -194,7 +205,40 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                    <button type="button" class="btn btn-danger" id="assignGroupBtn">Assign</button>
+                                    <button type="button" class="btn btn-success" id="assignGroupBtn">Assign</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="modal fade" id="rejectTicketModal" tabindex="-1"
+                        aria-labelledby="rejectTicketModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="rejectTicketModalLabel">Reject Tiket</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+
+                                    <div class="row mx-auto">
+                                        <input type="text" class="form-control" name="id_tiket" id="id_tiket"
+                                            readonly hidden>
+
+                                        <label for="jenis_tiket">Alasan Reject Tiket</label>
+                                        <div class="row mb-3">
+                                            <div class="col">
+                                                <textarea name="alasan_reject" id="alasan_reject" type="text" class="form-control" rows="10"></textarea>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                    <button type="button" class="btn btn-danger" id="rejectTicketBtn">Reject</button>
                                 </div>
                             </div>
                         </div>
@@ -256,6 +300,31 @@
                     },
                     success: function(data) {
                         // $('#assignModal').modal('toggle');
+                        window.location.href = '/';
+
+                    }
+                })
+            });
+
+
+            $('#rejectTicketBtn').click(function() {
+                $nik = $user_id;
+                $id_tiket = $id_tiket;
+                $alasan_reject = $('#alasan_reject').val();
+
+                $.ajax({
+                    url: "/api/helpdesk-reject-tiket",
+                    method: "POST",
+                    dataType: "json",
+                    data: {
+                        nik: $nik,
+                        id_tiket: $id_tiket,
+                        alasan_reject: $alasan_reject,
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(data) {
                         window.location.href = '/';
 
                     }

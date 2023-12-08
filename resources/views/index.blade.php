@@ -10,6 +10,17 @@
         rel="stylesheet" type="text/css" />
     <link href="{{ URL::asset('assets/libs/datatables.net-responsive-bs4/datatables.net-responsive-bs4.min.css') }}"
         rel="stylesheet" type="text/css" />
+    <style>
+        .red {
+            background-color: red !important;
+            color: white !important;
+        }
+
+        .green {
+            background-color: green !important;
+            color: white !important;
+        }
+    </style>
 @endsection
 @section('content')
     @component('components.breadcrumb')

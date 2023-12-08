@@ -90,21 +90,23 @@
                         </div>
                     </div>
 
-                    <hr>
+                    @if ($tiket->flow_number == 5)
+                        <hr>
 
-                    <div class="row mb-3">
-                        <label for="detail_tiket">Solusi yang diberikan - {{ $tiket->judul_solusi }}</label>
-                        <div class="col">
-                            <textarea type="text" class="form-control" rows="5" readonly>{{ $tiket->detail_solusi }}</textarea>
+                        <div class="row mb-3">
+                            <label for="detail_tiket">Solusi yang diberikan - {{ $tiket->judul_solusi }}</label>
+                            <div class="col">
+                                <textarea type="text" class="form-control" rows="5" readonly>{{ $tiket->detail_solusi }}</textarea>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="row pb-3 mx-auto text-center">
-                        <button type="button" class="btn btn-lg btn-success" style="width: 100%" data-bs-toggle="modal"
-                            data-bs-target="#closeTicketModal">
-                            Close Tiket
-                        </button>
-                    </div>
+                        <div class="row pb-3 mx-auto text-center">
+                            <button type="button" class="btn btn-lg btn-success" style="width: 100%" data-bs-toggle="modal"
+                                data-bs-target="#closeTicketModal">
+                                Close Tiket
+                            </button>
+                        </div>
+                    @endif
 
                     <!-- Modal -->
                     <div class="modal fade" id="closeTicketModal" tabindex="-1" aria-labelledby="closeTicketModalLabel"

@@ -18,8 +18,8 @@
                                 </div>
                                 <div class="auth-content my-auto">
                                     <div class="text-center">
-                                        <h5 class="mb-0">Welcome Back !</h5>
-                                        <p class="text-muted mt-2">Sign in to continue to CARES.</p>
+                                        <h5 class="mb-0">Selamat Datang</h5>
+                                        <p class="text-muted mt-2">Login untuk mengakses CARES.</p>
                                     </div>
                                     {{-- <form class="mt-4 pt-2" action="{{ route('login') }}" method="POST"> --}}
                                     <div class="form-floating form-floating-custom mb-4">
@@ -54,6 +54,15 @@
                                         <div class="form-floating-icon">
                                             <i data-feather="lock"></i>
                                         </div>
+                                    </div>
+
+                                    <label for="login_method">Metode Login</label>
+                                    <div class="mb-4">
+                                        <select name="login_method" id="login_method" class="form-control text-end">
+                                            {{-- <option value="">Pilih Metode Login</option> --}}
+                                            <option value="local">Local</option>
+                                            <option value="ldap">LDAP</option>
+                                        </select>
                                     </div>
 
                                     <div class="row mb-4">
@@ -203,11 +212,13 @@
             $('#loginButton').click(function() {
                 var nik = $('#input-username').val();
                 var password = $('#password-input').val();
+                // var login_method = $('#login_method').val();
                 // console.log(username);
                 // console.log(password);
 
                 $.ajax({
-                    url: "/password-login",
+                    url: "/api/main-login",
+                    // url: "/password-login",
                     method: "POST",
                     dataType: "json",
                     headers: {
@@ -216,18 +227,19 @@
                     data: {
                         nik: nik,
                         password: password,
+                        // login_method: login_method,
                     },
                     success: function(response) {
-                        if (response.status == 403) {
-                            console.log('password salah')
-                            $("#password-input").addClass("is-invalid");
-                            $("#error-password").text(response.password);
-                        } else {
-                            $("#password-input").removeClass("is-invalid");
-                            $("#error-password").text("");
+                        // if (response.status == 403) {
+                        //     console.log('password salah')
+                        //     $("#password-input").addClass("is-invalid");
+                        //     $("#error-password").text(response.password);
+                        // } else {
+                        //     $("#password-input").removeClass("is-invalid");
+                        //     $("#error-password").text("");
 
-                            window.location.href = response.path;
-                        }
+                        //     window.location.href = response.path;
+                        // }
                     }
                 })
             })

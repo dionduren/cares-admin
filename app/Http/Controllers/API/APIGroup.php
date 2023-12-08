@@ -161,4 +161,46 @@ class APIGroup extends Controller
             'success' => true,
         ], 201);
     }
+
+    function helpdesk_reject_ticket(Request $request)
+    {
+        //Get variable
+
+        $id_tiket = $request->input('id_tiket');
+        // $tipe_tiket = $request->input('tipe_tiket');
+        $tipe_tiket = Tiket::where('id', $id_tiket)->first()->tipe_tiket;
+        $nik =  $request->input('nik');
+        $helpdesk_agent = User::where('nik', $nik)->first();
+        $alasan_reject =  $request->input('alasan_reject');
+
+        // set ticket status to rejected
+        if ($tipe_tiket == 'REQUEST') {
+            $flow_number = 9;
+            $status_tiket = StatusTiket::where('flow_number', $flow_number)->where('tipe_tiket', $tipe_tiket)->first()->nama_status;
+        } elseif ($tipe_tiket == 'INCIDENT') {
+            $flow_number = 8;
+            $status_tiket = StatusTiket::where('flow_number', $flow_number)->where('tipe_tiket', $tipe_tiket)->first()->nama_status;
+        } else {
+            $status_tiket = 'Rejected';
+            $flow_number = 0;
+            // $flow_number = 8;
+            // $status_tiket = StatusTiket::where('flow_number', $flow_number)->where('tipe_tiket', "INCIDENT")->first()->nama_status;
+        }
+
+        // $status_tiket = StatusTiket::where('flow_number', 2)->where('tipe_tiket', $tipe_tiket)->first();
+
+        Tiket::where('id', $id_tiket)->update([
+            'id_status_tiket' => $flow_number,
+            'status_tiket' => $status_tiket,
+            'alasan_reject' => $alasan_reject,
+            'updated_by' => $helpdesk_agent->nama,
+        ]);
+
+        // hapus SLA
+        SLA::where('id_tiket', $id_tiket)->delete();
+
+        return response()->json([
+            'success' => true,
+        ], 201);
+    }
 }

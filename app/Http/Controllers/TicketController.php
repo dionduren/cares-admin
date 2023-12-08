@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Tiket;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 
 class TicketController extends Controller
 {
@@ -42,5 +43,19 @@ class TicketController extends Controller
             'user' => $user,
             'tiket' => $tiket_detail,
         ]);
+    }
+
+    public function revise_ticket($id)
+    {
+        $user = Auth::user();
+        $tiket_detail = Tiket::where('id', $id)->first();
+        if ($tiket_detail->status_tiket == 'Canceled' || $tiket_detail->status_tiket == 'Rejected') {
+            return view('dashboard.user.ticket-revise', [
+                'user' => $user,
+                'tiket' => $tiket_detail,
+            ]);
+        } else {
+            return Redirect::to('/');
+        }
     }
 }
