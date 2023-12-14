@@ -217,8 +217,8 @@
                 // console.log(password);
 
                 $.ajax({
-                    // url: "/api/main-login",
-                    url: "/password-login",
+                    url: "/api/main-login",
+                    // url: "/password-login",
                     method: "POST",
                     dataType: "json",
                     headers: {

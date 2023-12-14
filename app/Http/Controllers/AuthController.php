@@ -69,6 +69,11 @@ class AuthController extends Controller
         return view('auth.login');
     }
 
+    public function login_test()
+    {
+        return view('auth.login-test');
+    }
+
     public function passwordLogin(Request $request)
     {
         // $username = $request->input('username');
@@ -150,10 +155,8 @@ class AuthController extends Controller
 
             // Check if any user exists with the given credentials
             $user_login = array(
-                // 'ip_address' => $this->apilogin_model->getUserIP(),
-                // 'email' => $this->input->post('nik'),
-                'user' => $this->input->post('nik'),
-                'password' => $this->input->post('password'),
+                'user' => $nik,
+                'password' => $password,
                 'domain' => 'pupuk-indonesia.com'
             );
 
@@ -177,35 +180,43 @@ class AuthController extends Controller
                 $binddn = 'OU=people,DC=' . $dc1 . ',DC=' . $dc2; //cn=admin or whatever you use to login by phpldapadmin
                 $ldapbind = @ldap_bind($ds, 'uid=' . $user_login['user'] . ',' . $binddn, $user_login['password']);
 
+                \dd($binddn);
+                // \dd($ldapbind);
+
+
                 //check if ldap was sucessfull 
                 if ($ldapbind) {
                     $token = $this->set_cookies($nik);
-                    // echo "LDAP bind successful...";
-                    // Set the response and exit
-                    $emp_no = $this->apilogin_model->get_badge_email($nik, 'email');
-                    $email = $nik;
-                    $this->response([
-                        'status' => TRUE,
-                        'message' => 'Login LDAP successful',
-                        'emp_no' => $emp_no,
-                        'email' => $email,
-                        'token' => $token
-                    ], REST_Controller::HTTP_OK);
+                    return response()->json(
+                        [
+                            'status' => TRUE,
+                            'message' => 'Login LDAP successful',
+                            'nik' => $nik,
+                            'token' => $token
+                        ],
+                        // REST_Controller::HTTP_OK
+                    );
                 } else {
                     // Set the response and exit
                     //BAD_REQUEST (400) being the HTTP response code
-                    $this->response([
-                        'status' => FALSE,
-                        'message' => 'Wrong NIK or Password. '
-                    ], REST_Controller::HTTP_BAD_REQUEST);
+                    return response()->json(
+                        [
+                            'status' => FALSE,
+                            'message' => 'Wrong NIK or Password. '
+                        ],
+                        // REST_Controller::HTTP_BAD_REQUEST
+                    );
                 }
             } else {
                 // Set the response and exit
                 //BAD_REQUEST (400) being the HTTP response code
-                $this->response([
-                    'status' => FALSE,
-                    'message' => 'LDAP Server Connection Error.'
-                ], REST_Controller::HTTP_BAD_REQUEST);
+                return response()->json(
+                    [
+                        'status' => FALSE,
+                        'message' => 'LDAP Server Connection Error.'
+                    ],
+                    // REST_Controller::HTTP_BAD_REQUEST
+                );
             }
         }
     }
