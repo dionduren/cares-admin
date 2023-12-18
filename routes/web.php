@@ -27,7 +27,7 @@ use App\Http\Controllers\Dashboard\TechnicalController;
 Auth::routes();
 
 Route::get('/login', [AuthController::class, 'loginPage'])->name('login');
-Route::get('/login-test', [AuthController::class, 'login_test'])->name('login');
+// Route::get('/login-test', [AuthController::class, 'login_test'])->name('login');
 Route::post('/password-login', [AuthController::class, 'passwordLogin']);
 
 // Routes that require authentication
