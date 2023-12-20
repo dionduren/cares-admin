@@ -24,14 +24,14 @@
                                     {{-- <form class="mt-4 pt-2" action="{{ route('login') }}" method="POST"> --}}
                                     <div class="form-floating form-floating-custom mb-4">
                                         <input type="text" class="form-control @error('nik') is-invalid @enderror"
-                                            value="{{ old('nik') }}" id="input-username" placeholder="Enter User Name"
+                                            value="{{ old('nik') }}" id="nik" placeholder="Enter User Name"
                                             name="nik">
                                         @error('nik')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
-                                        <label for="input-username">Username</label>
+                                        <label for="nik">Username</label>
                                         <div class="form-floating-icon">
                                             <i data-feather="users"></i>
                                         </div>
@@ -210,7 +210,7 @@
         $(document).ready(function() {
 
             $('#loginButton').click(function() {
-                var nik = $('#input-username').val();
+                var nik = $('#nik').val();
                 var password = $('#password-input').val();
                 // var login_method = $('#login_method').val();
                 // console.log(username);

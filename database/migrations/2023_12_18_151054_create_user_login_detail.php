@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('user_login_detail', function (Blueprint $table) {
             $table->id();
-            $table->string('emp_no')->nullable();
-            $table->string('nama')->nullable();
+            $table->string('emp_no');
+            $table->string('nama');
             $table->string('gender')->nullable();
             $table->string('emp_grade')->nullable();
             $table->string('emp_grade_title')->nullable();
@@ -45,6 +45,8 @@ return new class extends Migration
             $table->string('sup_pos_id')->nullable();
             $table->string('bag_id')->nullable();
             $table->string('bag_title')->nullable();
+            $table->string('updated_by');
+            $table->string('created_by');
             $table->timestamps();
         });
     }

@@ -17,23 +17,23 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('company_code')->nullable();
+            // $table->string('company_code')->nullable();
             $table->string('nik')->unique();
-            $table->string('password');
+            $table->string('password')->nullable();
             $table->string('nama');
-            $table->string('jabatan')->nullable();
-            $table->string('id_unit_kerja')->nullable();
-            $table->string('unit_kerja')->nullable();
             $table->string('email')->nullable();
-            // $table->timestamp('email_verified_at')->nullable();
             $table->integer('role_id')->unsigned();
-            $table->string('atasan_id')->nullable();
-            $table->string('nama_atasan')->nullable();
+            // $table->string('jabatan')->nullable();
+            // $table->string('id_unit_kerja')->nullable();
+            // $table->string('unit_kerja')->nullable();
+            // $table->timestamp('email_verified_at')->nullable();
+            // $table->string('atasan_id')->nullable();
+            // $table->string('nama_atasan')->nullable();
+            $table->string('token', 250)->nullable(); // Token column
+            // $table->bigInteger('token_exp')->nullable(); // Timestamp for token expiration
+            // $table->dateTime('token_exp_date')->nullable(); // Human-readable expiration date/time
             $table->text('avatar')->nullable();     //DIFFERENT
             $table->rememberToken();
-            $table->string('token', 250)->nullable(); // Token column
-            $table->bigInteger('token_exp')->nullable(); // Timestamp for token expiration
-            $table->dateTime('token_exp_date')->nullable(); // Human-readable expiration date/time
             $table->string('updated_by');
             $table->string('created_by');
             $table->timestamps();
