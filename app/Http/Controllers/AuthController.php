@@ -49,22 +49,51 @@ class AuthController extends Controller
         return response()->json($response, $code);
     }
 
+    // public function old_login(Request $request)
+    // {
+    //     if (Auth::attempt(['nik' => $request->nik, 'password' => $request->password])) {
+    //         $user = Auth::user();
+    //         $success['id'] =  $user->id;
+    //         $success['nik'] =  $user->nik;
+    //         $success['nama'] =  $user->nama;
+    //         $success['email'] =  $user->email;
+    //         $success['role_id'] =  $user->role_id;
+    //         $success['unit_kerja'] =  $user->unit_kerja;
+    //         $success['token'] =  $user->createToken('MyApp')->plainTextToken;
+
+    //         return $this->sendResponse($success, 'User login successfully.');
+    //     } else {
+    //         return $this->sendError('Unauthorised.', ['error' => 'Unauthorised']);
+    //     }
+    // }
+
     public function login(Request $request)
     {
+        // First, attempt local authentication
         if (Auth::attempt(['nik' => $request->nik, 'password' => $request->password])) {
-            $user = Auth::user();
-            $success['id'] =  $user->id;
-            $success['nik'] =  $user->nik;
-            $success['nama'] =  $user->nama;
-            $success['email'] =  $user->email;
-            $success['role_id'] =  $user->role_id;
-            $success['unit_kerja'] =  $user->unit_kerja;
-            $success['token'] =  $user->createToken('MyApp')->plainTextToken;
-
-            return $this->sendResponse($success, 'User login successfully.');
-        } else {
+            return $this->createSuccessResponse(Auth::user());
+        }
+        // If local auth fails, attempt SSO authentication
+        elseif ($user = $this->attemptSSOLogin(['nik' => $request->nik, 'password' => $request->password])) {
+            return $this->createSuccessResponse($user);
+        }
+        // If both local and SSO auth fail, return error
+        else {
             return $this->sendError('Unauthorised.', ['error' => 'Unauthorised']);
         }
+    }
+
+    protected function createSuccessResponse($user)
+    {
+        $success['id'] =  $user->id;
+        $success['nik'] =  $user->nik;
+        $success['nama'] =  $user->nama;
+        $success['email'] =  $user->email;
+        $success['role_id'] =  $user->role_id;
+        // $success['unit_kerja'] =  $user->unit_kerja;
+        $success['token'] =  $user->createToken('MyApp')->plainTextToken;
+
+        return $this->sendResponse($success, 'User login successfully.');
     }
 
     public function loginPage()
@@ -77,30 +106,41 @@ class AuthController extends Controller
         return view('auth.login-test');
     }
 
-    public function passwordLogin(Request $request)
+    // public function passwordLogin(Request $request)
+    public function main_login(Request $request)
     {
         $credentials = $request->only(['nik', 'password']);
 
         // Try local authentication first
         if (Auth::attempt($credentials)) {
+
             $id = User::where('nik', $request->input('nik'))->first()->id;
+
             Auth::loginUsingId($id);
+
             return response()->json([
                 'path' => '/',
                 'status' => 200,
             ]);
         } else {
-            if ($this->attemptSSOLogin($credentials)) {
+            if ($user = $this->attemptSSOLogin($credentials)) {
                 // SSO authentication successful
+                try {
+                    // Auth::login($user);
+                    // Auth::login($user_id);
+                    Auth::loginUsingId($user->id);
 
-                return response()->json([
-                    'path' => '/',
-                    'status' => 200,
-                ]);
+                    return response()->json([
+                        'path' => '/',
+                        'status' => 200,
+                    ]);
+                } catch (\Exception $e) {
+                    Log::error('login failed: ' . $e->getMessage());
+                }
             } else {
 
                 return response()->json([
-                    'password' => 'User / Password yang anda masukkan salah',
+                    'password' => 'User \ Password yang anda masukkan salah',
                     'status' => 403,
                 ]);
             }
@@ -117,8 +157,6 @@ class AuthController extends Controller
 
         try {
             // Use Laravel's HTTP client or another HTTP client to send a POST request
-
-
             $response = Http::asForm()->withBasicAuth($sso_username, $sso_password)
                 ->post($ssoApiUrl, [
                     'uid' => $credentials['nik'],
@@ -130,18 +168,14 @@ class AuthController extends Controller
 
             // Cek apakah data user terdaftar di  SAP
             if ($response->successful() && $response['status']) {
-                // Cek apakah data user terdaftar di  Lokal
+                // Cek apakah data user terdaftar di Lokal
                 $user = $this->findOrCreateUser($login_info);
 
-                // Login the user into your application
-                Auth::login($user);
-
-                return true;
+                return $user;
+            } else {
+                return false;
             }
-
-            return false;
         } catch (\Exception $e) {
-            // Handle exceptions (like network issues)
             Log::error('SSO login failed: ' . $e->getMessage());
             return false;
         }
@@ -149,73 +183,68 @@ class AuthController extends Controller
 
     protected function findOrCreateUser($ssoUser)
     {
-        // \dd($ssoUser['emp_no']);
-        // Assuming the SSO returns a unique identifier for the user
         $user = User::where('nik', $ssoUser['emp_no'])->first();
 
-        // \dd($user);
         if ($user == null) {
 
-            $karyawan_detail = $this->getKaryawanDetail($ssoUser['emp_no']);
+            try {
+                $karyawan_detail = $this->getKaryawanDetail($ssoUser['emp_no']);
 
-            if ($karyawan_detail['pos_level'] >= 2) {
-                $role_id = 7;
-            } else {
-                $role_id = 6;
+                if ($karyawan_detail['pos_level'] >= 2) {
+                    $role_id = 7;
+                } else {
+                    $role_id = 6;
+                }
+
+                $user = User::create([
+                    'nik' => $ssoUser['emp_no'],
+                    'nama' => $karyawan_detail['nama'],
+                    'email' => $ssoUser['email'],
+                    'token' => $ssoUser['token'],
+                    'role_id' => $role_id,
+                    'updated_by' => 'SAP SSO',
+                    'created_by' => 'SAP SSO',
+                ]);
+
+                SAPUserDetail::create([
+                    'emp_no' => $karyawan_detail['emp_no'],
+                    'nama' => $karyawan_detail['nama'],
+                    'gender' => $karyawan_detail['gender'] ?? null,
+                    'emp_grade' => $karyawan_detail['emp_grade'] ?? null,
+                    'emp_grade_title' => $karyawan_detail['emp_grade_title'] ?? null,
+                    'area' => $karyawan_detail['area'] ?? null,
+                    'area_title' => $karyawan_detail['area_title'] ?? null,
+                    'sub_area' => $karyawan_detail['sub_area'] ?? null,
+                    'sub_area_title' => $karyawan_detail['sub_area_title'] ?? null,
+                    'company' => $karyawan_detail['company'] ?? null,
+                    'lokasi' => $karyawan_detail['lokasi'] ?? null,
+                    'email' => $karyawan_detail['email'] ?? null,
+                    'hp' => $karyawan_detail['hp'] ?? null,
+                    'pos_id' => $karyawan_detail['pos_id'] ?? null,
+                    'pos_title' => $karyawan_detail['pos_title'] ?? null,
+                    'pos_grade' => $karyawan_detail['pos_grade'] ?? null,
+                    'pos_kategori' => $karyawan_detail['pos_kategori'] ?? null,
+                    'pos_level' => $karyawan_detail['pos_level'] ?? null,
+                    'org_id' => $karyawan_detail['org_id'] ?? null,
+                    'org_title' => $karyawan_detail['org_title'] ?? null,
+                    'dept_id' => $karyawan_detail['dept_id'] ?? null,
+                    'dept_title' => $karyawan_detail['dept_title'] ?? null,
+                    'komp_id' => $karyawan_detail['komp_id'] ?? null,
+                    'komp_title' => $karyawan_detail['komp_title'] ?? null,
+                    'dir_id' => $karyawan_detail['dir_id'] ?? null,
+                    'dir_title' => $karyawan_detail['dir_title'] ?? null,
+                    'sup_emp_no' => $karyawan_detail['sup_emp_no'] ?? null,
+                    'sup_pos_id' => $karyawan_detail['sup_pos_id'] ?? null,
+                    'bag_id' => $karyawan_detail['bag_id'] ?? null,
+                    'bag_title' => $karyawan_detail['bag_title'] ?? null,
+                    'updated_by' => 'SAP SSO',
+                    'created_by' => 'SAP SSO',
+                ]);
+
+                return $user;
+            } catch (\Exception $e) {
+                Log::error('findOrCreateUser failed: ' . $e->getMessage());
             }
-
-
-            // \dd($ssoUser['token']);
-            $user = User::create([
-                'nik' => $ssoUser['emp_no'],
-                'nama' => $karyawan_detail['nama'],
-                'email' => $ssoUser['email'],
-                // 'remember_token' => $ssoUser['token'],
-                'token' => $ssoUser['token'],
-                // check role_id, gimana kalo VP? apakah panggil dulu fungsi get karyawan detail?
-                // 'role_id' => '6',
-                'role_id' => $role_id,
-                'updated_by' => 'SAP SSO',
-                'created_by' => 'SAP SSO',
-            ]);
-
-            SAPUserDetail::create([
-                'emp_no' => $karyawan_detail['emp_no'],
-                'nama' => $karyawan_detail['nama'],
-                'gender' => $karyawan_detail['gender'] ?? null,
-                'emp_grade' => $karyawan_detail['emp_grade'] ?? null,
-                'emp_grade_title' => $karyawan_detail['emp_grade_title'] ?? null,
-                'area' => $karyawan_detail['area'] ?? null,
-                'area_title' => $karyawan_detail['area_title'] ?? null,
-                'sub_area' => $karyawan_detail['sub_area'] ?? null,
-                'sub_area_title' => $karyawan_detail['sub_area_title'] ?? null,
-                'company' => $karyawan_detail['company'] ?? null,
-                'lokasi' => $karyawan_detail['lokasi'] ?? null,
-                'email' => $karyawan_detail['email'] ?? null,
-                'hp' => $karyawan_detail['hp'] ?? null,
-                'pos_id' => $karyawan_detail['pos_id'] ?? null,
-                'pos_title' => $karyawan_detail['pos_title'] ?? null,
-                'pos_grade' => $karyawan_detail['pos_grade'] ?? null,
-                'pos_kategori' => $karyawan_detail['pos_kategori'] ?? null,
-                'pos_level' => $karyawan_detail['pos_level'] ?? null,
-                'org_id' => $karyawan_detail['org_id'] ?? null,
-                'org_title' => $karyawan_detail['org_title'] ?? null,
-                'dept_id' => $karyawan_detail['dept_id'] ?? null,
-                'dept_title' => $karyawan_detail['dept_title'] ?? null,
-                'komp_id' => $karyawan_detail['komp_id'] ?? null,
-                'komp_title' => $karyawan_detail['komp_title'] ?? null,
-                'dir_id' => $karyawan_detail['dir_id'] ?? null,
-                'dir_title' => $karyawan_detail['dir_title'] ?? null,
-                'sup_emp_no' => $karyawan_detail['sup_emp_no'] ?? null,
-                'sup_pos_id' => $karyawan_detail['sup_pos_id'] ?? null,
-                'bag_id' => $karyawan_detail['bag_id'] ?? null,
-                'bag_title' => $karyawan_detail['bag_title'] ?? null,
-                'updated_by' => 'SAP SSO',
-                'created_by' => 'SAP SSO',
-            ]);
-
-
-            return $user;
         } else {
             return $user;
         }
@@ -236,11 +265,7 @@ class AuthController extends Controller
             if ($response->successful() && $response['status']) {
 
                 $body = $response->getBody();
-
-                // Parse the body into a JSON array
                 $detail_karyawan = json_decode($body, true);
-
-                // \dd($detail_karyawan['emp_no']);
 
                 return $detail_karyawan;
             }

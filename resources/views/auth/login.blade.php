@@ -212,9 +212,7 @@
             $('#loginButton').click(function() {
                 var nik = $('#nik').val();
                 var password = $('#password-input').val();
-                // var login_method = $('#login_method').val();
-                // console.log(username);
-                // console.log(password);
+
 
                 $.ajax({
                     // url: "/api/main-login",
@@ -227,19 +225,19 @@
                     data: {
                         nik: nik,
                         password: password,
-                        // login_method: login_method,
                     },
                     success: function(response) {
-                        // if (response.status == 403) {
-                        //     console.log('password salah')
-                        //     $("#password-input").addClass("is-invalid");
-                        //     $("#error-password").text(response.password);
-                        // } else {
-                        //     $("#password-input").removeClass("is-invalid");
-                        //     $("#error-password").text("");
+                        // console.log(response);
+                        if (response.status == 403) {
+                            console.log('password salah')
+                            $("#password-input").addClass("is-invalid");
+                            $("#error-password").text(response.password);
+                        } else {
+                            $("#password-input").removeClass("is-invalid");
+                            $("#error-password").text("");
 
-                        //     window.location.href = response.path;
-                        // }
+                            window.location.href = response.path;
+                        }
                     }
                 })
             })

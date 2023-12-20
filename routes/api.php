@@ -22,7 +22,7 @@ use App\Http\Controllers\SuperAdminController;
 */
 
 Route::post('/login', [AuthController::class, 'login']);
-Route::post('/main-login', [AuthController::class, 'main_login']);
+// Route::post('/main-login', [AuthController::class, 'main_login']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
