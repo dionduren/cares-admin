@@ -192,7 +192,7 @@ class AuthController extends Controller
             try {
                 $karyawan_detail = $this->getKaryawanDetail($ssoUser['emp_no']);
 
-                if ($karyawan_detail['pos_level'] >= 2) {
+                if ($karyawan_detail['pos_level'] <= 2) {
                     $role_id = 7;
                 } else {
                     $role_id = 6;
