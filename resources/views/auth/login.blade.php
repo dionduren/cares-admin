@@ -56,19 +56,11 @@
                                         </div>
                                     </div>
 
-                                    <label for="login_method">Metode Login</label>
-                                    <div class="mb-4">
-                                        <select name="login_method" id="login_method" class="form-control text-end">
-                                            {{-- <option value="">Pilih Metode Login</option> --}}
-                                            <option value="local">Local</option>
-                                            <option value="ldap">LDAP</option>
-                                        </select>
-                                    </div>
-
                                     <div class="row mb-4">
                                         <div class="col">
                                             <div class="form-check font-size-15">
-                                                <input class="form-check-input " type="checkbox" id="remember-check">
+                                                <input class="form-check-input " type="checkbox" id="remember-check"
+                                                    name="remember-check">
                                                 <label class="form-check-label font-size-13" for="remember-check">
                                                     Remember me
                                                 </label>
@@ -212,6 +204,7 @@
             $('#loginButton').click(function() {
                 var nik = $('#nik').val();
                 var password = $('#password-input').val();
+                var remember_me = $('#remember-check').val();
 
 
                 $.ajax({
@@ -225,6 +218,7 @@
                     data: {
                         nik: nik,
                         password: password,
+                        remember_me: remember_me,
                     },
                     success: function(response) {
                         // console.log(response);

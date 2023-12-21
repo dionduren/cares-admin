@@ -5,20 +5,21 @@
             <div class="navbar-brand-box">
                 <a href="/" class="logo logo-dark">
                     <span class="logo-sm">
-                        <img src="{{ URL::asset('assets/images/logo-sm.svg') }}" alt="" height="30">
+                        <img src="{{ URL::asset('assets/images/logo-crop.png') }}" alt="" height="30">
                     </span>
                     <span class="logo-lg">
-                        <img src="{{ URL::asset('assets/images/logo-sm.svg') }}" alt="" height="24"> <span
+                        <img src="{{ URL::asset('assets/images/logo-crop.png') }}" alt="" height="30"> <span
                             class="logo-txt">CARES</span>
                     </span>
                 </a>
 
                 <a href="/" class="logo logo-light">
                     <span class="logo-sm">
-                        <img src="{{ URL::asset('assets/images/logo-sm.svg') }}" alt="" height="30">
+                        {{-- <img src="{{ URL::asset('assets/images/logo-sm.svg') }}" alt="" height="30"> --}}
+                        <img src="{{ URL::asset('assets/images/logo-crop.png') }}" alt="" height="30">
                     </span>
                     <span class="logo-lg">
-                        <img src="{{ URL::asset('assets/images/logo-sm.svg') }}" alt="" height="24"> <span
+                        <img src="{{ URL::asset('assets/images/logo-crop.png') }}" alt="" height="30"> <span
                             class="logo-txt">CARES</span>
                     </span>
                 </a>

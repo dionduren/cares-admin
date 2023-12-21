@@ -10,6 +10,7 @@ use App\Models\Tiket;
 use App\Models\Kategori;
 use App\Models\Subkategori;
 use App\Models\ItemCategory;
+use App\Models\Master\SAPUserDetail;
 use App\Models\Master\StatusTiket;
 use App\Models\Master\TipeSLA;
 use App\Models\Transaction\Attachment;
@@ -34,8 +35,8 @@ class APITiketCreate extends Controller
      */
     public function store(Request $request)
     {
-        $company_code = 'A000';
-        $company_name = 'PI';
+        // $company_code = 'A000';
+        // $company_name = 'PI';
         $kode_perusahaan = 'PIH';
         $id_unit_layanan = 1;
         $unit_layanan = 'TI';
@@ -73,7 +74,7 @@ class APITiketCreate extends Controller
 
         try {
             $user_id_creator = $request->input('user_id');
-            $user_creator = User::where('nik', $user_id_creator)->first()->nama;
+            $user_creator = SAPUserDetail::where('emp_no', $user_id_creator)->first();
 
             $id_kategori = $request->input('kategori_tiket');
             $nama_kategori = $request->input('nama_kategori');
@@ -110,11 +111,13 @@ class APITiketCreate extends Controller
             }
 
             $db_raw_data = [
-                'company_code' => $company_code,            // Set Model setelah sudah fix akan jadi multi company
-                'company_name' => $company_name,            // Set Model setelah sudah fix akan jadi multi company
+                'company_code' => $user_creator->company,            // Set Model setelah sudah fix akan jadi multi company
+                'company_name' => $user_creator->lokasi,            // Set Model setelah sudah fix akan jadi multi company
                 'id_unit_layanan' => $id_unit_layanan,      // Set Model setelah sudah fix akan multi unit layanan
                 'unit_layanan' => $unit_layanan,            // Set Model setelah sudah fix akan multi unit layanan
                 'user_id_creator' => $user_id_creator,
+                'jabatan_creator' => $user_creator->pos_title,
+                'unit_kerja_creator' => $user_creator->komp_title,
                 'tipe_tiket' => $tipe_tiket,
                 'nomor_tiket' => HelperController::GetNomorTiket($kode_perusahaan, $unit_layanan, $tipe_tiket),
                 'id_kategori' => $id_kategori,
@@ -129,8 +132,8 @@ class APITiketCreate extends Controller
                 'status_tiket' => $status_tiket->nama_status,
                 'level_dampak' => $level_dampak,
                 'level_urgensi' => $level_urgensi,
-                'updated_by' => $user_creator,
-                'created_by' => $user_creator,
+                'updated_by' => $user_creator->nama,
+                'created_by' => $user_creator->nama,
             ];
 
             $ticket = Tiket::create($db_raw_data);
@@ -195,7 +198,8 @@ class APITiketCreate extends Controller
 
         try {
             $user_id_creator = $request->input('user_id_creator');
-            $user_creator = User::where('nik', $user_id_creator)->first()->nama;
+            // $user_creator = User::where('nik', $user_id_creator)->first()->nama;
+            $user_creator = SAPUserDetail::where('emp_no', $user_id_creator)->first();
 
             $id_kategori = $request->input('id_kategori');
             $nama_kategori = Kategori::where('id', $request->input('id_kategori'))->first()->nama_kategori;
@@ -231,13 +235,15 @@ class APITiketCreate extends Controller
             }
 
 
-            if ($id_kategori == null) {
+            if ($id_item_kategori == null) {
                 $db_raw_data = [
-                    'company_code' => $company_code,            // Set Model setelah sudah fix akan jadi multi company
-                    'company_name' => $company_name,            // Set Model setelah sudah fix akan jadi multi company
+                    'company_code' => $user_creator->company,            // Set Model setelah sudah fix akan jadi multi company
+                    'company_name' => $user_creator->lokasi,            // Set Model setelah sudah fix akan jadi multi company
                     'id_unit_layanan' => $id_unit_layanan,      // Set Model setelah sudah fix akan multi unit layanan
                     'unit_layanan' => $unit_layanan,            // Set Model setelah sudah fix akan multi unit layanan
                     'user_id_creator' => $user_id_creator,
+                    'jabatan_creator' => $user_creator->pos_title,
+                    'unit_kerja_creator' => $user_creator->komp_title,
                     'tipe_tiket' => $tipe_tiket,
                     'nomor_tiket' => HelperController::GetNomorTiket($kode_perusahaan, $unit_layanan, $tipe_tiket),
                     'id_kategori' => $id_kategori,
@@ -251,16 +257,18 @@ class APITiketCreate extends Controller
                     // 'attachment' => null,
                     'level_dampak' => $level_dampak,
                     'level_urgensi' => $level_urgensi,
-                    'updated_by' => $user_creator,
-                    'created_by' => $user_creator,
+                    'updated_by' => $user_creator->nama,
+                    'created_by' => $user_creator->nama,
                 ];
             } else {
                 $db_raw_data = [
-                    'company_code' => $company_code,            // Set Model setelah sudah fix akan jadi multi company
-                    'company_name' => $company_name,            // Set Model setelah sudah fix akan jadi multi company
+                    'company_code' => $user_creator->company,            // Set Model setelah sudah fix akan jadi multi company
+                    'company_name' => $user_creator->lokasi,            // Set Model setelah sudah fix akan jadi multi company
                     'id_unit_layanan' => $id_unit_layanan,      // Set Model setelah sudah fix akan multi unit layanan
                     'unit_layanan' => $unit_layanan,            // Set Model setelah sudah fix akan multi unit layanan
                     'user_id_creator' => $user_id_creator,
+                    'jabatan_creator' => $user_creator->pos_title,
+                    'unit_kerja_creator' => $user_creator->komp_title,
                     'tipe_tiket' => $tipe_tiket,
                     'nomor_tiket' => HelperController::GetNomorTiket($kode_perusahaan, $unit_layanan, $tipe_tiket),
                     'id_kategori' => $id_kategori,
@@ -276,8 +284,8 @@ class APITiketCreate extends Controller
                     // 'attachment' => null,
                     'level_dampak' => $level_dampak,
                     'level_urgensi' => $level_urgensi,
-                    'updated_by' => $user_creator,
-                    'created_by' => $user_creator,
+                    'updated_by' => $user_creator->nama,
+                    'created_by' => $user_creator->nama,
                 ];
             }
 
@@ -285,13 +293,15 @@ class APITiketCreate extends Controller
 
             SLA::create([
                 'id_sla' => $sla_response->id,
+                'kategori_sla' => 'Response',
                 'tipe_sla' => $sla_response->nama_sla,
+                'sla_hours_target' => $sla_response->durasi_jam,
                 'id_tiket' => $ticket->id,
                 'business_start_time' => HelperController::getStartBusiness(),
                 'status_sla' => "On Progress",
                 'actual_start_time' => now(),
-                'updated_by' => $user_creator,
-                'created_by' => $user_creator,
+                'updated_by' => $user_creator->nama,
+                'created_by' => $user_creator->nama,
             ]);
 
             return response()->json([

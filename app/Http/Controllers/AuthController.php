@@ -71,6 +71,7 @@ class AuthController extends Controller
     {
         // First, attempt local authentication
         if (Auth::attempt(['nik' => $request->nik, 'password' => $request->password])) {
+            // Log::error('Mobile login Attempted: ' . $request->nik);
             return $this->createSuccessResponse(Auth::user());
         }
         // If local auth fails, attempt SSO authentication
@@ -110,6 +111,7 @@ class AuthController extends Controller
     public function main_login(Request $request)
     {
         $credentials = $request->only(['nik', 'password']);
+        $remember = $request->has('remember_me');
 
         // Try local authentication first
         if (Auth::attempt($credentials)) {
@@ -126,9 +128,9 @@ class AuthController extends Controller
             if ($user = $this->attemptSSOLogin($credentials)) {
                 // SSO authentication successful
                 try {
-                    // Auth::login($user);
+                    Auth::login($user, $remember);
                     // Auth::login($user_id);
-                    Auth::loginUsingId($user->id);
+                    // Auth::loginUsingId($user->id);
 
                     return response()->json([
                         'path' => '/',
