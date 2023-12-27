@@ -34,9 +34,9 @@ Route::get('/subkategori-list/{id}', [APITiketCreate::class, 'list_subkategori']
 Route::get('/item-kategori-list/{id}', [APITiketCreate::class, 'list_item_kategori']);
 
 Route::post('/submit-tiket', [APITiketCreate::class, 'store']);
-// need testing - need attachment code on flutter
+// need attachment code on flutter
 Route::post('/submit-tiket-mobile', [APITiketCreate::class, 'store_mobile']);
-// new - need front end
+// new - need front end & mobile
 Route::post('/submit-tiket-revise', [APITiketCreate::class, 'store_revise']);
 // need testing - need frontend - need attachment code on flutter
 Route::post('/submit-tiket-mobile-revise/{id}', [APITiketCreate::class, 'store_mobile_revise']);

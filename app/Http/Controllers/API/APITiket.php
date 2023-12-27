@@ -20,7 +20,7 @@ class APITiket extends Controller
 
     function created_ticket_list($id)
     {
-        $list_tiket = Tiket::where('user_id_creator', $id)->get();
+        $list_tiket = Tiket::where('user_id_creator', $id)->get(['id', 'judul_tiket', 'kategori_tiket', 'subkategori_tiket', 'status_tiket', 'created_at', 'updated_at']);
         return response()->json($list_tiket);
     }
 
