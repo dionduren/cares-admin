@@ -36,6 +36,7 @@ Route::middleware(['auth'])->group(
     Route::redirect('/index', '/');
 
     Route::get('/create-ticket', [TicketController::class, 'create_ticket'])->name('create_ticket');
+    Route::get('/create-ticket-problem', [TicketController::class, 'create_ticket_problem'])->name('create_ticket_problem');
 
     Route::get('/tiket/detail/{id}', [TicketController::class, 'detail_ticket']);
     Route::get('/tiket/revise/{id}', [TicketController::class, 'revise_ticket']);

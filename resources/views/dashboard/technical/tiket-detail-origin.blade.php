@@ -104,33 +104,6 @@
                                 <div class="modal-body">
 
                                     <div class="row mb-3">
-                                        <label for="detail_tiket">Kondisi Problem pada tiket</label>
-                                        <div class="col">
-                                            <select class="form-control" name="kondisi_problem" id="kondisi_problem">
-                                                <option value="1">Dapat diselesaikan in-house</option>
-                                                <option value="2">Perlu eskalasi ke pihak ketiga</option>
-                                                <option value="3">Perlu ditunda menunggu keputusan stakeholder</option>
-                                                <option value="4">Lainnya</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    {{-- <div class="row mb-3">
-                                        <label for="detail_tiket">Judul solusi baru yang digunakan</label>
-                                        <div class="col">
-                                            <input type="text" class="form-control" name="judul_solusi_problem"
-                                                id="judul_solusi">
-                                        </div>
-                                    </div>
-
-                                    <div class="row mb-3">
-                                        <label for="detail_tiket">Jelaskan solusi baru yang digunakan</label>
-                                        <div class="col">
-                                            <textarea class="form-control" name="detail_solusi_problem" id="detail_solusi" rows="5"></textarea>
-                                        </div>
-                                    </div> --}}
-
-                                    {{-- <div class="row mb-3">
                                         <label for="detail_tiket">Solusi tiket yang digunakan</label>
                                         <div class="col">
                                             <select class="form-control dropdownGrup" name="solusi_tiket" id="solusi_tiket">
@@ -151,13 +124,11 @@
                                         <div class="col">
                                             <textarea class="form-control" name="detail_solusi" id="detail_solusi" rows="5"></textarea>
                                         </div>
-                                    </div> --}}
+                                    </div>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button type="button" id="resolveTicketButton" class="btn btn-danger text-white">Hold
-                                        Ticket</button>
-                                    {{-- <button type="button" id="resolveTicketButton" class="btn btn-success">Submit</button> --}}
+                                    <button type="button" id="resolveTicketButton" class="btn btn-primary">Submit</button>
                                 </div>
                             </div>
                         </div>

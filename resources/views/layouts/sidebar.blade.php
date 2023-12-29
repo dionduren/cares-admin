@@ -25,6 +25,13 @@
                     </a>
                 </li>
 
+
+                <li>
+                    <a href="/create-ticket-problem">
+                        <i class="mdi mdi-ticket-confirmation"></i>
+                        <span data-key="t-dashboard">Buat Tiket Problem Baru</span>
+                    </a>
+                </li>
                 <li>
                     <a href="/ticket/self">
                         <i class="mdi mdi-ticket"></i>
@@ -130,7 +137,8 @@
                             <li><a href="/technical/ticket/resolved" key="t-task-list" style="color:red">Daftar Tiket
                                     Resolved</a>
                             </li>
-                            <li><a href="/technical/ticket/history" key="t-create-task" style="color:red">All Tiket</a>
+                            <li><a href="/technical/ticket/history" key="t-create-task" style="color:red">All
+                                    Tiket</a>
                             </li>
                         </ul>
                     </li>

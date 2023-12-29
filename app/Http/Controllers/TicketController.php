@@ -26,6 +26,13 @@ class TicketController extends Controller
             'user' => $user,
         ]);
     }
+    public function create_ticket_problem(Request $request)
+    {
+        $user = Auth::user();
+        return view('ticket.create-problem', [
+            'user' => $user,
+        ]);
+    }
 
     function index_self()
     {
