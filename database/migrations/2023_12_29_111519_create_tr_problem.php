@@ -33,7 +33,7 @@ return new class extends Migration
             $table->string('item_kategori_tiket')->nullable();
             $table->string('tipe_problem');
             $table->boolean('major_problem');
-            $table->boolean('major_problem');
+            $table->boolean('active');
             $table->boolean('knowledge');
             $table->string('judul_tiket');
             $table->text('detail_tiket');

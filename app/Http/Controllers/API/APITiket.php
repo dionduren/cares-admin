@@ -20,7 +20,7 @@ class APITiket extends Controller
 
     function created_ticket_list($id)
     {
-        $list_tiket = Tiket::where('user_id_creator', $id)->get(['id', 'judul_tiket', 'kategori_tiket', 'subkategori_tiket', 'status_tiket', 'created_at', 'updated_at']);
+        $list_tiket = Tiket::where('user_id_creator', $id)->get(['id', 'id_status_tiket', 'nomor_tiket', 'tipe_tiket', 'judul_tiket', 'kategori_tiket', 'subkategori_tiket', 'item_kategori_tiket', 'status_tiket', 'created_at', 'updated_at']);
         return response()->json($list_tiket);
     }
 
@@ -46,7 +46,7 @@ class APITiket extends Controller
 
     public function ticket_attachments($id)
     {
-        $tiket_attachments = Attachment::where('id_tiket', $id)->get();
+        $tiket_attachments = Attachment::where('id_tiket', $id)->get(['nama_file_altered', 'file_location']);
         return response()->json($tiket_attachments);
     }
 
@@ -55,20 +55,20 @@ class APITiket extends Controller
     public function helpdesk_list_submitted()
     {
         // Cek benerin alur request dulu
-        $list_tiket = Tiket::where('id_status_tiket', '1')->get();
+        $list_tiket = Tiket::where('id_status_tiket', '1')->get(['id', 'id_status_tiket', 'nomor_tiket', 'tipe_tiket', 'judul_tiket', 'kategori_tiket', 'subkategori_tiket', 'item_kategori_tiket', 'status_tiket', 'created_at', 'updated_at']);
         // $list_tiket = Tiket::all();
         return response()->json($list_tiket);
     }
 
     public function helpdesk_list_assigned()
     {
-        $list_tiket = Tiket::where('id_status_tiket', '2')->orWhere('id_status_tiket', '3')->get();
+        $list_tiket = Tiket::where('id_status_tiket', '2')->orWhere('id_status_tiket', '3')->get(['id', 'id_status_tiket', 'nomor_tiket', 'tipe_tiket', 'judul_tiket', 'kategori_tiket', 'subkategori_tiket', 'item_kategori_tiket', 'status_tiket', 'created_at', 'updated_at']);
         return response()->json($list_tiket);
     }
 
     public function helpdesk_list_resolved()
     {
-        $list_tiket = Tiket::where('id_status_tiket', '4')->get();
+        $list_tiket = Tiket::where('id_status_tiket', '4')->get(['id', 'id_status_tiket', 'nomor_tiket', 'tipe_tiket', 'judul_tiket', 'kategori_tiket', 'subkategori_tiket', 'item_kategori_tiket', 'status_tiket', 'created_at', 'updated_at']);
         return response()->json($list_tiket);
     }
 

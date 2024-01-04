@@ -215,6 +215,8 @@ class DatabaseSeeder extends Seeder
             'nama' => 'Dion Alamsah',
             'email' => 'dion.alamsah@pupuk-indonesia.com',
             'sup_emp_no' => '1180042',
+            'company' => 'A000',
+            'lokasi' => 'PIHC Jakarta',
             'updated_by' => 'DB Seeder',
             'created_by' => 'DB Seeder',
         ]);
@@ -229,6 +231,16 @@ class DatabaseSeeder extends Seeder
             'role_id' => '7',
             'updated_by' => 'Seeder',
             'created_by' => 'Seeder',
+        ]);
+
+        SAPUserDetail::create([
+            'emp_no' => 'vp.superadmin',
+            'nama' => 'Atasan Dion',
+            'email' => 'atasan.dion@pupuk-indonesia.com',
+            'company' => 'A000',
+            'lokasi' => 'PIHC Jakarta',
+            'updated_by' => 'DB Seeder',
+            'created_by' => 'DB Seeder',
         ]);
 
 
@@ -395,6 +407,8 @@ class DatabaseSeeder extends Seeder
             'nama' => 'User Test',
             'email' => 'user.test@pupuk-indonesia.com',
             'sup_emp_no' => 'vp.test',
+            'company' => 'A000',
+            'lokasi' => 'PIHC Jakarta',
             'updated_by' => 'DB Seeder',
             'created_by' => 'DB Seeder',
         ]);
