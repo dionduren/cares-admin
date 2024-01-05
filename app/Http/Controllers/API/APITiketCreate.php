@@ -303,6 +303,7 @@ class APITiketCreate extends Controller
 
                     Attachment::create([
                         'id_tiket' => $ticket->id,
+                        'tipe_tiket' => $ticket->tipe_tiket,
                         'nama_file_original' => $originalName,
                         'nama_file_altered' => $alteredName,
                         'tipe_file' => $type,

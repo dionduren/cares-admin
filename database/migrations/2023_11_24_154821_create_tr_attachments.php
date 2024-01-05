@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('tr_attachments', function (Blueprint $table) {
             $table->id();
             $table->integer('id_tiket')->unsigned();
+            $table->string('tipe_tiket');
             $table->string('nama_file_original');
             $table->string('nama_file_altered');
             $table->string('tipe_file');
