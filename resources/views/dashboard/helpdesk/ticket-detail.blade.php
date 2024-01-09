@@ -278,7 +278,7 @@
                 $tingkat_prioritas = $('#tingkat_prioritas').val();
                 $tipe_sla = $('#tipe_sla').val();
                 $id_group = $('#grup_teknisi').find(':selected').val();
-                $assigned_group = $('#grup_teknisi').find(':selected').text();
+                // $assigned_group = $('#grup_teknisi').find(':selected').text();
 
                 $.ajax({
                     url: "/api/tiket-assign-group",
@@ -293,7 +293,7 @@
                         tingkat_prioritas: $tingkat_prioritas,
                         tipe_sla: $tipe_sla,
                         id_group: $id_group,
-                        assigned_group: $assigned_group,
+                        // assigned_group: $assigned_group,
                     },
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
