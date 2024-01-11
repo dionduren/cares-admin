@@ -4,6 +4,32 @@
 @endsection
 @section('css')
     <link href="{{ URL::asset('/assets/libs/admin-resources/admin-resources.min.css') }}" rel="stylesheet">
+    <style>
+        /* Disable wrapping in all cells */
+        table.dataTable td {
+            white-space: nowrap;
+        }
+
+        .dataTables_length label {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        .dataTables_length select {
+            width: auto;
+            margin-left: 0.5em;
+            margin-right: 0.5em;
+            /* Adjust as necessary */
+            display: inline-block;
+        }
+
+        .dataTables_paginate {
+            display: flex;
+            justify-content: flex-end;
+            /* Aligns pagination to the right */
+        }
+    </style>
 @endsection
 @section('content')
     @component('components.breadcrumb')
@@ -22,26 +48,32 @@
                 <div class="card-body">
 
                     <div class="row">
-                        <table id="listTicket" class="table table-bordered nowrap">
+                        <table id="listTicket" class="table table-bordered"style="margin-bottom: 0px">
                             <thead class="fs-5 fw-bolder text-light" style="background-color: rgb(12, 12, 151)">
                                 <tr align="middle" valign="middle">
-                                    <th>No.Tiket</th>
-                                    <th>Tipe Tiket</th>
-                                    <th>User</th>
-                                    <th>Company</th>
-                                    <th width="10%">Unit Kerja</th>
-                                    <th>Kategori Tiket</th>
-                                    <th>Judul Tiket</th>
-                                    <th>Durasi Max SLA Response</th>
-                                    <th>Realisasi SLA Response</th>
-                                    <th>Status Response</th>
-                                    <th>Durasi Max SLA Resolve</th>
-                                    <th>Realisasi SLA Response</th>
-                                    <th>Status Resolve</th>
-                                    <th>Grup Teknisi</th>
-                                    <th>Teknisi</th>
-                                    <th>Keterangan</th>
-                                    <th>Nomor Solusi</th>
+                                    <th class="text-center" rowspan="2">No.Tiket</th>
+                                    <th class="text-center" rowspan="2">Tipe Tiket</th>
+                                    <th class="text-center" colspan="3">Info Creator Tiket</th>
+                                    <th class="text-center" rowspan="2">Kategori Tiket</th>
+                                    <th class="text-center" rowspan="2">Judul Tiket</th>
+                                    <th class="text-center" colspan="3">SLA Response</th>
+                                    <th class="text-center" colspan="3">SLA Resolve</th>
+                                    <th class="text-center" rowspan="2">Grup Teknisi</th>
+                                    <th class="text-center" rowspan="2">Teknisi</th>
+                                    <th class="text-center" rowspan="2">Keterangan</th>
+                                    <th class="text-center" rowspan="2">Nomor Solusi</th>
+                                    <th class="text-center" rowspan="2">Action</th>
+                                </tr>
+                                <tr align="middle" valign="middle">
+                                    <th class="text-center">User</th>
+                                    <th class="text-center">Company</th>
+                                    <th class="text-center">Unit Kerja</th>
+                                    <th class="text-center">Durasi Maksimal</th>
+                                    <th class="text-center">Realisasi</th>
+                                    <th class="text-center">Status</th>
+                                    <th class="text-center">Durasi Maksimal</th>
+                                    <th class="text-center">Realisasi</th>
+                                    <th class="text-center">Status</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -82,6 +114,7 @@
                 order: [
                     [0, 'asc']
                 ],
+
                 columns: [{
                         data: "nomor_tiket",
                         className: "no-wrap"
@@ -97,19 +130,12 @@
                         data: "company_name"
                     },
                     {
-                        data: "sap_user_detail.komp_title", // Assuming 'nama' is the field you want to display
+                        data: "sap_user_detail.komp_title",
                     },
                     {
                         className: 'text-start',
                         data: "kategori_tiket"
                     },
-                    // {
-                    //     data: "item_kategori_tiket",
-                    //     className: 'text-center',
-                    //     render: function(data, type, row, meta) {
-                    //         return type === 'display' && data == null ? "-" : data;
-                    //     }
-                    // },
                     {
                         data: "judul_tiket"
                     },
@@ -120,12 +146,11 @@
                     {
                         data: "sla_response.business_elapsed_time",
                         className: 'text-center',
-                        defaultContent: " - "
+                        defaultContent: " BELUM DIRESPON "
                     },
                     {
                         data: "sla_response",
                         className: 'text-center',
-                        defaultContent: "BELUM DIRESPON",
                         render: function(data, type, row) {
                             // Check if sla_response data exists and percentage is not null
                             if (data && data.business_time_percentage !== undefined && data
@@ -141,7 +166,7 @@
                             }
 
                             // Default text if no data or percentage is null
-                            return "BELUM DIRESPON";
+                            return " - ";
                         },
                         createdCell: function(td, cellData, rowData, row, col) {
                             if (cellData && cellData.business_time_percentage !== undefined &&
@@ -156,21 +181,18 @@
                     {
                         data: "sla_resolve.sla_hours_target",
                         className: 'text-center',
-                        defaultContent: " - "
+                        render: function(data, type, row, meta) {
+                            return type === 'display' && data == null ? " - " : data + ' Jam';
+                        }
                     },
                     {
                         data: "sla_resolve.business_elapsed_time",
                         className: 'text-center',
                         defaultContent: " - "
                     },
-                    // {
-                    //     data: "sla_resolve.business_elapsed_time",
-                    //     defaultContent: "BELUM SOLVED",
-                    // },
                     {
                         data: "sla_resolve",
                         className: 'text-center',
-                        defaultContent: "BELUM DIRESPON",
                         render: function(data, type, row) {
                             // Check if sla data exists and percentage is not null
                             if (data && data.business_time_percentage !== undefined && data
@@ -186,7 +208,7 @@
                             }
 
                             // Default text if no data or percentage is null
-                            return "BELUM DIRESPON";
+                            return " - ";
                         },
                         createdCell: function(td, cellData, rowData, row, col) {
                             if (cellData && cellData.business_time_percentage !== undefined &&
@@ -201,10 +223,12 @@
 
                     {
                         data: "assigned_group",
+                        className: 'text-center',
                         defaultContent: " - "
                     },
                     {
                         data: "assigned_technical",
+                        className: 'text-center',
                         defaultContent: " - "
                     },
                     {
@@ -215,44 +239,56 @@
                     {
                         data: "id_solusi",
                         className: 'text-center',
-                        defaultContent: " - "
+                        defaultContent: " - ",
+                        render: function(data, type, row, meta) {
+                            return type === 'display' && data == 9999 ? "Solusi Baru" : data;
+                        }
                     },
 
-                    // {
-                    //     data: null,
-                    //     orderable: false,
-                    //     render: function(data, type, row) {
-                    //         return `
-                //                 <div class="dropdown">
-                //                     <div class="flex-shrink-0 text-center">
-                //                         <div class="dropdown align-self-start">
-                //                             <a class="dropdown-toggle" href="#" role="button"
-                //                             data-bs-toggle="dropdown" aria-haspopup="true"
-                //                             aria-expanded="false">
-                //                                 <i class="bx bx-dots-vertical-rounded font-size-24 text-dark"></i>
-                //                             </a>
-                //                             <div class="dropdown-menu">
-                //                                 <a class="dropdown-item" href="/technical/ticket/detail/${row.id}">
-                //                                     Detail
-                //                                 </a>
-                //                             </div>
-                //                         </div>
-                //                     </div>
-                //                 </div>
-                //             `;
-                    //     }
-                    // }
+                    {
+                        data: null,
+                        orderable: false,
+                        render: function(data, type, row) {
+                            return `
+                                <div class="dropdown">
+                                    <div class="flex-shrink-0 text-center">
+                                        <div class="dropdown align-self-start">
+                                            <a class="dropdown-toggle" href="#" role="button"
+                                            data-bs-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false">
+                                                <i class="bx bx-dots-vertical-rounded font-size-24 text-dark"></i>
+                                            </a>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" href="/ticket/detail/${row.id}">
+                                                    Detail Tiket
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        }
+                    }
                 ],
                 lengthChange: true,
-                scrollCollapse: true,
+                // scrollCollapse: true,
                 scrollX: true,
+                autoWidth: false,
                 // ordering: true,
                 // dom: 'Bfrtilp',
-                dom: 'fBrt<"bottom"lp>',
-                buttons: ['copy', 'excel', 'pdf', 'colvis']
+                // dom: 'fBrt<"bottom"lp>',
+                dom: "<'row'<'col-sm-12 col-md-4'B><'col-sm-12 col-md-8'f>>" +
+                    "<'row'<'col-sm-12'tr>>" + // Table
+                    "<'row'<'col-sm-12 col-md-4'l><'col-sm-12 col-md-4 text-center'i><'col-sm-12 col-md-4'p>>", // Length, Info, Pagination
+                lengthMenu: [5, 10, 15, 20, 25, 50, 100],
+                buttons: ['excelHtml5', {
+                    extend: 'pdfHtml5',
+                    orientation: 'landscape',
+                    pageSize: 'LEGAL'
+                }],
             });
 
-            table1.buttons().container().appendTo('#listTicket_wrapper .col-md-6:eq(0)');
+            table1.buttons().container().appendTo('#listTicket_wrapper .col-md-3:eq(0)');
         });
     </script>
 @endsection
