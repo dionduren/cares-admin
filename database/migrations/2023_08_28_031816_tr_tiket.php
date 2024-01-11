@@ -44,6 +44,7 @@ return new class extends Migration
             $table->integer('id_solusi')->unsigned()->nullable();
             $table->string('judul_solusi')->nullable();
             $table->text('detail_solusi')->nullable();
+            $table->text('alasan_hold')->nullable();
             $table->text('alasan_reject')->nullable();
             $table->integer('rating_kepuasan')->unsigned()->nullable();
             $table->string('catatan_kepuasan')->nullable();

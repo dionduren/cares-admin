@@ -76,6 +76,8 @@ Route::get('/solution-list/{id}', [APITiket::class, 'solution_list']);
 Route::post('/submit-solution', [APITiket::class, 'submit_solution']);
 Route::post('/submit-new-solution', [APITiket::class, 'submit_new_solution']);
 
+Route::get('/sla-list', [APITiket::class, 'master_sla_list']);
+
 Route::get('/activity-history', [SuperAdminController::class, 'data_activity_history']);
 
 Route::post('/close-tiket', [APITiket::class, 'close_tiket']);

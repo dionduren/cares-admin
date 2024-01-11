@@ -104,6 +104,7 @@ class APIGroup extends Controller
             'business_seconds' => $businessSLA['seconds'],
             'business_elapsed_time' => $businessSLA_string,
             'business_time_percentage' => $business_percentage_formatted,
+            'status_sla' => "Finished",
             'actual_stop_time' => now(),
             'actual_days' => $actualSLA['days'],
             'actual_hours' => $actualSLA['hours'],

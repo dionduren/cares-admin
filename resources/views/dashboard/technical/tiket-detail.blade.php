@@ -84,11 +84,20 @@
 
                     <hr>
 
-                    <div class="row pb-3 mx-auto text-center">
-                        <button type="button" class="btn btn-lg btn-primary" style="width: 100%" data-bs-toggle="modal"
-                            data-bs-target="#solveTicketModal">
-                            Action Tiket
-                        </button>
+                    <div class="row pb-3 px-auto justify-content-center">
+                        <div class="col-5">
+                            <button type="button" class="btn btn-lg btn-danger" style="width: 100%" data-bs-toggle="modal"
+                                data-bs-target="#holdTicketModal">
+                                Hold Tiket
+                            </button>
+                        </div>
+                        <div class="col-1"></div>
+                        <div class="col-5">
+                            <button type="button" class="btn btn-lg btn-primary" style="width: 100%" data-bs-toggle="modal"
+                                data-bs-target="#solveTicketModal">
+                                Solve Tiket
+                            </button>
+                        </div>
                     </div>
 
                     <!-- Modal -->
@@ -102,7 +111,7 @@
                                         aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-
+                                    {{-- 
                                     <div class="row mb-3">
                                         <label for="detail_tiket">Kondisi Problem pada tiket</label>
                                         <div class="col">
@@ -113,7 +122,7 @@
                                                 <option value="4">Lainnya</option>
                                             </select>
                                         </div>
-                                    </div>
+                                    </div> --}}
 
                                     {{-- <div class="row mb-3">
                                         <label for="detail_tiket">Judul solusi baru yang digunakan</label>
@@ -121,16 +130,16 @@
                                             <input type="text" class="form-control" name="judul_solusi_problem"
                                                 id="judul_solusi">
                                         </div>
-                                    </div>
+                                    </div> --}}
 
-                                    <div class="row mb-3">
+                                    {{-- <div class="row mb-3">
                                         <label for="detail_tiket">Jelaskan solusi baru yang digunakan</label>
                                         <div class="col">
                                             <textarea class="form-control" name="detail_solusi_problem" id="detail_solusi" rows="5"></textarea>
                                         </div>
                                     </div> --}}
 
-                                    {{-- <div class="row mb-3">
+                                    <div class="row mb-3">
                                         <label for="detail_tiket">Solusi tiket yang digunakan</label>
                                         <div class="col">
                                             <select class="form-control dropdownGrup" name="solusi_tiket" id="solusi_tiket">
@@ -151,13 +160,16 @@
                                         <div class="col">
                                             <textarea class="form-control" name="detail_solusi" id="detail_solusi" rows="5"></textarea>
                                         </div>
-                                    </div> --}}
+                                    </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button type="button" id="resolveTicketButton" class="btn btn-danger text-white">Hold
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Close</button>
+                                    {{-- <button type="button" id="resolveTicketButton"
+                                        class="btn btn-danger text-white">Hold
+                                        Ticket</button> --}}
+                                    <button type="button" id="resolveTicketButton" class="btn btn-success">Solve
                                         Ticket</button>
-                                    {{-- <button type="button" id="resolveTicketButton" class="btn btn-success">Submit</button> --}}
                                 </div>
                             </div>
                         </div>

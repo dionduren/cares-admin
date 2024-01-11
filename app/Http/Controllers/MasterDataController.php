@@ -29,7 +29,16 @@ class MasterDataController extends Controller
     public function helpdesk_ticket_list()
     {
 
-        return view('dashboard.admin.master.ticket-list');
+        $user = Auth::user()->nik;
+        return view('dashboard.admin.master.ticket-list', [
+            'user' => $user,
+        ]);
+    }
+
+    public function helpdesk_ticket_list_test()
+    {
+
+        return view('dashboard.admin.master.ticket-list-test');
     }
 
     public function master_kategori()

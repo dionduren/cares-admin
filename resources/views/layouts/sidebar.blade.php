@@ -166,6 +166,13 @@
                     <li>
                         <a href="/master/ticket-list">
                             <i class="mdi mdi-ticket-confirmation"></i>
+                            <span data-key="t-horizontal">Daftar Tiket Helpdesk</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="/master/ticket-list-test">
+                            <i class="mdi mdi-ticket-confirmation"></i>
                             <span data-key="t-horizontal">Daftar Tiket Helpdesk (Test)</span>
                         </a>
                     </li>

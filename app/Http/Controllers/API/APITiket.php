@@ -13,6 +13,7 @@ use App\Models\Master\StatusTiket;
 use App\Models\KnowledgeManagement;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\HelperController;
+use App\Models\Master\SAPUserDetail;
 use App\Models\Transaction\Attachment;
 
 class APITiket extends Controller
@@ -55,20 +56,20 @@ class APITiket extends Controller
     public function helpdesk_list_submitted()
     {
         // Cek benerin alur request dulu
-        $list_tiket = Tiket::where('id_status_tiket', '1')->get(['id', 'id_status_tiket', 'nomor_tiket', 'tipe_tiket', 'judul_tiket', 'kategori_tiket', 'subkategori_tiket', 'item_kategori_tiket', 'status_tiket', 'created_at', 'updated_at']);
+        $list_tiket = Tiket::where('id_status_tiket', '1')->get(['id', 'id_status_tiket', 'nomor_tiket', 'tipe_tiket', 'judul_tiket', 'kategori_tiket', 'subkategori_tiket', 'item_kategori_tiket', 'status_tiket', 'created_by',   'created_at', 'updated_at']);
         // $list_tiket = Tiket::all();
         return response()->json($list_tiket);
     }
 
     public function helpdesk_list_assigned()
     {
-        $list_tiket = Tiket::where('id_status_tiket', '2')->orWhere('id_status_tiket', '3')->get(['id', 'id_status_tiket', 'nomor_tiket', 'tipe_tiket', 'judul_tiket', 'kategori_tiket', 'subkategori_tiket', 'item_kategori_tiket', 'status_tiket', 'created_at', 'updated_at']);
+        $list_tiket = Tiket::where('id_status_tiket', '2')->orWhere('id_status_tiket', '3')->get(['id', 'id_status_tiket', 'nomor_tiket', 'tipe_tiket', 'judul_tiket', 'kategori_tiket', 'subkategori_tiket', 'item_kategori_tiket', 'status_tiket', 'created_by',   'created_at', 'updated_at']);
         return response()->json($list_tiket);
     }
 
     public function helpdesk_list_resolved()
     {
-        $list_tiket = Tiket::where('id_status_tiket', '4')->get(['id', 'id_status_tiket', 'nomor_tiket', 'tipe_tiket', 'judul_tiket', 'kategori_tiket', 'subkategori_tiket', 'item_kategori_tiket', 'status_tiket', 'created_at', 'updated_at']);
+        $list_tiket = Tiket::where('id_status_tiket', '4')->get(['id', 'id_status_tiket', 'nomor_tiket', 'tipe_tiket', 'judul_tiket', 'kategori_tiket', 'subkategori_tiket', 'item_kategori_tiket', 'status_tiket',  'created_by',  'created_at', 'updated_at']);
         return response()->json($list_tiket);
     }
 
@@ -76,19 +77,19 @@ class APITiket extends Controller
 
     public function teamlead_waiting_list($id)
     {
-        $list_tiket = Tiket::where('id_status_tiket', '2')->where('id_group', $id)->get();
+        $list_tiket = Tiket::where('id_status_tiket', '2')->where('id_group', $id)->get(['id', 'id_status_tiket', 'nomor_tiket', 'tipe_tiket', 'judul_tiket', 'kategori_tiket', 'subkategori_tiket', 'item_kategori_tiket', 'status_tiket',  'created_by',  'created_at', 'updated_at']);
         return response()->json($list_tiket);
     }
 
     public function teamlead_ongoing_list($id)
     {
-        $list_tiket = Tiket::where('id_status_tiket', '3')->where('id_group', $id)->get();
+        $list_tiket = Tiket::where('id_status_tiket', '3')->where('id_group', $id)->get(['id', 'id_status_tiket', 'nomor_tiket', 'tipe_tiket', 'judul_tiket', 'kategori_tiket', 'subkategori_tiket', 'item_kategori_tiket', 'status_tiket',  'created_by',  'created_at', 'updated_at']);
         return response()->json($list_tiket);
     }
 
     public function teamlead_finished($id)
     {
-        $list_tiket = Tiket::where('id_status_tiket', '4')->where('id_group', $id)->get();
+        $list_tiket = Tiket::where('id_status_tiket', '4')->where('id_group', $id)->get(['id', 'id_status_tiket', 'nomor_tiket', 'tipe_tiket', 'judul_tiket', 'kategori_tiket', 'subkategori_tiket', 'item_kategori_tiket', 'status_tiket',  'created_by',  'created_at', 'updated_at']);
         return response()->json($list_tiket);
     }
 
@@ -96,14 +97,44 @@ class APITiket extends Controller
 
     public function technical_ongoing_list($id)
     {
-        $list_tiket = Tiket::where('id_status_tiket', '3')->where('id_technical', $id)->get();
+        $list_tiket = Tiket::where('id_status_tiket', '3')->where('id_technical', $id)->get(['id', 'id_status_tiket', 'nomor_tiket', 'tipe_tiket', 'judul_tiket', 'kategori_tiket', 'subkategori_tiket', 'item_kategori_tiket', 'status_tiket', 'created_by',   'created_at', 'updated_at']);
         // $list_tiket = Tiket::where('id_technical', $id)->get();
         return response()->json($list_tiket);
     }
 
     public function technical_finished($id)
     {
-        $list_tiket = Tiket::where('id_status_tiket', '4')->where('id_technical', $id)->get();
+        $list_tiket = Tiket::where('id_status_tiket', '4')->where('id_technical', $id)->get(['id', 'id_status_tiket', 'nomor_tiket', 'tipe_tiket', 'judul_tiket', 'kategori_tiket', 'subkategori_tiket', 'item_kategori_tiket', 'status_tiket', 'created_by',  'created_at', 'updated_at']);
+        return response()->json($list_tiket);
+    }
+
+    // ==================== SLA List ===========
+
+    public function master_sla_list()
+    { // $list_tiket = Tiket::all(['id', 'company_name', 'id_status_tiket', 'nomor_tiket', 'tipe_tiket', 'judul_tiket', 'kategori_tiket', 'subkategori_tiket', 'item_kategori_tiket', 'assigned_group', 'assigned_technical', 'id_solusi', 'status_tiket', 'created_by',  'created_at', 'updated_at']);
+        // $detail_requester = SAPUserDetail::where('nama', $list_ticket->created_by)->get(['komp_title', 'org_title', 'pos_title', 'pos_grade', 'pos_kategori']);
+        // $sla_response = SLA::where('id_tiket', $list_ticket->id)->where('tipe_sla', 'Response')->get(['sla_hours_target', 'business_elapsed_time',]);
+        // $sla_resolve = SLA::where('id_tiket', $list_ticket->id->where('tipe_sla', 'Resolve'))->get([]);
+        // return response()->json($list_tiket);
+
+        $list_tiket = Tiket::with([
+            'sapUserDetail' => function ($query) {
+                $query->select(['emp_no', 'nama', 'komp_title', 'org_title', 'pos_title', 'pos_grade', 'pos_kategori']);
+            },
+            'slaResponse' => function ($query) {
+                $query->where('kategori_sla', 'Response')
+                    ->select(['id_tiket', 'sla_hours_target', 'business_elapsed_time', 'business_time_percentage']);
+            },
+            'slaResolve' => function ($query) {
+                $query->where('kategori_sla', 'Resolve')
+                    ->select(['id_tiket', 'sla_hours_target', 'business_elapsed_time', 'business_time_percentage']);
+            }
+        ])->get([
+            'id', 'user_id_creator', 'company_name', 'nomor_tiket', 'tipe_tiket', 'judul_tiket',
+            'kategori_tiket', 'subkategori_tiket', 'item_kategori_tiket', 'assigned_group',
+            'assigned_technical', 'id_solusi', 'detail_solusi', 'status_tiket', 'created_by', 'created_at', 'updated_at'
+        ]);
+
         return response()->json($list_tiket);
     }
 
@@ -258,6 +289,7 @@ class APITiket extends Controller
             'business_seconds' => $businessSLA['seconds'],
             'business_elapsed_time' => $businessSLA_string,
             'business_time_percentage' => $business_percentage_formatted,
+            'status_sla' => "Finished",
             'actual_stop_time' => now(),
             'actual_days' => $actualSLA['days'],
             'actual_hours' => $actualSLA['hours'],
