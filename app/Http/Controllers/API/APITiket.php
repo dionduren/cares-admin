@@ -111,12 +111,7 @@ class APITiket extends Controller
     // ==================== SLA List ===========
 
     public function master_sla_list()
-    { // $list_tiket = Tiket::all(['id', 'company_name', 'id_status_tiket', 'nomor_tiket', 'tipe_tiket', 'judul_tiket', 'kategori_tiket', 'subkategori_tiket', 'item_kategori_tiket', 'assigned_group', 'assigned_technical', 'id_solusi', 'status_tiket', 'created_by',  'created_at', 'updated_at']);
-        // $detail_requester = SAPUserDetail::where('nama', $list_ticket->created_by)->get(['komp_title', 'org_title', 'pos_title', 'pos_grade', 'pos_kategori']);
-        // $sla_response = SLA::where('id_tiket', $list_ticket->id)->where('tipe_sla', 'Response')->get(['sla_hours_target', 'business_elapsed_time',]);
-        // $sla_resolve = SLA::where('id_tiket', $list_ticket->id->where('tipe_sla', 'Resolve'))->get([]);
-        // return response()->json($list_tiket);
-
+    { 
         $list_tiket = Tiket::with([
             'sapUserDetail' => function ($query) {
                 $query->select(['emp_no', 'nama', 'komp_title', 'org_title', 'pos_title', 'pos_grade', 'pos_kategori']);
