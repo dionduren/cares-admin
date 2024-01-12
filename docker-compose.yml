@@ -1,17 +1,27 @@
-version: "3.8"
+version: '3.8'
 services:
-    app:
-        build:
-            context: .
-            dockerfile: .docker/Dockerfile
-        image: cares-web
-        container_name: cares-web
-        restart: always
-        environment:
-            - TZ=Asia/Jakarta
-        ports:
-            - 44070:80
-            - 44071:443
-        volumes:
-            - .:/var/www/html
-            - ./log/cron:/var/log/cron
+  web:
+    build: .
+    image: php:8.1.7-apache
+    container_name: cares_admin
+    ports:
+      - "8080:80"
+    volumes:
+      - ./:/var/www/html
+      - ./000-default.conf:/etc/apache2/sites-available/000-default.conf
+    working_dir: /var/www/html
+    environment:
+        - TZ=Asia/Jakarta
+
+    command: 
+      bash -c "
+        apt-get update &&
+        apt-get install -y libpq-dev libzip-dev unzip git curl &&
+        docker-php-ext-install pdo pdo_pgsql zip &&
+        a2enmod rewrite &&
+        curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer &&
+        composer install --no-scripts --no-autoloader &&
+        composer dump-autoload --optimize &&
+        chown -R www-data:www-data /var/www/html &&
+        chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache &&
+        apache2-foreground"
