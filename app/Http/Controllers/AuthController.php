@@ -11,76 +11,39 @@ use Illuminate\Support\Facades\Http;
 
 class AuthController extends Controller
 {
-    /**
-     * success response method.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function sendResponse($result, $message)
     {
         $response = [
             'success' => true,
-            'data'    => $result,
             'message' => $message,
+            'data'    => $result,
         ];
 
         return response()->json($response, 200);
     }
 
-
-    /**
-     * return error response.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function sendError($error, $errorMessages = [], $code = 404)
+    public function sendError($errorMessages = [], $statusCode)
     {
         $response = [
-            'success' => false,
-            'message' => $error,
+            'status' => false,
+            'message' => 'Error occurred',
+            'error' => [
+                'code' => $statusCode,
+                'description' => $errorMessages
+            ]
         ];
 
-
-        if (!empty($errorMessages)) {
-            $response['data'] = $errorMessages;
-        }
-
-
-        return response()->json($response, $code);
+        return response()->json($response, $statusCode);
     }
-
-    // public function old_login(Request $request)
-    // {
-    //     if (Auth::attempt(['nik' => $request->nik, 'password' => $request->password])) {
-    //         $user = Auth::user();
-    //         $success['id'] =  $user->id;
-    //         $success['nik'] =  $user->nik;
-    //         $success['nama'] =  $user->nama;
-    //         $success['email'] =  $user->email;
-    //         $success['role_id'] =  $user->role_id;
-    //         $success['unit_kerja'] =  $user->unit_kerja;
-    //         $success['token'] =  $user->createToken('MyApp')->plainTextToken;
-
-    //         return $this->sendResponse($success, 'User login successfully.');
-    //     } else {
-    //         return $this->sendError('Unauthorised.', ['error' => 'Unauthorised']);
-    //     }
-    // }
 
     public function login(Request $request)
     {
-        // First, attempt local authentication
         if (Auth::attempt(['nik' => $request->nik, 'password' => $request->password])) {
-            // Log::error('Mobile login Attempted: ' . $request->nik);
             return $this->createSuccessResponse(Auth::user());
-        }
-        // If local auth fails, attempt SSO authentication
-        elseif ($user = $this->attemptSSOLogin(['nik' => $request->nik, 'password' => $request->password])) {
+        } elseif ($user = $this->attemptSSOLogin(['nik' => $request->nik, 'password' => $request->password])) {
             return $this->createSuccessResponse($user);
-        }
-        // If both local and SSO auth fail, return error
-        else {
-            return $this->sendError('Unauthorised.', ['error' => 'Unauthorised']);
+        } else {
+            return $this->sendError('Invalid credentials or unauthorized access.', 401);
         }
     }
 
@@ -91,7 +54,6 @@ class AuthController extends Controller
         $success['nama'] =  $user->nama;
         $success['email'] =  $user->email;
         $success['role_id'] =  $user->role_id;
-        // $success['unit_kerja'] =  $user->unit_kerja;
         $success['token'] =  $user->createToken('MyApp')->plainTextToken;
 
         return $this->sendResponse($success, 'User login successfully.');
@@ -129,8 +91,6 @@ class AuthController extends Controller
                 // SSO authentication successful
                 try {
                     Auth::login($user, $remember);
-                    // Auth::login($user_id);
-                    // Auth::loginUsingId($user->id);
 
                     return response()->json([
                         'path' => '/',

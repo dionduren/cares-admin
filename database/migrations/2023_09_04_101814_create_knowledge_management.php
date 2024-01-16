@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('ms_knowledge_management', function (Blueprint $table) {
             $table->id();
+            $table->integer('id_referensi_tiket')->unsigned()->nullable();
             $table->string('tipe_tiket');
             $table->integer('id_kategori')->unsigned();
             $table->string('kategori_tiket');
