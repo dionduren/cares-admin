@@ -51,6 +51,24 @@ class APITiket extends Controller
         return response()->json($tiket_attachments);
     }
 
+    public function download_attachments($filename)
+    {
+        // Assuming files are stored in the 'public' disk
+        $filePath = 'uploads/' . $filename;
+
+        if (!Storage::disk('public')->exists($filePath)) {
+            return response()->json(['message' => 'File not found.'], 404);
+        }
+
+        $fileContent = Storage::disk('public')->get($filePath);
+        $mimeType = Storage::disk('public')->mimeType($filePath);
+
+        return Response::make($fileContent, 200, [
+            'Content-Type' => $mimeType,
+            'Content-Disposition' => 'attachment; filename="' . $filename . '"'
+        ]);
+    }
+
     // ==================== HELPDESK ====================
 
     public function helpdesk_list_submitted()
@@ -111,7 +129,7 @@ class APITiket extends Controller
     // ==================== SLA List ===========
 
     public function master_sla_list()
-    { 
+    {
         $list_tiket = Tiket::with([
             'sapUserDetail' => function ($query) {
                 $query->select(['emp_no', 'nama', 'komp_title', 'org_title', 'pos_title', 'pos_grade', 'pos_kategori']);

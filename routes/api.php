@@ -45,6 +45,7 @@ Route::get('/created-tiket-list/{id}', [APITiket::class, 'created_ticket_list'])
 Route::get('/list-all-tiket', [APITiket::class, 'list_all_ticket']);
 Route::get('/tiket-detail/{id}', [APITiket::class, 'ticket_detail']);
 Route::get('/tiket-attachments/{id}', [APITiket::class, 'ticket_attachments']);
+Route::get('/download-attachments/{filename}', [APITiket::class, 'download_attachments']);
 
 // mobile need front end
 Route::get('/helpdesk-tiket-submitted', [APITiket::class, 'helpdesk_list_submitted']);
