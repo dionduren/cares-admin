@@ -12,9 +12,11 @@ use App\Models\Transaction\SLA;
 use App\Models\Master\StatusTiket;
 use App\Models\KnowledgeManagement;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\HelperController;
 use App\Models\Master\SAPUserDetail;
 use App\Models\Transaction\Attachment;
+use Illuminate\Support\Facades\Storage;
+use App\Http\Controllers\HelperController;
+use Symfony\Component\HttpFoundation\Response;
 
 class APITiket extends Controller
 {
