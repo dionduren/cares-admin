@@ -476,22 +476,18 @@
                 for (var i = 0; i < attachments.length; i++) {
                     var fileType = attachments[i].split('.').pop().toLowerCase();
                     var fileName = fileNames[i];
-                    var filePath = '/storage/' + attachments[i]; // Modify as per your actual path
-                    var fileDisplay = "";
+                    var filePath = '/download-file/' + encodeURIComponent(fileNames[
+                        i]); // Adjust for download endpoint
+                    var fileIcon = fileType === 'pdf' ? 'file-pdf' : (fileType === 'jpg' || fileType === 'png' ||
+                        fileType === 'jpeg' ? 'file-image' : 'file');
 
-                    if (fileType === 'jpg' || fileType === 'png' || fileType === 'jpeg') {
-                        fileDisplay = '<img src="' + filePath + '" alt="' + fileName +
-                            '" style="max-height:200px; display: block;"/>';
-
-                        html += '<li margin-bottom: 10px;">' + fileDisplay +
-                            ' <span>' + fileName + '</span></li>';
-                    } else if (fileType === 'pdf' || fileType === 'zip') {
-                        var downloadUrl = '/download-file/' + encodeURIComponent(fileName); // Update this line
-                        fileDisplay = '<a href="' + downloadUrl + '" target="_blank"><i class="fas fa-' + (
-                            fileType === 'pdf' ? 'file-pdf' : 'file-archive') + '"></i> ' + fileName + '</a>';
-
-                        html += '<li margin-bottom: 10px;">' + fileDisplay + '</li>';
-                    }
+                    // Create list item with file icon, name, and download button
+                    html +=
+                        '<li style="margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">' +
+                        '<span><i class="fas fa-' + fileIcon + '"></i> ' + fileName + '</span>' +
+                        '<button class="btn btn-lg btn-primary" onclick="window.location.href=\'' + filePath +
+                        '\'" class="download-button">Download</button>' +
+                        '</li>';
                 }
 
                 $("#attachment_list").html(html);
