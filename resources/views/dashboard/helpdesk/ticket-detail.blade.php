@@ -458,7 +458,7 @@
 
                         // File Name Original
                         var fileNames = data.map(function(item) {
-                            return item.nama_file_original;
+                            return item.nama_file_altered;
                         });
 
                         var fileNameString = fileNames.join(',');
@@ -484,15 +484,13 @@
                             '" style="max-height:200px; display: block;"/>';
 
                         html += '<li margin-bottom: 10px;">' + fileDisplay +
-                            ' <span>' +
-                            fileName + '</span></li>';
+                            ' <span>' + fileName + '</span></li>';
                     } else if (fileType === 'pdf' || fileType === 'zip') {
-                        fileDisplay = '<a href="' + filePath + '" target="_blank"><i class="fas fa-' + (fileType ===
-                            'pdf' ? 'file-pdf' : 'file-archive') + '"></i> ' + fileName + '</a>';
+                        var downloadUrl = '/download-file/' + encodeURIComponent(fileName); // Update this line
+                        fileDisplay = '<a href="' + downloadUrl + '" target="_blank"><i class="fas fa-' + (
+                            fileType === 'pdf' ? 'file-pdf' : 'file-archive') + '"></i> ' + fileName + '</a>';
 
-
-                        html += '<li margin-bottom: 10px;">' + fileDisplay +
-                            '</li>';
+                        html += '<li margin-bottom: 10px;">' + fileDisplay + '</li>';
                     }
                 }
 

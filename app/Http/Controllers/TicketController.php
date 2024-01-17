@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Tiket;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Redirect;
+
 
 class TicketController extends Controller
 {
@@ -64,5 +66,16 @@ class TicketController extends Controller
         } else {
             return Redirect::to('/');
         }
+    }
+
+    public function downloadFile($filename)
+    {
+        $filePath = 'uploads/' . $filename;
+
+        if (!Storage::disk('public')->exists($filePath)) {
+            abort(404);
+        }
+
+        return Storage::disk('public')->download($filePath);
     }
 }

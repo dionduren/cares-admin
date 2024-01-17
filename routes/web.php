@@ -41,6 +41,7 @@ Route::middleware(['auth'])->group(
     Route::get('/tiket/detail/{id}', [TicketController::class, 'detail_ticket']);
     Route::get('/tiket/revise/{id}', [TicketController::class, 'revise_ticket']);
     Route::get('/ticket/self', [TicketController::class, 'index_self']);
+    Route::get('/download-file/{filename}', [TicketController::class, 'downloadFile']);
 
     Route::get('/helpdesk/ticket/new', [HelpdeskController::class, 'index_new']);
     Route::get('/helpdesk/ticket/detail/{id}', [HelpdeskController::class, 'detail_tiket']);
