@@ -332,8 +332,8 @@ class APITiket extends Controller
     {
         $id_tiket = $request->input('id_tiket');
         $tipe_tiket = Tiket::where('id', $id_tiket)->first()->tipe_tiket;
-        $id_technical = $request->input('nik');
-        $nama_technical = User::where('nik', $id_technical)->first()->nama;
+        $id_user = $request->input('nik');
+        $nama_user = User::where('nik', $id_user)->first()->nama;
 
         // set status ticket
         $status_tiket = StatusTiket::where('flow_number', 5)->where('tipe_tiket', $tipe_tiket)->first();
@@ -342,9 +342,8 @@ class APITiket extends Controller
             'id_status_tiket' => $status_tiket->flow_number,
             'status_tiket' => $status_tiket->nama_status,
             'rating_kepuasan' => 3,
-            'updated_by' => $nama_technical,
+            'updated_by' => $nama_user,
         ]);
-
 
         return response()->json([
             'success' => true,
@@ -355,8 +354,8 @@ class APITiket extends Controller
     {
         $id_tiket = $request->input('id_tiket');
         $tipe_tiket = Tiket::where('id', $id_tiket)->first()->tipe_tiket;
-        $id_technical = $request->input('nik');
-        $nama_technical = User::where('nik', $id_technical)->first()->nama;
+        $id_user = $request->input('nik');
+        $nama_user = User::where('nik', $id_user)->first()->nama;
         $rating_kepuasan = $request->input('rating_kepuasan');
         $catatan_kepuasan = $request->input('catatan_kepuasan');
 
@@ -368,7 +367,7 @@ class APITiket extends Controller
             'status_tiket' => $status_tiket->nama_status,
             'rating_kepuasan' => $rating_kepuasan,
             'catatan_kepuasan' => $catatan_kepuasan,
-            'updated_by' => $nama_technical,
+            'updated_by' => $nama_user,
         ]);
 
 
