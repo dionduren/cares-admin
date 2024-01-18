@@ -12,7 +12,6 @@ use App\Models\Master\TipeSLA;
 use Illuminate\Support\Carbon;
 use App\Models\Transaction\SLA;
 use App\Models\Master\StatusTiket;
-use App\Models\KnowledgeManagement;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\HelperController;
 

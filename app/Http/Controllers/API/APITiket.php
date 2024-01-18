@@ -2,21 +2,20 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\HelperController;
+
+use App\Models\KnowledgeManagement;
 use App\Models\User;
 use App\Models\Tiket;
-use Illuminate\Http\Request;
-
 use App\Models\Master\TipeSLA;
-use Illuminate\Support\Carbon;
-use App\Models\Transaction\SLA;
 use App\Models\Master\StatusTiket;
-use App\Models\KnowledgeManagement;
-use App\Http\Controllers\Controller;
-use App\Models\Master\SAPUserDetail;
 use App\Models\Transaction\Attachment;
+use App\Models\Transaction\SLA;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
-use App\Http\Controllers\HelperController;
-use Symfony\Component\HttpFoundation\Response;
 
 class APITiket extends Controller
 {
@@ -55,6 +54,9 @@ class APITiket extends Controller
 
     public function download_attachments($filename)
     {
+        // Sanitize and validate filename
+        $filename = urldecode($filename);
+
         // Assuming files are stored in the 'public' disk
         $filePath = 'uploads/' . $filename;
 
@@ -62,13 +64,19 @@ class APITiket extends Controller
             return response()->json(['message' => 'File not found.'], 404);
         }
 
-        $fileContent = Storage::disk('public')->get($filePath);
-        $mimeType = Storage::disk('public')->mimeType($filePath);
+        // Optional: Check user permissions here
 
-        return Response::make($fileContent, 200, [
-            'Content-Type' => $mimeType,
-            'Content-Disposition' => 'attachment; filename="' . $filename . '"'
-        ]);
+        // $fileContent = Storage::disk('public')->get($filePath);
+        // $mimeType = Storage::disk('public')->mimeType($filePath);
+
+
+        // Streamed Response for efficient file handling
+        return Storage::disk('public')->download($filePath);
+
+        // // Create a response instance and set the necessary headers
+        // return response($fileContent, 200)
+        //     ->header('Content-Type', $mimeType)
+        //     ->header('Content-Disposition', 'attachment; filename="' . $filename . '"');
     }
 
     // ==================== HELPDESK ====================
