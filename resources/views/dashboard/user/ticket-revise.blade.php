@@ -23,6 +23,15 @@
     <div class="row py-5">
         <div class="col-11 mx-auto">
 
+            <div class="col">
+                <div class="card bg-danger border-danger text-white-50">
+                    <div class="card-body">
+                        <h5 class="mb-4 text-white"><i class="mdi mdi-block-helper me-3"></i>Alasan Reject</h5>
+                        <textarea type="text" class="form-control" name="alasan_reject" id="alasan_reject" rows="4" readonly>{{ $tiket->alasan_reject }}</textarea>
+                    </div>
+                </div>
+            </div><!-- end col -->
+
             <div class="card card-h-100">
                 <!-- card body -->
                 <div class="card-body">
@@ -92,7 +101,7 @@
                         </div>
 
                         <div class="row pb-3 mx-auto text-center">
-                            <button class="btn btn-lg btn-primary" type="submit" style="width: 100%">Submit
+                            <button class="btn btn-lg btn-primary" type="submit" style="width: 100%">Revisi
                                 Ticket</button>
                         </div>
 
@@ -110,7 +119,7 @@
         $ticket_detail = {!! json_encode($tiket) !!};
 
         $(document).ready(function() {
-            console.log($ticket_detail);
+            // console.log($ticket_detail);
 
             $.ajax({
                 url: "/api/kategori-list/",
@@ -236,6 +245,7 @@
                 // Pengumpulan data di dalam form
                 var formData = new FormData($('#create-tiket-form')[0]);
 
+                formData.append('id', $ticket_detail.id);
                 formData.append('user_id', $user_id);
                 formData.append('nama_kategori', $("#kategori_tiket option:selected").text());
                 formData.append('nama_subkategori', $("#subkategori_tiket option:selected").text());
@@ -245,7 +255,7 @@
                 }
 
                 $.ajax({
-                    url: "/api/submit-tiket",
+                    url: "/api/submit-tiket-revise",
                     method: "POST",
                     dataType: "json",
                     data: formData,

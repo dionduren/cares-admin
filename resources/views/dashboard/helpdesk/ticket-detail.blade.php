@@ -123,7 +123,7 @@
                         </div>
                     </div>
 
-                    <!-- Modal -->
+                    <!-- Modal Assign -->
                     <div class="modal fade" id="assignTicketModal" tabindex="-1" aria-labelledby="assignTicketModalLabel"
                         aria-hidden="true">
                         <div class="modal-dialog">
@@ -211,7 +211,7 @@
                         </div>
                     </div>
 
-
+                    <!-- Modal Reject -->
                     <div class="modal fade" id="rejectTicketModal" tabindex="-1"
                         aria-labelledby="rejectTicketModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-lg">
@@ -237,7 +237,7 @@
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                    {{-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button> --}}
                                     <button type="button" class="btn btn-danger" id="rejectTicketBtn">Reject</button>
                                 </div>
                             </div>
@@ -473,12 +473,15 @@
                 var fileNames = fileNameString.split(",");
                 var html = "";
 
+                console.log("attachments.length = " + attachments.length);
+
                 for (var i = 0; i < attachments.length; i++) {
                     var fileType = attachments[i].split('.').pop().toLowerCase();
                     var fileName = fileNames[i];
                     var filePath = '/download-file/' + encodeURIComponent(fileNames[
                         i]); // Adjust for download endpoint
-                    var fileIcon = fileType === 'pdf' ? 'file-pdf' : (fileType === 'jpg' || fileType === 'png' ||
+                    var fileIcon = fileType === 'pdf' ? 'file-pdf' : (fileType === 'jpg' || fileType ===
+                        'png' ||
                         fileType === 'jpeg' ? 'file-image' : 'file');
 
                     // Create list item with file icon, name, and download button
@@ -490,7 +493,15 @@
                         '</li>';
                 }
 
-                $("#attachment_list").html(html);
+
+                if (!attachmentsString || !fileNameString) {
+                    // Handle the case when there are no attachments or file names
+                    console.log("No attachments found.");
+                    $("#attachment_list").html("No attachments available.");
+                    return;
+                } else {
+                    $("#attachment_list").html(html);
+                }
             }
 
         });

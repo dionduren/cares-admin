@@ -329,7 +329,7 @@ class APITiketCreate extends Controller
         }
     }
 
-    function store_revise(Request $request, $id)
+    function store_revise(Request $request)
     {
         // $company_code = 'A000';
         // $company_name = 'PI';
@@ -338,7 +338,7 @@ class APITiketCreate extends Controller
         $unit_layanan = 'TI';
 
         try {
-            $id_tiket = $id;
+            $id_tiket = $request->input('id');
             $user_id_creator = $request->input('user_id');
             $user_creator = SAPUserDetail::where('emp_no', $user_id_creator)->first();
             // $user_id_creator = $request->input('user_id');
@@ -387,7 +387,6 @@ class APITiketCreate extends Controller
                 'jabatan_creator' => $user_creator->pos_title,
                 'unit_kerja_creator' => $user_creator->komp_title,
                 'tipe_tiket' => $tipe_tiket,
-                'nomor_tiket' => HelperController::GetNomorTiket($kode_perusahaan, $unit_layanan, $tipe_tiket),
                 'id_kategori' => $id_kategori,
                 'kategori_tiket' => $nama_kategori,
                 'id_subkategori' => $id_subkategori,
@@ -404,15 +403,18 @@ class APITiketCreate extends Controller
                 'created_by' => $user_creator->nama,
             ];
 
-            $ticket = Tiket::where('id', $id_tiket)->update($db_raw_data);
+            Tiket::where('id', $id_tiket)->update($db_raw_data);
+
+            $ticket = Tiket::where('id', $id_tiket)->first();
 
             // Get Tipe SLA and create SLA Response
-            SLA::create([
+            SLA::updateOrCreate([
+                'id_tiket' => $ticket->id,
+            ], [
                 'id_sla' => $sla_response->id,
                 'kategori_sla' => 'Response',
                 'tipe_sla' => $sla_response->nama_sla,
                 'sla_hours_target' => $sla_response->durasi_jam,
-                'id_tiket' => $ticket->id,
                 'business_start_time' => HelperController::getStartBusiness(),
                 'status_sla' => "On Progress",
                 'actual_start_time' => now(),
@@ -423,7 +425,7 @@ class APITiketCreate extends Controller
             // Multi-Attachments Upload
             if ($request->hasFile('attachments')) {
                 // hapus existing file di server & DB
-                $currentAttachments = Attachment::where('id_tiket', $ticket->id)->get();
+                $currentAttachments = Attachment::where('id_tiket', $id_tiket)->get();
                 foreach ($currentAttachments as $currentAttachment) {
                     // Hapus file di server
                     if (Storage::exists($currentAttachment->file_location)) {
@@ -442,6 +444,7 @@ class APITiketCreate extends Controller
 
                     Attachment::create([
                         'id_tiket' => $ticket->id,
+                        'tipe_tiket' => $ticket->tipe_tiket,
                         'nama_file_original' => $originalName,
                         'nama_file_altered' => $alteredName,
                         'tipe_file' => $type,
